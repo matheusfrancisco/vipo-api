@@ -9,6 +9,6 @@ export const factoryServer = ({ userController }: any) => {
     res.send('Hello world');
   });
 
- 
+
   return server;
 };
