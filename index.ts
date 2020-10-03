@@ -1,11 +1,12 @@
-import 'reflect-metadata';
-import { factoryServer } from './server';
+import express from "express";
+import { routerFactory } from "./routes";
 
 (async () => {
+  const app = express();
 
-  const server = factoryServer({
-    userController: {},
-  });
+  const router = await routerFactory();
+  app.use(express.json());
+  app.use(router);
 
-  server.listen(3000, () => {});
+  app.listen(3000, () => {});
 })();

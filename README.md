@@ -25,5 +25,9 @@ npm run test
 
 ## TODO
 
-- [ ] Chance architecture to useCases
+- [x] Chance architecture to useCases
+- [ ] Add migration
+- [ ] Run docker test and docker productions
 - [ ] Improve email validator
+- [ ] Fix all test
+- [ ] Add ci.yml to run tests
