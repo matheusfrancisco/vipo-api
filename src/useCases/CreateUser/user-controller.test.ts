@@ -11,8 +11,6 @@ import { CreateUserController } from "./create-user-controller";
 import { CreateUserUseCase } from "./create-use-case";
 import { CustomerRepository } from "../../domain/user/user-repository";
 import { UserEntity } from "../../infrastructure/entity/user-entity";
-import { PostgresCustomerRepository } from "../../infrastructure/postgres-customer-repository";
-import { stringify } from "querystring";
 
 describe("CustomerController", () => {
   let execute: sinon.SinonSpy;
@@ -23,7 +21,6 @@ describe("CustomerController", () => {
   }: Record<string, string>) => Promise<void>;
 
   let customerController: any;
-  let customerControllerDelegated: any;
   let failingCustomerController: any;
   let end: any;
   let send: any;
@@ -32,11 +29,7 @@ describe("CustomerController", () => {
   let resMock: any;
   let json: any;
   let resMockSuccess: any;
-  let createToken: any;
   let createCustomertest: any;
-  let updateFullName: any;
-  let updatedBirthday: any;
-  let updateTaxpayerRegistry: any;
 
   const customerEmail = "matheusmachadoufsc@gmail.com";
   const userName = "xi";
