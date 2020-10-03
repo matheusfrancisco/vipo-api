@@ -2,18 +2,14 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  Generated,
   CreateDateColumn,
   UpdateDateColumn,
-  BeforeUpdate,
   BeforeInsert,
-  AfterUpdate,
-  JoinColumn,
-  OneToOne
+  AfterUpdate
 } from "typeorm";
 
 @Entity()
-export class CustomerEntity {
+export class UserEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -25,51 +21,10 @@ export class CustomerEntity {
   @Column({
     nullable: true
   })
-  firstName?: string;
-
-  @Column({
-    nullable: true
-  })
-  lastName?: string;
-
-  @Column({
-    nullable: true
-  })
-  address?: string;
-
-  @Column({
-    nullable: true
-  })
-  cep?: string;
-
-  @Column({
-    nullable: true
-  })
-  state?: string;
-
-  @Column({
-    nullable: true
-  })
-  city?: string;
-
-  @Column({
-    nullable: true
-  })
-  number?: number;
+  name!: string;
 
   @Column()
   password!: string;
-
-  @Column({
-    unique: true,
-    nullable: true
-  })
-  taxpayerRegistry?: string;
-
-  @Column({
-    nullable: true
-  })
-  countryCode?: string;
 
   @CreateDateColumn({ name: "created_at", type: "timestamp with time zone" })
   createdAt!: Date;

@@ -1,41 +1,26 @@
-import { CustomerRepository } from "src/domain/customer/user-repository";
-import { CustomerEntity } from "./entity/customer-entity";
+import { CustomerRepository } from "src/domain/user/user-repository";
+import { UserEntity } from "./entity/user-entity";
 import { Connection, getRepository } from "typeorm";
-import Customer from "../domain/customer/user";
+import User from "../domain/user/user";
 
 export class PostgresCustomerRepository implements CustomerRepository {
   constructor(public connection: Connection) {}
-  public async save({ email, password }: Customer): Promise<void> {
+  public async save({ name, email, password }: User): Promise<void> {
     const entity = {
+      name: name,
       email: email.value,
       password: password
     };
-    await getRepository(CustomerEntity).save(entity);
+    console.log("oiiii", entity);
+    await getRepository(UserEntity).save(entity);
   }
 
-  public async findByEmail(email: string): Promise<CustomerEntity | undefined> {
-    const userRepository = await getRepository(CustomerEntity).findOne({
+  public async findByEmail(email: string): Promise<UserEntity | undefined> {
+    const userRepository = await getRepository(UserEntity).findOne({
       email
     });
     if (userRepository) {
       return userRepository;
     }
-  }
-
-  public async updateFullName(customer: Customer, id: number): Promise<any> {
-    const { email, password } = customer;
-    const entity = {
-      id,
-      email: email.value,
-      password,
-      lastName: customer.lastName,
-      firstName: customer.firstName
-    };
-    return await getRepository(CustomerEntity).preload(entity);
-  }
-
-  public async update(customer: Customer, id: number): Promise<any> {
-    const customerRepository = customer.toRepository();
-    return await getRepository(CustomerEntity).update(id, customerRepository);
   }
 }

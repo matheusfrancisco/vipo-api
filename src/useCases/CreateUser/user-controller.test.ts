@@ -6,13 +6,13 @@ import chaiAsPromised from "chai-as-promised";
 chai.use(chaiAsPromised);
 chai.use(sinonChai);
 const expect = chai.expect;
-import { ServiceError } from "../service-error";
-import { buildCustomerController } from "./customer-controller";
-import CustomerService from "../application/customer-service";
-import { CustomerResource } from "../application/customer-service";
-import { CountryFactory } from "../domain/customer/country";
-import { CustomerRepository } from "../domain/customer/user-repository";
-import { CustomerEntity } from "../infrastructure/entity/customer-entity";
+import { ServiceError } from "../../service-error";
+import { buildCustomerController } from "../../view/customer-controller";
+import CustomerService from "../../application/customer-service";
+import { CustomerResource } from "../../application/customer-service";
+import { CountryFactory } from "../domain/user/country";
+import { CustomerRepository } from "../../domain/user/user-repository";
+import { CustomerEntity } from "../../infrastructure/entity/user-entity";
 
 describe("CustomerController", () => {
   let createCustomer: sinon.SinonSpy;
