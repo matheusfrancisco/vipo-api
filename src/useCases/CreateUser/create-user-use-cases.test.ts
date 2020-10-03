@@ -1,25 +1,26 @@
-/*
+import chai from "chai";
+import sinon from "sinon";
+import sinonChai from "sinon-chai";
+import chaiAsPromised from "chai-as-promised";
 
-Fix tests change service to createUseCases.execute
-*/
+chai.use(chaiAsPromised);
+chai.use(sinonChai);
+const expect = chai.expect;
+
+import { CreateUserUseCase } from "./create-use-case";
 
 describe("CreateUserUseCase", () => {
-  let repositoryCustomer: any;
-  xit("should save customer with userRepository", () => {
+  it("should save customer with userRepository", async () => {
     const save = sinon.spy();
     const findByEmail = sinon.spy();
-    const update = sinon.spy();
-    const updateFullName = sinon.spy();
-    const buildCountry = sinon.fake.returns(countries.US);
-    const countryFactory = { buildCountry };
 
-    const customerService = new CustomerService(
-      { save, findByEmail, updateFullName, update },
-      countryFactory
-    );
-    customerService.createCustomer("matheusfrancisco@hotmail.com", "123123");
-    expect(save.called).toBeTruthy();
-    expect(save.args[0][0] instanceof Customer).toBeTruthy();
-    expect(save.args[0][0].email.value).toEqual("matheusfrancisco@hotmail.com");
+    const customerService = new CreateUserUseCase({ save, findByEmail });
+
+    await customerService.execute({
+      name: "x",
+      email: "matheusfrancisco@hotmail.com",
+      password: "123123"
+    });
+    expect(save).to.have.been.called;
   });
 });
