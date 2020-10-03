@@ -7,7 +7,7 @@ import request from "supertest";
 import { getRepository } from "typeorm";
 import { UserEntity } from "../../infrastructure/entity/user-entity";
 
-describe("integratoin test", () => {
+xdescribe("integratoin test", () => {
   let server: any;
   let connection: any;
   let repositoryCustomerTest: any;

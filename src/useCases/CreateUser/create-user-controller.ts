@@ -13,17 +13,20 @@ export class CreateUserController {
     request: Request,
     response: Response
   ): Promise<Response | undefined> {
-    const { name, email, password } = request.body;
-    if (!name || !email || !password) {
+    if (
+      !request.body ||
+      !request.body.name ||
+      !request.body.email ||
+      !request.body.password
+    ) {
       response.status(400).json(buildErrorMessage("Parameters missing"));
       return;
     }
-
     try {
       await this._createUserUseCase.execute({
-        name,
-        email,
-        password
+        name: request.body.name,
+        email: request.body.email,
+        password: request.body.password
       });
 
       return response.status(201).send();
