@@ -1,26 +1,24 @@
 /* Fix test create integration 
 create server.ts to use in test */
 
-import { createUseCaseFactory } from ".";
-// import { factoryServer } from "../../../index";
+import { server } from "../../../index";
 import request from "supertest";
+import { routerFactory } from "../../../routes";
 import { getRepository } from "typeorm";
 import { UserEntity } from "../../infrastructure/entity/user-entity";
+import { CreateDatabaseConnection } from "../../infrastructure/connection";
 
-xdescribe("integratoin test", () => {
-  let server: any;
+describe("integratoin test", () => {
+  let serverFactoryWithUserRoute: any;
+  let userRoutes: any;
   let connection: any;
   let repositoryCustomerTest: any;
 
   beforeEach(async () => {
-    // let { userRepository, userController } = await createUseCaseFactory.build("prod");
-
-    // server = factoryServer({
-    //   customerController,
-    //   authController
-    // });
-
-    connection = createUseCaseFactory.getConnection();
+    userRoutes = await routerFactory();
+    const { app } = server(userRoutes);
+    connection = CreateDatabaseConnection.getConnection();
+    serverFactoryWithUserRoute = app;
     repositoryCustomerTest = getRepository(UserEntity);
     await repositoryCustomerTest.delete({});
   });
@@ -30,15 +28,14 @@ xdescribe("integratoin test", () => {
   });
 
   it("should register a user", async () => {
-    const res = await request(server)
-      .post("/api/v1/user")
+    const res = await request(serverFactoryWithUserRoute)
+      .post("/users")
       .send({
         name: "mt",
         email: "xicoooooodo@hotmail.com",
         password: "123123"
       });
 
-    expect(res.body).toEqual({ message: "sucess" });
-    expect(res.status).toEqual(200);
+    expect(res.status).toEqual(201);
   });
 });

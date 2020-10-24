@@ -13,7 +13,7 @@ describe("Customer Repository", () => {
     connection = await createConnection();
     repository = getRepository(UserEntity);
 
-    // await repository.delete({});
+    await repository.delete({});
     customerRepository = new PostgresCustomerRepository(connection);
   });
 
@@ -34,7 +34,7 @@ describe("Customer Repository", () => {
   });
 
   afterEach(async () => {
-    // await repository.delete({});
+    await repository.delete({});
     connection.close();
   });
 });
