@@ -6,13 +6,13 @@
   "username": "postgres",
   "password": "postgres",
   "database": "vipo",
-  "synchronize": true,
+  "synchronize": false,
   "logging": false,
   "entities": ["src/infrastructure/entity/**/*.ts"],
-  "migrations": ["src/migration/**/*.ts"],
+  "migrations": ["src/migrations/**/*.ts"],
   "subscribers": ["src/subscriber/**/*.ts"],
   "cli": {
-    "migrationsDir": "src/migration"
+    "migrationsDir": "src/migrations"
   },
   "extra": {
     "connectionLimit": 5
