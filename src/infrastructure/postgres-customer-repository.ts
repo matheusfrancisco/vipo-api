@@ -11,7 +11,6 @@ export class PostgresCustomerRepository implements CustomerRepository {
       email: email.value,
       password: password
     };
-    console.log("oiiii", entity);
     await getRepository(UserEntity).save(entity);
   }
 
