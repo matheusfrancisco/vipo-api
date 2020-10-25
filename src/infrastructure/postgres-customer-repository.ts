@@ -1,5 +1,6 @@
 import { CustomerRepository } from "src/domain/user/user-repository";
 import { UserEntity } from "./entity/user-entity";
+import { UserProfile } from "./entity/user-profile";
 import { Connection, getRepository } from "typeorm";
 import User from "../domain/user/user";
 
@@ -21,5 +22,21 @@ export class PostgresCustomerRepository implements CustomerRepository {
     if (userRepository) {
       return userRepository;
     }
+  }
+
+  public async updateUserProfile({
+    musicals,
+    userId,
+    foods,
+    drinks
+  }: any) {
+
+    const userProfileRepository = getRepository(UserProfile);
+    const entity = { userId, musicals, foods, drinks }
+    await userProfileRepository.save(entity);
+    const findUserProfile = await userProfileRepository.findOne({
+      user: userId,
+    })
+    return findUserProfile
   }
 }

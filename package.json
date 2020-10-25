@@ -7,7 +7,8 @@
     "format": "prettier --write \"**/*.*(js|ts|json|yml|yaml|md)\"",
     "test": "jest --forceExit --silent --maxWorkers=1",
     "start": "nodemon --inspect",
-    "migrations": "ts-node node_modules/typeorm/cli.js migration:run  "
+    "migrations": "ts-node node_modules/typeorm/cli.js migration:run  ",
+    "create-migration": "ts-node node_modules/typeorm/cli.js migration:create -n"
   },
   "dependencies": {
     "@types/bcrypt": "^3.0.0",
