@@ -11,7 +11,7 @@ describe("integratoin test", () => {
   beforeEach(async () => {
     userRoutes = await routerFactory("test");
     const { app } = server(userRoutes);
-    connection = CreateDatabaseConnection.getConnection("test");
+    connection = await CreateDatabaseConnection.createConnection("test");
     serverFactoryWithUserRoute = app;
     
     connection = CreateDatabaseConnection.getConnection('test');

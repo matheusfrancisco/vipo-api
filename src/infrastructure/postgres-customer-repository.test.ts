@@ -15,21 +15,29 @@ describe("Customer Repository", () => {
     repository = getRepository(UserEntity);
 
     customerRepository = new PostgresCustomerRepository(connection);
+    connection = await CreateDatabaseConnection.getConnection('test');
+
+    const entities = connection.entityMetadatas;
+
+    entities.forEach(async (entity: any) => {
+      const repository = connection.getRepository(entity.name);
+      await repository.query(`DELETE FROM ${entity.tableName}`);
+    });
   });
 
   it("Should save a customer", async () => {
     const user = new User({
       name: "Matheus",
-      email: "matheus@hotmaaxil.com",
+      email: "matheus2@hotmaaxil.com",
       password: "123123"
     });
     await customerRepository.save(user);
     const foundCustomer = await repository.findOne({
-      email: "matheus@hotmaaxil.com"
+      email: "matheus2@hotmaaxil.com"
     });
     expect(foundCustomer).toMatchObject({
       password: "123123",
-      email: "matheus@hotmaaxil.com"
+      email: "matheus2@hotmaaxil.com"
     });
   });
 
