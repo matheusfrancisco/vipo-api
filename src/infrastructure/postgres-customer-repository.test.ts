@@ -15,7 +15,6 @@ describe("Customer Repository", () => {
     repository = getRepository(UserEntity);
 
     customerRepository = new PostgresCustomerRepository(connection);
-    connection = await CreateDatabaseConnection.getConnection('test');
 
     const entities = connection.entityMetadatas;
 
