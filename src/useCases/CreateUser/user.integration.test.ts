@@ -1,6 +1,3 @@
-/* Fix test create integration 
-create server.ts to use in test */
-
 import { server } from "../../../index";
 import request from "supertest";
 import { routerFactory } from "../../../routes";
@@ -12,19 +9,21 @@ describe("integratoin test", () => {
   let serverFactoryWithUserRoute: any;
   let userRoutes: any;
   let connection: any;
-  let repositoryCustomerTest: any;
 
   beforeEach(async () => {
-    userRoutes = await routerFactory();
+    userRoutes = await routerFactory("test");
     const { app } = server(userRoutes);
-    connection = CreateDatabaseConnection.getConnection();
+    connection = CreateDatabaseConnection.getConnection("test");
     serverFactoryWithUserRoute = app;
-    repositoryCustomerTest = getRepository(UserEntity);
-    await repositoryCustomerTest.delete({});
-  });
+    
+    connection = CreateDatabaseConnection.getConnection('test');
 
-  afterEach(async () => {
-    await repositoryCustomerTest.delete({});
+    const entities = connection.entityMetadatas;
+
+    entities.forEach(async (entity: any) => {
+      const repository = connection.getRepository(entity.name);
+      await repository.query(`DELETE FROM ${entity.tableName}`);
+    });
   });
 
   it("should register a user", async () => {
@@ -38,4 +37,27 @@ describe("integratoin test", () => {
 
     expect(res.status).toEqual(201);
   });
+
+  it("should throw  user already exist", async () => {
+    const res = await request(serverFactoryWithUserRoute)
+      .post("/users")
+      .send({
+        name: "mt",
+        email: "xicoooooodo@hotmail.com",
+        password: "123123"
+      });
+
+    const res2 = await request(serverFactoryWithUserRoute)
+      .post("/users")
+      .send({
+        name: "mt",
+        email: "xicoooooodo@hotmail.com",
+        password: "123123"
+      });
+
+    expect(res2.body.message).toEqual("User already exists.");
+  });
+
+
+  afterEach(async () => {});
 });

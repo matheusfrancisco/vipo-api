@@ -17,12 +17,11 @@ export class CreateUserUseCase {
   }
 
   async execute({ name, email, password }: Record<string, string>) {
-    //#TODO implement
-    // const userAlreadyExists = await this.usersRepository.findByEmail(data.email);
+    const userAlreadyExists = await this.userRepository.findByEmail(email);
 
-    // if (userAlreadyExists) {
-    //   throw new Error('User already exists.');
-    // }
+    if (userAlreadyExists) {
+      throw new Error('User already exists.');
+    }
 
     try {
       const hashPass = await this.cryptPass(password);

@@ -38,15 +38,13 @@ export class UpdateUserProfileController {
         });
       }
 
-      console.log("entrou1")
       const userProfile = await this._updateUserProfileUseCase.execute({
         userId: user.id,
         profileInformations: request.body.profileInformations,
       });
 
-      console.log("entrou1")
-      return response.status(200).send({
-        userProfile,
+      return response.status(200).json({
+        profile: userProfile,
       });
     } catch (err) {
       // const status = error.constructor.name === "ServiceError" ? 400 : 500;
