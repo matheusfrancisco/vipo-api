@@ -43,7 +43,6 @@ export class PostgresCustomerRepository implements CustomerRepository {
     //#TODO for instance i don't read about
     //partial updating using typeorm but I think has a better away to do this.
     if (userProfile) {
-      console.log(entity)
       await userProfileRepository.update(userProfile.id, entity)
     } else {
       await userProfileRepository.save(entity)
@@ -55,7 +54,6 @@ export class PostgresCustomerRepository implements CustomerRepository {
       },
     })
 
-    console.log(findUserProfile)
     return findUserProfile
   }
 }
