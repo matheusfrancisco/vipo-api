@@ -10,7 +10,7 @@ export const server = (router: any) => {
 };
 
 export const startServer = async () => {
-  const router = await routerFactory();
+  const router = await routerFactory('prod');
   const { app } = server(router);
   app.listen(3000, () => {
     console.log("Server running");
