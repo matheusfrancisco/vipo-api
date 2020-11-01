@@ -10,7 +10,7 @@ export const routerFactory = async (config: string = "prod") => {
 
   const {
     createUserController,
-    userRepository
+    userRepository,
   } = await createUseCaseFactory.build(connection);
 
   // const { findUserController } = await FindUseCaseFactory.build(connection);
@@ -24,7 +24,7 @@ export const routerFactory = async (config: string = "prod") => {
     // #TODO remove sensitive informations from user
     return response.status(200).send({
       user: request.body.user,
-      token: request.body.token
+      token: request.body.token,
     });
   });
 

@@ -7,6 +7,7 @@ export class Auth {
   constructor(private userRepository: any) {
     this.userRepository = userRepository;
     this.singIn = this.singIn.bind(this);
+    this.verify = this.verify.bind(this);
   }
 
   async singIn(
@@ -36,31 +37,40 @@ export class Auth {
     const token = jwt.sign(
       {
         id,
-        email
+        email,
       },
       "SECRET",
       {
-        expiresIn: "2h"
+        expiresIn: "2h",
       }
     );
 
     return token;
   }
 
+  public getToken(authorization: any): string {
+    const authParameters = authorization.split(" ");
+    if (authParameters[0] == "Bearer" && authParameters[1]) {
+      return authParameters[1];
+    }
+    throw new ServiceError("BadRequest");
+  }
+
   public async verify(
-    token: string,
-    url: string
+    request: Request,
+    response: Response,
+    next: NextFunction
   ): Promise<Record<string, string> | null | ServiceError> {
     try {
-      const userPayload = (await jwt.verify(token, "SECRET")) as any;
+      const userToken = this.getToken(request.headers.authorization);
+      const userPayload = (await jwt.verify(userToken, "SECRET")) as any;
       const user = await this.userRepository.findByEmail(userPayload.email);
       if (user) {
-        return {
-          id: userPayload.id,
-          email: userPayload.email
-        };
+        (request.body.id = userPayload.id),
+          (request.body.email = userPayload.email),
+          next();
       }
-      return null;
+      throw new ServiceError("Unauthorazing");
     } catch (error) {
       throw new ServiceError("Unauthorazing");
     }
