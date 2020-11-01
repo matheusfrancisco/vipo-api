@@ -16,13 +16,19 @@ export class UserProfile {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column("simple-array")
-  musical!: string[];
+  @Column("simple-array",
+    { nullable: true }
+  )
+  musicals!: string[];
 
-  @Column("simple-array")
+  @Column("simple-array",
+    { nullable: true }
+  )
   foods!: string[];
 
-  @Column("simple-array")
+  @Column("simple-array",
+    { nullable: true }
+  )
   drinks!: string[];
 
   @OneToOne(type => UserEntity)

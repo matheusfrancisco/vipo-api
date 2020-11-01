@@ -32,11 +32,30 @@ export class PostgresCustomerRepository implements CustomerRepository {
   }: any) {
 
     const userProfileRepository = getRepository(UserProfile);
-    const entity = { userId, musicals, foods, drinks }
-    await userProfileRepository.save(entity);
-    const findUserProfile = await userProfileRepository.findOne({
-      user: userId,
+    const entity = { user: userId, musicals, foods, drinks }
+
+    const userProfile = await userProfileRepository.findOne({
+      where: {
+        user: entity.user
+      },
     })
+
+    //#TODO for instance i don't read about
+    //partial updating using typeorm but I think has a better away to do this.
+    if (userProfile) {
+      console.log(entity)
+      await userProfileRepository.update(userProfile.id, entity)
+    } else {
+      await userProfileRepository.save(entity)
+    }
+
+    const findUserProfile = await userProfileRepository.findOne({
+      where: {
+        user: entity.user
+      },
+    })
+
+    console.log(findUserProfile)
     return findUserProfile
   }
 }

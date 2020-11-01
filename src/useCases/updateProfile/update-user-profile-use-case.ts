@@ -12,20 +12,22 @@ export interface UserResource {
 export class UpdateUserProfileUseCase {
   constructor(private userRepository: CustomerRepository) {}
 
-  async execute({ userId, informations }: any) {
+  //#TODO improve type any
+  async execute({ userId, profileInformations }: any) {
     try {
 
       const userProfile = new UserProfile({
         userId,
-        musicals: informations.musicals,
-        drinks: informations.drinks,
-        foods: informations.drinks,
+        musicals: profileInformations.musicals,
+        drinks: profileInformations.drinks,
+        foods: profileInformations.foods,
       })
 
       const profileUpdate = await this.userRepository.updateUserProfile({
         ...userProfile.toRepository(),
       })
-      return
+
+      return profileUpdate
     } catch (error) {
       throw error;
     }

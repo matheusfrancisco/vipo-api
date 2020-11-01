@@ -20,22 +20,34 @@ export class UpdateUserProfileController {
     request: Request,
     response: Response
   ): Promise<UserEntity | undefined | Response<any>> {
+
     if (!request.body || !request.body.email) {
       response.status(400).json(buildErrorMessage("Parameters missing"));
       return;
     }
+
     try {
+
       const user = await this._findUserUseCase.execute({
         email: request.body.email,
       })
 
+      if (!user) {
+        return response.status(404).json({
+          message: "User not found."
+        });
+      }
 
+      console.log("entrou1")
       const userProfile = await this._updateUserProfileUseCase.execute({
-        userId: user?.id,
-        informations: request.body.informations,
+        userId: user.id,
+        profileInformations: request.body.profileInformations,
       });
 
-      return userProfile;
+      console.log("entrou1")
+      return response.status(200).send({
+        userProfile,
+      });
     } catch (err) {
       // const status = error.constructor.name === "ServiceError" ? 400 : 500;
       // res.status(status).json(buildErrorMessage(error.message));
