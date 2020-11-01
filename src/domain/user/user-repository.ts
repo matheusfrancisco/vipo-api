@@ -1,5 +1,5 @@
 import Customer from "./user";
-import UserProfile from "./userProfile";
+import UserProfile from "./user-profile";
 import { UserEntity } from "../../infrastructure/entity/user-entity";
 
 export interface CustomerRepository {

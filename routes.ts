@@ -6,7 +6,7 @@ import { Auth } from "./src/middlewares/auth";
 import { CreateDatabaseConnection } from "./src/infrastructure/connection";
 
 export const routerFactory = async (config: string = "prod") => {
-  const connection = await CreateDatabaseConnection.createConnection();
+  const connection = await CreateDatabaseConnection.createConnection(config);
 
   const {
     createUserController,
