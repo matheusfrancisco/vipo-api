@@ -1,8 +1,9 @@
 import { CustomerRepository } from "../domain/user/user-repository";
 import User from "../domain/user/user";
-import { getRepository, createConnection, Repository } from "typeorm";
+import { getRepository,  Repository } from "typeorm";
 import { UserEntity } from "./entity/user-entity";
 import { PostgresCustomerRepository } from "./postgres-customer-repository";
+import { CreateDatabaseConnection } from "./connection";
 
 describe("Customer Repository", () => {
   let repository: Repository<UserEntity>;
@@ -10,31 +11,45 @@ describe("Customer Repository", () => {
   let customerRepository: CustomerRepository;
 
   beforeEach(async () => {
-    connection = await createConnection();
-    repository = getRepository(UserEntity);
+    connection = await CreateDatabaseConnection.createConnection("test");
+    repository = await getRepository(UserEntity);
 
-    await repository.delete({});
     customerRepository = new PostgresCustomerRepository(connection);
+
+    const entities = await connection.entityMetadatas;
+
+    entities.forEach(async (entity: any) => {
+      const repository = connection.getRepository(entity.name);
+      await repository.delete({})
+    });
   });
 
   it("Should save a customer", async () => {
     const user = new User({
       name: "Matheus",
-      email: "matheus@hotmaaxil.com",
+      email: "matheus2@hotmaaxil.com",
       password: "123123"
     });
     await customerRepository.save(user);
     const foundCustomer = await repository.findOne({
-      email: "matheus@hotmaaxil.com"
+      email: "matheus2@hotmaaxil.com"
     });
     expect(foundCustomer).toMatchObject({
       password: "123123",
-      email: "matheus@hotmaaxil.com"
+      email: "matheus2@hotmaaxil.com"
     });
   });
 
   afterEach(async () => {
-    await repository.delete({});
-    connection.close();
+    connection = await CreateDatabaseConnection.getConnection('test');
+    if(!connection) {
+      connection = await CreateDatabaseConnection.createConnection('test');
+    }
+    const entities = connection.entityMetadatas;
+
+    entities.forEach(async (entity: any) => {
+      const repository = connection.getRepository(entity.name);
+      await repository.delete({})
+    });
   });
 });

@@ -11,10 +11,6 @@ export interface UserResource {
 export class FindUserUseCase {
   constructor(private userRepository: CustomerRepository) {}
 
-  public async cryptPass(password: string) {
-    const hashPass = await bcrypt.hash(password, 8);
-    return hashPass;
-  }
 
   async execute({ name, email }: Record<string, string>) {
     try {

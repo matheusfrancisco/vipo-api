@@ -14,7 +14,8 @@ export class FindUseCaseFactory {
 
     const findUserController = new FindUserController(findUseCases);
     return {
-      findUserController
+      findUserController,
+      findUseCases,
     };
   }
 }
