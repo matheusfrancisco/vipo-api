@@ -8,7 +8,6 @@ export class CreateDatabaseConnection {
     //#TODO have alot dupliacate code, move to a method and get config from env
     if(config === "test") {
       if (!this.connection_test) {
-        console.log("entrou")
         //#TODO this can be a method
         this.connection_test = await createConnection({
           type: "postgres",
