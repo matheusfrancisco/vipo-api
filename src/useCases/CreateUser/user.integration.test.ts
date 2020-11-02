@@ -13,17 +13,15 @@ describe("integratoin test", () => {
     const { app } = await server(userRoutes);
     connection = await CreateDatabaseConnection.createConnection("test");
     serverFactoryWithUserRoute = app;
-    
+  });
 
+  it("should register a user", async () => {
     const entities = await connection.entityMetadatas;
 
     entities.forEach(async (entity: any) => {
       const repository = connection.getRepository(entity.name);
       await repository.delete({})
     });
-  });
-
-  it("should register a user", async () => {
     const res = await request(serverFactoryWithUserRoute)
       .post("/users")
       .send({
@@ -36,6 +34,12 @@ describe("integratoin test", () => {
   });
 
   it("should throw  user already exist", async () => {
+    const entities = await connection.entityMetadatas;
+
+    entities.forEach(async (entity: any) => {
+      const repository = connection.getRepository(entity.name);
+      await repository.delete({})
+    });
     const res = await request(serverFactoryWithUserRoute)
       .post("/users")
       .send({
@@ -58,7 +62,10 @@ describe("integratoin test", () => {
 
   afterEach(async () => {
     connection = CreateDatabaseConnection.getConnection('test');
-
+    if(!connection) {
+      connection = await CreateDatabaseConnection.createConnection('test');
+      
+    }
     const entities = await connection.entityMetadatas;
 
     entities.forEach(async (entity: any) => {
