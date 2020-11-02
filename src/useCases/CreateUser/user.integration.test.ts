@@ -1,8 +1,6 @@
 import { server } from "../../../index";
 import request from "supertest";
 import { routerFactory } from "../../../routes";
-import { getRepository } from "typeorm";
-import { UserEntity } from "../../infrastructure/entity/user-entity";
 import { CreateDatabaseConnection } from "../../infrastructure/connection";
 
 describe("integratoin test", () => {

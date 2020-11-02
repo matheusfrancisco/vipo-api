@@ -1,10 +1,10 @@
-import { CustomerRepository } from "src/domain/user/user-repository";
+import { UserRepository } from "src/domain/user/user-repository";
 import { UserEntity } from "./entity/user-entity";
 import { UserProfile } from "./entity/user-profile";
 import { Connection, getRepository } from "typeorm";
 import User from "../domain/user/user";
 
-export class PostgresCustomerRepository implements CustomerRepository {
+export class PostgresUserRepository implements UserRepository {
   constructor(public connection: Connection) {}
   public async save({ name, email, password }: User): Promise<void> {
     const entity = {

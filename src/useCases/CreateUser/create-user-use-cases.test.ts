@@ -10,13 +10,13 @@ const expect = chai.expect;
 import { CreateUserUseCase } from "./create-use-case";
 
 describe("CreateUserUseCase", () => {
-  it("should save customer with userRepository", async () => {
+  it("should save user with userRepository", async () => {
     const save = sinon.spy();
     const findByEmail = sinon.spy();
 
-    const customerService = new CreateUserUseCase({ save, findByEmail });
+    const userService = new CreateUserUseCase({ save, findByEmail });
 
-    await customerService.execute({
+    await userService.execute({
       name: "x",
       email: "matheusfrancisco@hotmail.com",
       password: "123123"

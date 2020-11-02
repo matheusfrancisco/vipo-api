@@ -1,20 +1,20 @@
-import { CustomerRepository } from "../domain/user/user-repository";
+import { UserRepository } from "../domain/user/user-repository";
 import User from "../domain/user/user";
 import { getRepository,  Repository } from "typeorm";
 import { UserEntity } from "./entity/user-entity";
-import { PostgresCustomerRepository } from "./postgres-customer-repository";
+import { PostgresUserRepository } from "./postgres-user-repository";
 import { CreateDatabaseConnection } from "./connection";
 
-describe("Customer Repository", () => {
+describe("User Repository", () => {
   let repository: Repository<UserEntity>;
   let connection: any;
-  let customerRepository: CustomerRepository;
+  let userRepository: UserRepository;
 
   beforeEach(async () => {
     connection = await CreateDatabaseConnection.createConnection("test");
     repository = await getRepository(UserEntity);
 
-    customerRepository = new PostgresCustomerRepository(connection);
+    userRepository = new PostgresUserRepository(connection);
 
     const entities = await connection.entityMetadatas;
 
@@ -24,17 +24,17 @@ describe("Customer Repository", () => {
     });
   });
 
-  it("Should save a customer", async () => {
+  it("Should save a user", async () => {
     const user = new User({
       name: "Matheus",
       email: "matheus2@hotmaaxil.com",
       password: "123123"
     });
-    await customerRepository.save(user);
-    const foundCustomer = await repository.findOne({
+    await userRepository.save(user);
+    const foundUser = await repository.findOne({
       email: "matheus2@hotmaaxil.com"
     });
-    expect(foundCustomer).toMatchObject({
+    expect(foundUser).toMatchObject({
       password: "123123",
       email: "matheus2@hotmaaxil.com"
     });

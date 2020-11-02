@@ -1,7 +1,7 @@
 import Email from "./email";
 import { ServiceError } from "../../service-error";
 
-describe("Customer", () => {
+describe("User", () => {
   const validEmail = "matheusmachadoufsc@gmail.com";
 
   const email = new Email(validEmail);

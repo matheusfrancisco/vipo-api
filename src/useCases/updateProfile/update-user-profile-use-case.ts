@@ -1,5 +1,5 @@
 
-import { CustomerRepository } from "../../domain/user/user-repository";
+import { UserRepository } from "../../domain/user/user-repository";
 import UserProfile from '../../domain/user/user-profile';
 import bcrypt from "bcrypt";
 
@@ -10,7 +10,7 @@ export interface UserResource {
 }
 
 export class UpdateUserProfileUseCase {
-  constructor(private userRepository: CustomerRepository) {}
+  constructor(private userRepository: UserRepository) {}
 
   //#TODO improve type any
   async execute({ userId, profileInformations }: any) {
