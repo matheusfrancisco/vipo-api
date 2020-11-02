@@ -66,7 +66,7 @@ export class Auth {
       const userPayload = (await jwt.verify(userToken, "SECRET")) as any;
       const user = await this.userRepository.findByEmail(userPayload.email);
       if (user) {
-        (request.body.id = userPayload.id),
+        (request.body.userId = userPayload.id),
           (request.body.email = userPayload.email),
           next();
       }
