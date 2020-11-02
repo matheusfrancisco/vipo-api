@@ -1,15 +1,15 @@
 import User from "../../domain/user/user";
-import { CustomerRepository } from "../../domain/user/user-repository";
+import { UserRepository } from "../../domain/user/user-repository";
 import bcrypt from "bcrypt";
 
-export interface CustomerResource {
+export interface UserResource {
   id: number;
   name: string;
   email: string;
 }
 
 export class CreateUserUseCase {
-  constructor(private userRepository: CustomerRepository) {}
+  constructor(private userRepository: UserRepository) {}
 
   public async cryptPass(password: string) {
     const hashPass = await bcrypt.hash(password, 8);

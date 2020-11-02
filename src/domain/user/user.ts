@@ -1,6 +1,6 @@
 import Email from "./email";
 
-export default class Customer {
+export default class User {
   private _name?: string;
   public readonly email: Email;
   public readonly password: string;

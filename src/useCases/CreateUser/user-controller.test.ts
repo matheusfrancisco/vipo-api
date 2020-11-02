@@ -9,10 +9,10 @@ const expect = chai.expect;
 import { ServiceError } from "../../service-error";
 import { CreateUserController } from "./create-user-controller";
 import { CreateUserUseCase } from "./create-use-case";
-import { CustomerRepository } from "../../domain/user/user-repository";
+import { UserRepository } from "../../domain/user/user-repository";
 import { UserEntity } from "../../infrastructure/entity/user-entity";
 
-describe("CustomerController", () => {
+describe("UserController", () => {
   let execute: sinon.SinonSpy;
   let executeMock: ({
     name,
@@ -20,8 +20,8 @@ describe("CustomerController", () => {
     password
   }: Record<string, string>) => Promise<void>;
 
-  let customerController: any;
-  let failingCustomerController: any;
+  let userController: any;
+  let failingUserController: any;
   let end: any;
   let send: any;
   let statusReturnMock: any;
@@ -29,29 +29,23 @@ describe("CustomerController", () => {
   let resMock: any;
   let json: any;
   let resMockSuccess: any;
-  let createCustomertest: any;
+  let createUserControllerTest: any;
 
-  const customerEmail = "matheusmachadoufsc@gmail.com";
+  const userEmail = "matheusmachadoufsc@gmail.com";
   const userName = "xi";
   const userPass = "123123";
-  const expectedCustomer = [
-    {
-      id: 1,
-      email: "matheusmachadoufsc@hotmail.com",
-      password: "ee65426e-b376-4221-931b-994913e17b73"
-    }
-  ];
+
   const req = {
     body: {
       name: userName,
-      email: customerEmail,
+      email: userEmail,
       password: userPass
     }
   };
   const reqWithoutEmail = { body: { password: userPass } };
-  const reqWithoutPass = { body: { email: customerEmail } };
+  const reqWithoutPass = { body: { email: userEmail } };
 
-  const customerRepository = {
+  const userRepository = {
     save: () => Promise.resolve(),
     findByEmail: (): Promise<UserEntity | undefined> => Promise.resolve()
   };
@@ -62,7 +56,7 @@ describe("CustomerController", () => {
 
   class CreateUserUseCaseMock extends CreateUserUseCase {
     constructor(
-      userRepository: CustomerRepository,
+      userRepository: UserRepository,
       execute: ({
         name,
         email,
@@ -76,19 +70,19 @@ describe("CustomerController", () => {
 
   beforeEach(() => {
     execute = sinon.spy();
-    createCustomertest = jest.fn();
-    createCustomertest.mockReturnValue({ token: "test", email: "test" });
+    createUserControllerTest = jest.fn();
+    createUserControllerTest.mockReturnValue({ token: "test", email: "test" });
 
     executeMock = ({ name, email, password }: Record<string, string>) => {
       return Promise.resolve(execute({ name, email, password }));
     };
 
-    customerController = new CreateUserController(
-      new CreateUserUseCaseMock(customerRepository, executeMock)
+    userController = new CreateUserController(
+      new CreateUserUseCaseMock(userRepository, executeMock)
     );
 
-    failingCustomerController = new CreateUserController(
-      new CreateUserUseCaseMock(customerRepository, () => {
+    failingUserController = new CreateUserController(
+      new CreateUserUseCaseMock(userRepository, () => {
         throw new ServiceError("Service error");
       })
     );
@@ -104,31 +98,31 @@ describe("CustomerController", () => {
 
   describe("POST userController.handle", () => {
     it("Should return status code 201", async () => {
-      const r = await customerController.handle(req, resMockSuccess);
+      const r = await userController.handle(req, resMockSuccess);
       expect(status).to.have.been.calledWith(201);
       expect(send).to.have.been.called;
     });
 
     it("Should return status code 400 if email is not present post user", async () => {
-      await customerController.handle(reqWithoutEmail, resMock);
+      await userController.handle(reqWithoutEmail, resMock);
       expect(status).to.have.been.calledWith(400);
       // expect(json).to.have.been.calledWith({ error: "Parameters missing" });
     });
 
     it("Should return status code 400 if pass is not present", async () => {
-      await customerController.handle(reqWithoutPass, resMock);
+      await userController.handle(reqWithoutPass, resMock);
       expect(status).to.have.been.calledWith(400);
       // expect(json).to.have.been.calledWith({ error: "Parameters missing" });
     });
 
     it("Should return status code 400 if error thrown", async () => {
-      await failingCustomerController.handle(req, resMock);
+      await failingUserController.handle(req, resMock);
       expect(status).to.have.been.calledWith(400);
       // expect(json).to.have.been.calledWith({ error: "Service error" });
     });
 
     it("Should return status code 400 if body is empty", async () => {
-      await customerController.handle({}, resMock);
+      await userController.handle({}, resMock);
       expect(status).to.have.been.calledWith(400);
       expect(json).to.have.been.calledWith({ error: "Parameters missing" });
     });

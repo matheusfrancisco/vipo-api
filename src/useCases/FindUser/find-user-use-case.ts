@@ -1,5 +1,5 @@
 import User from "../../domain/user/user";
-import { CustomerRepository } from "../../domain/user/user-repository";
+import { UserRepository } from "../../domain/user/user-repository";
 import bcrypt from "bcrypt";
 
 export interface UserResource {
@@ -9,7 +9,7 @@ export interface UserResource {
 }
 
 export class FindUserUseCase {
-  constructor(private userRepository: CustomerRepository) {}
+  constructor(private userRepository: UserRepository) {}
 
 
   async execute({ name, email }: Record<string, string>) {
