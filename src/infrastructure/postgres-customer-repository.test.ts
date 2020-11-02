@@ -12,15 +12,15 @@ describe("Customer Repository", () => {
 
   beforeEach(async () => {
     connection = await CreateDatabaseConnection.createConnection("test");
-    repository = getRepository(UserEntity);
+    repository = await getRepository(UserEntity);
 
     customerRepository = new PostgresCustomerRepository(connection);
 
-    const entities = connection.entityMetadatas;
+    const entities = await connection.entityMetadatas;
 
     entities.forEach(async (entity: any) => {
       const repository = connection.getRepository(entity.name);
-      await repository.query(`DELETE FROM ${entity.tableName}`);
+      await repository.delete({})
     });
   });
 
@@ -42,13 +42,14 @@ describe("Customer Repository", () => {
 
   afterEach(async () => {
     connection = await CreateDatabaseConnection.getConnection('test');
-
+    if(!connection) {
+      connection = await CreateDatabaseConnection.createConnection('test');
+    }
     const entities = connection.entityMetadatas;
 
     entities.forEach(async (entity: any) => {
       const repository = connection.getRepository(entity.name);
-      await repository.query(`DELETE FROM ${entity.tableName}`);
+      await repository.delete({})
     });
-    connection.close();
   });
 });

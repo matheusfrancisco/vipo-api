@@ -12,17 +12,16 @@ describe("integratoin test", () => {
 
   beforeEach(async () => {
     userRoutes = await routerFactory("test");
-    const { app } = server(userRoutes);
-    connection = CreateDatabaseConnection.getConnection("test");
+    const { app } = await server(userRoutes);
+    connection = await CreateDatabaseConnection.createConnection("test");
     serverFactoryWithUserRoute = app;
     
-    connection = CreateDatabaseConnection.getConnection('test');
 
-    const entities = connection.entityMetadatas;
+    const entities = await connection.entityMetadatas;
 
     entities.forEach(async (entity: any) => {
       const repository = connection.getRepository(entity.name);
-      await repository.query(`DELETE FROM ${entity.tableName}`);
+      await repository.delete({})
     });
   });
 
@@ -31,7 +30,7 @@ describe("integratoin test", () => {
       .post("/users")
       .send({
         name: "mt",
-        email: "xicoooooodo@hotmail.com",
+        email: "xicoooooodo1@hotmail.com",
         password: "123123"
       });
 
@@ -62,11 +61,12 @@ describe("integratoin test", () => {
   afterEach(async () => {
     connection = CreateDatabaseConnection.getConnection('test');
 
-    const entities = connection.entityMetadatas;
+    const entities = await connection.entityMetadatas;
 
     entities.forEach(async (entity: any) => {
       const repository = connection.getRepository(entity.name);
-      await repository.query(`DELETE FROM ${entity.tableName}`);
+      await repository.delete({})
     });
+
   });
 });

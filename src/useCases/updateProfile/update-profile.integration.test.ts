@@ -13,15 +13,6 @@ describe("integratoin test", () => {
     const { app } = server(userRoutes);
     connection = await CreateDatabaseConnection.createConnection("test");
     serverFactoryWithUserRoute = app;
-    
-    connection = CreateDatabaseConnection.getConnection('test');
-
-    const entities = connection.entityMetadatas;
-
-    entities.forEach(async (entity: any) => {
-      const repository = connection.getRepository(entity.name);
-      await repository.query(`DELETE FROM ${entity.tableName}`);
-    });
   });
 
   it("should update user profile", async () => {
@@ -50,14 +41,19 @@ describe("integratoin test", () => {
   });
 
 
-  afterEach(async () => {
-    connection = CreateDatabaseConnection.getConnection('test');
 
-    const entities = connection.entityMetadatas;
+  afterEach(async () => {
+    connection = await CreateDatabaseConnection.createConnection('test');
+
+    const entities = await connection.entityMetadatas;
 
     entities.forEach(async (entity: any) => {
       const repository = connection.getRepository(entity.name);
-      await repository.query(`DELETE FROM ${entity.tableName}`);
+      // await repository.query(`DELETE FROM ${entity.tableName}`);
+      // repository.clear({cascade: true})
+      await repository.delete({})
     });
+    connection.close();
+
   });
 });

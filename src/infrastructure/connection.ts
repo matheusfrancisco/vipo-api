@@ -6,12 +6,11 @@ export class CreateDatabaseConnection {
 
   public static async createConnection(config: string = "prod") {
     //#TODO have alot dupliacate code, move to a method and get config from env
-    console.log(config, "aquiii")
     if(config === "test") {
       if (!this.connection_test) {
+        console.log("entrou")
         //#TODO this can be a method
         this.connection_test = await createConnection({
-          name: "default",
           type: "postgres",
           host: "localhost",
           port: 5433,
@@ -30,7 +29,7 @@ export class CreateDatabaseConnection {
           logging: false
         });
       }
-      return this.connection_test
+      return this.getConnection(config)
     } else {
       if (!this.connection) {
         //#TODO this can be a method
