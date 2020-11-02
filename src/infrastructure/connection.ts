@@ -1,4 +1,4 @@
-import { Connection, createConnection } from "typeorm";
+import { Connection, createConnection, getRepository } from "typeorm";
 
 export class CreateDatabaseConnection {
   private static connection: Connection;
@@ -58,5 +58,16 @@ export class CreateDatabaseConnection {
 
   public static getConnection(config: string) {
     return config === "test" ? this.connection_test : this.connection;
+  }
+
+  public static async cleanAll(entities: any) {
+    try {
+      for (const entity of entities) {
+        const repository = await getRepository(entity.name);
+        await repository.query(`DELETE FROM ${entity.tableName};`);
+      }
+    } catch (error) {
+      throw new Error(`ERROR: Cleaning test db: ${error}`);
+    }
   }
 }

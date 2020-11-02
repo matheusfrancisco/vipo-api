@@ -2,26 +2,26 @@ import { server } from "../../../index";
 import request from "supertest";
 import { routerFactory } from "../../../routes";
 import { CreateDatabaseConnection } from "../../infrastructure/connection";
+import { UserEntity } from "../../infrastructure/entity/user-entity";
+import { getRepository } from "typeorm";
 
 describe("integratoin test", () => {
   let serverFactoryWithUserRoute: any;
   let userRoutes: any;
   let connection: any;
+  let repository: any;
 
   beforeEach(async () => {
     userRoutes = await routerFactory("test");
     const { app } = await server(userRoutes);
     connection = await CreateDatabaseConnection.createConnection("test");
+    repository = await getRepository(UserEntity);
+
     serverFactoryWithUserRoute = app;
   });
 
   it("should register a user", async () => {
-    const entities = await connection.entityMetadatas;
 
-    entities.forEach(async (entity: any) => {
-      const repository = connection.getRepository(entity.name);
-      await repository.delete({})
-    });
     const res = await request(serverFactoryWithUserRoute)
       .post("/users")
       .send({
@@ -34,17 +34,12 @@ describe("integratoin test", () => {
   });
 
   it("should throw  user already exist", async () => {
-    const entities = await connection.entityMetadatas;
 
-    entities.forEach(async (entity: any) => {
-      const repository = connection.getRepository(entity.name);
-      await repository.delete({})
-    });
     const res = await request(serverFactoryWithUserRoute)
       .post("/users")
       .send({
         name: "mt",
-        email: "xicoooooodo@hotmail.com",
+        email: "xicoooooodo2@hotmail.com",
         password: "123123"
       });
 
@@ -52,7 +47,7 @@ describe("integratoin test", () => {
       .post("/users")
       .send({
         name: "mt",
-        email: "xicoooooodo@hotmail.com",
+        email: "xicoooooodo2@hotmail.com",
         password: "123123"
       });
 
@@ -61,17 +56,8 @@ describe("integratoin test", () => {
 
 
   afterEach(async () => {
-    connection = CreateDatabaseConnection.getConnection('test');
-    if(!connection) {
-      connection = await CreateDatabaseConnection.createConnection('test');
-      
-    }
+    connection = await CreateDatabaseConnection.createConnection("test");
     const entities = await connection.entityMetadatas;
-
-    entities.forEach(async (entity: any) => {
-      const repository = connection.getRepository(entity.name);
-      await repository.delete({})
-    });
-
+    CreateDatabaseConnection.cleanAll(entities)
   });
 });

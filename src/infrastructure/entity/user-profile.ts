@@ -31,7 +31,7 @@ export class UserProfile {
   )
   drinks!: string[];
 
-  @OneToOne(type => UserEntity)
+  @OneToOne(type => UserEntity,  { onDelete: "CASCADE" })
   @JoinColumn()
   user!: UserEntity;
 

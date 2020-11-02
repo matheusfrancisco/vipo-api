@@ -16,12 +16,7 @@ describe("User Repository", () => {
 
     userRepository = new PostgresUserRepository(connection);
 
-    const entities = await connection.entityMetadatas;
-
-    entities.forEach(async (entity: any) => {
-      const repository = connection.getRepository(entity.name);
-      await repository.delete({})
-    });
+    repository.delete({});
   });
 
   it("Should save a user", async () => {
@@ -41,15 +36,6 @@ describe("User Repository", () => {
   });
 
   afterEach(async () => {
-    connection = await CreateDatabaseConnection.getConnection('test');
-    if(!connection) {
-      connection = await CreateDatabaseConnection.createConnection('test');
-    }
-    const entities = connection.entityMetadatas;
-
-    entities.forEach(async (entity: any) => {
-      const repository = connection.getRepository(entity.name);
-      await repository.delete({})
-    });
+    repository.delete({});
   });
 });
