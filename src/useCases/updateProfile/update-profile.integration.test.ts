@@ -43,17 +43,8 @@ describe("integratoin test", () => {
 
 
   afterEach(async () => {
-    connection = await CreateDatabaseConnection.createConnection('test');
-
+    connection = await CreateDatabaseConnection.createConnection("test");
     const entities = await connection.entityMetadatas;
-
-    entities.forEach(async (entity: any) => {
-      const repository = connection.getRepository(entity.name);
-      // await repository.query(`DELETE FROM ${entity.tableName}`);
-      // repository.clear({cascade: true})
-      await repository.delete({})
-    });
-    connection.close();
-
+    CreateDatabaseConnection.cleanAll(entities)
   });
 });
