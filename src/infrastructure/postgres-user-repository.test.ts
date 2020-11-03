@@ -38,5 +38,6 @@ describe("User Repository", () => {
   afterEach(async () => {
     connection = await CreateDatabaseConnection.createConnection("test");
     const entities = await connection.entityMetadatas;
-    CreateDatabaseConnection.cleanAll(entities)  });
+    await CreateDatabaseConnection.cleanAll(entities);
+   });
 });

@@ -62,13 +62,14 @@ export class Auth {
     next: NextFunction
   ): Promise<Record<string, string> | null | ServiceError> {
     try {
-      const userToken = this.getToken(request.headers.authorization);
-      const userPayload = (await jwt.verify(userToken, "SECRET")) as any;
+      const userToken = await this.getToken(request.headers.authorization);
+      const userPayload = jwt.verify(userToken, "SECRET") as any;
       const user = await this.userRepository.findByEmail(userPayload.email);
       if (user) {
-        (request.body.userId = userPayload.id),
-          (request.body.email = userPayload.email),
-          next();
+        request.body.userId = userPayload.id
+        request.body.email = userPayload.email
+        next();
+        return null;
       }
       throw new ServiceError("Unauthorazing");
     } catch (error) {

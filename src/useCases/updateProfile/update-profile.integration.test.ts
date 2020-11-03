@@ -23,18 +23,25 @@ describe("integratoin test", () => {
         email: "xicoooooodo@hotmail.com",
         password: "123123"
       });
+
+    const r = await request(serverFactoryWithUserRoute)
+      .get('/signin')
+      .send({
+        email: "xicoooooodo@hotmail.com",
+        password: "123123"
+      })
     
     const res = await request(serverFactoryWithUserRoute)
       .patch("/profile")
+      .set({ authorization: `Bearer ${r.body.token}`})
       .send({
-        "email": "xicoooooodo@hotmail.com",
+        email: "xicoooooodo@hotmail.com",
         "profileInformations": {
             "musicals": ["rock", "ki"],
             "foods": ["pasta"],
             "drinks": ["coffe", "wine", "juice"]
         }
     })
-
     expect(res.body.profile.drinks).toEqual(["coffe", "wine", "juice"]);
     expect(res.body.profile.foods).toEqual(["pasta"]);
     expect(res.body.profile.musicals).toEqual(["rock", "ki"]);
@@ -45,6 +52,6 @@ describe("integratoin test", () => {
   afterEach(async () => {
     connection = await CreateDatabaseConnection.createConnection("test");
     const entities = await connection.entityMetadatas;
-    CreateDatabaseConnection.cleanAll(entities)
+    await CreateDatabaseConnection.cleanAll(entities)
   });
 });

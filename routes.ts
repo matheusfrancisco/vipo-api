@@ -32,8 +32,8 @@ export const routerFactory = async (config: string = "prod") => {
     return createUserController.handle(request, response);
   });
 
-  router.patch("/profile", (request, response) => {
-    return updateUserProfileController.handle(request, response);
+  router.patch("/profile", auth.verify, async (request, response) => {
+    return await updateUserProfileController.handle(request, response);
   });
 
   return router;

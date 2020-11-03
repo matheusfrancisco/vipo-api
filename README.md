@@ -41,16 +41,3 @@ You need up database to run all tests
 ```bash
 npm run test
 ```
-
-## TODO
-
-- [x] Fix all unit test
-- [x] Add ci.yml to run tests
-- [x] Authentication
-- [x] Improve connection DB
-- [x] SingIn
-- [x] Add migration
-- [ ] Run docker test and docker productions
-- [ ] Fix all integration test
-- [ ] Add docker to run in CI
-- [ ] Improve email validator
