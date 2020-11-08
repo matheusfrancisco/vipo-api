@@ -19,7 +19,7 @@ export const routerFactory = async (config: string = "prod") => {
   const auth = await new Auth(userRepository);
   const router = Router();
 
-  router.get("/signin", auth.singIn, (request, response) => {
+  router.post("/signin", auth.singIn, (request, response) => {
     // const userProfileInformation = findUserController.handle(request, response);
     // #TODO remove sensitive informations from user
     return response.status(200).send({
