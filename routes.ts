@@ -2,6 +2,7 @@ import { Router } from "express";
 import { createUseCaseFactory } from "./src/useCases/CreateUser";
 import { UpdateUserUseCaseFactory } from "./src/useCases/updateProfile";
 import { FindUseCaseFactory } from "./src/useCases/FindUser";
+import { createRecommendationUseCaseFactory } from "./src/useCases/CreateRecommendation";
 import { Auth } from "./src/middlewares/auth";
 import { CreateDatabaseConnection } from "./src/infrastructure/connection";
 
@@ -14,7 +15,13 @@ export const routerFactory = async (config: string = "prod") => {
   } = await createUseCaseFactory.build(connection);
 
   // const { findUserController } = await FindUseCaseFactory.build(connection);
-  const { updateUserProfileController } = await UpdateUserUseCaseFactory.build(connection);
+  const { updateUserProfileController } = await UpdateUserUseCaseFactory.build(
+    connection
+  );
+
+  const {
+    createRecommendationController,
+  } = await createRecommendationUseCaseFactory.build(connection);
 
   const auth = await new Auth(userRepository);
   const router = Router();
@@ -34,6 +41,10 @@ export const routerFactory = async (config: string = "prod") => {
 
   router.patch("/profile", auth.verify, async (request, response) => {
     return await updateUserProfileController.handle(request, response);
+  });
+
+  router.post("/user/recommendation", auth.verify, (request, response) => {
+    return createRecommendationController.handle(request, response);
   });
 
   return router;
