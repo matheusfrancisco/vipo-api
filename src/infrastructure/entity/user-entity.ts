@@ -5,8 +5,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BeforeInsert,
-  AfterUpdate
+  AfterUpdate,
+  OneToMany,
 } from "typeorm";
+import { UserAnswer } from "./user-answer";
 
 @Entity()
 export class UserEntity {
@@ -14,14 +16,20 @@ export class UserEntity {
   id!: number;
 
   @Column({
-    unique: true
+    unique: true,
   })
   email!: string;
 
   @Column({
-    nullable: true
+    nullable: true,
   })
   name!: string;
+
+  @OneToMany(
+    () => UserAnswer,
+    (answer) => answer.user
+  )
+  answers!: UserAnswer[];
 
   @Column()
   password!: string;
