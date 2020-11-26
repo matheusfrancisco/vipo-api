@@ -8,7 +8,7 @@ export class CreateRecommendationUseCase {
     userEmail,
     numberOfPeople,
     howMuch,
-    like,
+    places,
   }: Record<string, string>) {
     try {
       const user = await this.userRepository.findByEmail(userEmail);
@@ -21,7 +21,7 @@ export class CreateRecommendationUseCase {
         user,
         numberOfPeople,
         howMuch,
-        like,
+        places,
       });
     } catch (error) {
       throw error;

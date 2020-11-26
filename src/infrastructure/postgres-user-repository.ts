@@ -56,13 +56,13 @@ export class PostgresUserRepository implements UserRepository {
     user,
     numberOfPeople,
     howMuch,
-    like,
+    places,
   }: UserAnswer): Promise<void> {
     const entity = {
       user: user,
       numberOfPeople: numberOfPeople,
       howMuch: howMuch,
-      like: like,
+      places: places,
     };
 
     await getRepository(UserAnswer).save(entity);

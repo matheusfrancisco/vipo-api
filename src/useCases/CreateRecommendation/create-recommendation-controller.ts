@@ -16,7 +16,7 @@ export class CreateRecommendationController {
     if (
       !request.body.numberOfPeople ||
       !request.body.howMuch ||
-      !request.body.like
+      !request.body.places
     ) {
       response.status(400).json(buildErrorMessage("Parameters missing"));
       return;
@@ -26,7 +26,7 @@ export class CreateRecommendationController {
         userEmail: request.body.email,
         numberOfPeople: request.body.numberOfPeople,
         howMuch: request.body.howMuch,
-        like: request.body.like,
+        places: request.body.places,
       });
 
       let answerRecommendation = { recommendation: "Night Pub" };
