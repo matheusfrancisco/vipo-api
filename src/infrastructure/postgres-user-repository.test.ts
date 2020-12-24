@@ -5,7 +5,7 @@ import { UserEntity } from "./entity/user-entity";
 import { PostgresUserRepository } from "./postgres-user-repository";
 import { CreateDatabaseConnection } from "./connection";
 
-describe("User Repository", () => {
+xdescribe("User Repository", () => {
   let repository: Repository<UserEntity>;
   let connection: any;
   let userRepository: UserRepository;

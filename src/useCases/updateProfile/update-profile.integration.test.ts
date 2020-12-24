@@ -3,7 +3,7 @@ import request from "supertest";
 import { routerFactory } from "../../../routes";
 import { CreateDatabaseConnection } from "../../infrastructure/connection";
 
-describe("integratoin test", () => {
+xdescribe("integratoin test", () => {
   let serverFactoryWithUserRoute: any;
   let userRoutes: any;
   let connection: any;

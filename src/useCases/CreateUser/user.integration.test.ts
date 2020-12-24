@@ -5,7 +5,7 @@ import { CreateDatabaseConnection } from "../../infrastructure/connection";
 import { UserEntity } from "../../infrastructure/entity/user-entity";
 import { getRepository } from "typeorm";
 
-describe("integratoin test", () => {
+xdescribe("integratoin test", () => {
   let serverFactoryWithUserRoute: any;
   let userRoutes: any;
   let connection: any;
