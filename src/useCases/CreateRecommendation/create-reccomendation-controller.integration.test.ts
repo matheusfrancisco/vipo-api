@@ -10,15 +10,14 @@ describe("integratoin test recomentadion profile", () => {
 
   beforeEach(async (done) => {
     userRoutes = await routerFactory("test");
-    const { app } =  await server(userRoutes);
+    serverFactoryWithUserRoute=  await server(userRoutes);
     connection = await CreateDatabaseConnection.createConnection("test");
-    serverFactoryWithUserRoute = app;
     jest.setTimeout(60000);
     done()
   });
 
   test("should create an recommendation user profile", async (done) => {
-    const res1 = await request(serverFactoryWithUserRoute)
+    const res1 = await request(serverFactoryWithUserRoute.app)
       .post("/users")
       .send({
         name: "mt",
@@ -26,14 +25,14 @@ describe("integratoin test recomentadion profile", () => {
         password: "123123"
       });
 
-    const r = await request(serverFactoryWithUserRoute)
+    const r = await request(serverFactoryWithUserRoute.app)
       .get('/signin')
       .send({
         email: "xicooooood2o@hotmail.com",
         password: "123123"
       })
     
-    const res = await request(serverFactoryWithUserRoute)
+    const res = await request(serverFactoryWithUserRoute.app)
       .post("/user/recommendation")
       .set({ authorization: `Bearer ${r.body.token}`})
       .send({

@@ -10,16 +10,15 @@ xdescribe("integratoin test", () => {
 
   beforeEach(async (done) => {
     userRoutes = await routerFactory("test");
-    const { app } = await server(userRoutes);
+    serverFactoryWithUserRoute = await server(userRoutes);
     connection = await CreateDatabaseConnection.createConnection("test");
-    serverFactoryWithUserRoute = app;
     jest.setTimeout(60000);
     done()
 
   });
 
   test("should update user profile", async (done) => {
-    const res1 = await request(serverFactoryWithUserRoute)
+    const res1 = await request(serverFactoryWithUserRoute.app)
       .post("/users")
       .send({
         name: "mt",
@@ -27,14 +26,14 @@ xdescribe("integratoin test", () => {
         password: "123123"
       });
 
-    const r = await request(serverFactoryWithUserRoute)
-      .post('/signin')
+    const r = await request(serverFactoryWithUserRoute.app)
+      .get('/signin')
       .send({
         email: "xicoooooodo@hotmail.com",
         password: "123123"
       })
     
-    const res = await request(serverFactoryWithUserRoute)
+    const res = await request(serverFactoryWithUserRoute.app)
       .patch("/profile")
       .set({ authorization: `Bearer ${r.body.token}`})
       .send({
