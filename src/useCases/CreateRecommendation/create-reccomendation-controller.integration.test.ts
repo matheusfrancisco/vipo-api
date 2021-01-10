@@ -13,11 +13,11 @@ describe("integratoin test recomentadion profile", () => {
     const { app } = server(userRoutes);
     connection = await CreateDatabaseConnection.createConnection("test");
     serverFactoryWithUserRoute = app;
-    jest.setTimeout(30000);
+    jest.setTimeout(60000);
     done()
   });
 
-  test("should create an recommendation user profile", async () => {
+  test("should create an recommendation user profile", async (done) => {
     const res1 = await request(serverFactoryWithUserRoute)
       .post("/users")
       .send({
@@ -49,6 +49,7 @@ describe("integratoin test recomentadion profile", () => {
       { "name": "Bar do jao", "description": "noite boa"},
     ]
     expect(res.body.recommendations).toEqual(recomentadion);
+    done()
   });
 
 

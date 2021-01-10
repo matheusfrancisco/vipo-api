@@ -18,11 +18,11 @@ xdescribe("integratoin test", () => {
     repository = await getRepository(UserEntity);
 
     serverFactoryWithUserRoute = app;
-    jest.setTimeout(30000);
+    jest.setTimeout(60000);
     done()
   });
 
-  test("should register a user", async () => {
+  test("should register a user", async (done) => {
 
     const res = await request(serverFactoryWithUserRoute)
       .post("/users")
@@ -33,9 +33,10 @@ xdescribe("integratoin test", () => {
       });
 
     expect(res.status).toEqual(201);
+    done()
   });
 
-  test("should throw  user already exist", async () => {
+  test("should throw  user already exist", async (done) => {
 
     const res = await request(serverFactoryWithUserRoute)
       .post("/users")
@@ -54,6 +55,8 @@ xdescribe("integratoin test", () => {
       });
 
     expect(res2.body.message).toEqual("User already exists.");
+    done()
+
   });
 
 

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "format": "prettier --write \"**/*.*(js|ts|json|yml|yaml|md)\"",
-    "test": "NODE_ENV=test jest --forceExit --maxWorkers=4 --testTimeout=30000 --detectOpenHandles",
+    "test": "NODE_ENV=test jest --forceExit --maxWorkers=4 --testTimeout=60000 --detectOpenHandles",
     "start": "nodemon --inspect",
     "migrations": "ts-node node_modules/typeorm/cli.js migration:run  ",
     "create-migration": "ts-node node_modules/typeorm/cli.js migration:create -n"

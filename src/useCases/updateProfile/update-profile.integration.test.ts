@@ -13,12 +13,12 @@ xdescribe("integratoin test", () => {
     const { app } = server(userRoutes);
     connection = await CreateDatabaseConnection.createConnection("test");
     serverFactoryWithUserRoute = app;
-    jest.setTimeout(30000);
+    jest.setTimeout(60000);
     done()
 
   });
 
-  test("should update user profile", async () => {
+  test("should update user profile", async (done) => {
     const res1 = await request(serverFactoryWithUserRoute)
       .post("/users")
       .send({
@@ -48,6 +48,7 @@ xdescribe("integratoin test", () => {
     expect(res.body.profile.drinks).toEqual(["coffe", "wine", "juice"]);
     expect(res.body.profile.foods).toEqual(["pasta"]);
     expect(res.body.profile.musicals).toEqual(["rock", "ki"]);
+    done()
   });
 
 

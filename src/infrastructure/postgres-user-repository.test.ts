@@ -17,11 +17,11 @@ xdescribe("User Repository", () => {
     userRepository = new PostgresUserRepository(connection);
 
     repository.delete({});
-    jest.setTimeout(30000);
+    jest.setTimeout(60000);
 
   });
 
-  test("Should save a user", async () => {
+  test("Should save a user", async (done) => {
     const user = new User({
       name: "Matheus",
       email: "matheus2@hotmaaxil.com",
@@ -35,6 +35,7 @@ xdescribe("User Repository", () => {
       password: "123123",
       email: "matheus2@hotmaaxil.com"
     });
+    done()
   });
 
   afterEach(async () => {
@@ -43,5 +44,6 @@ xdescribe("User Repository", () => {
     await CreateDatabaseConnection.cleanAll(entities);
     jest.clearAllMocks(); 
     jest.resetAllMocks();
+    
    });
 });
