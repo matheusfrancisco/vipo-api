@@ -8,11 +8,14 @@ xdescribe("integratoin test", () => {
   let userRoutes: any;
   let connection: any;
 
-  beforeEach(async () => {
+  beforeEach(async (done) => {
     userRoutes = await routerFactory("test");
     const { app } = server(userRoutes);
     connection = await CreateDatabaseConnection.createConnection("test");
     serverFactoryWithUserRoute = app;
+    jest.setTimeout(30000);
+    done()
+
   });
 
   it("should update user profile", async () => {
@@ -53,5 +56,7 @@ xdescribe("integratoin test", () => {
     connection = await CreateDatabaseConnection.createConnection("test");
     const entities = await connection.entityMetadatas;
     await CreateDatabaseConnection.cleanAll(entities)
+    jest.clearAllMocks(); 
+    jest.resetAllMocks();
   });
 });

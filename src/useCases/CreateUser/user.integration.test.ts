@@ -11,13 +11,15 @@ xdescribe("integratoin test", () => {
   let connection: any;
   let repository: any;
 
-  beforeEach(async () => {
+  beforeEach(async (done) => {
     userRoutes = await routerFactory("test");
     const { app } = await server(userRoutes);
     connection = await CreateDatabaseConnection.createConnection("test");
     repository = await getRepository(UserEntity);
 
     serverFactoryWithUserRoute = app;
+    jest.setTimeout(30000);
+    done()
   });
 
   it("should register a user", async () => {
@@ -59,5 +61,7 @@ xdescribe("integratoin test", () => {
     connection = await CreateDatabaseConnection.createConnection("test");
     const entities = await connection.entityMetadatas;
     await CreateDatabaseConnection.cleanAll(entities)
+    jest.clearAllMocks(); 
+    jest.resetAllMocks();
   });
 });

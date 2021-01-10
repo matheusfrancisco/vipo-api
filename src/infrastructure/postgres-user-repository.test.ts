@@ -17,6 +17,8 @@ xdescribe("User Repository", () => {
     userRepository = new PostgresUserRepository(connection);
 
     repository.delete({});
+    jest.setTimeout(30000);
+
   });
 
   it("Should save a user", async () => {
@@ -39,5 +41,7 @@ xdescribe("User Repository", () => {
     connection = await CreateDatabaseConnection.createConnection("test");
     const entities = await connection.entityMetadatas;
     await CreateDatabaseConnection.cleanAll(entities);
+    jest.clearAllMocks(); 
+    jest.resetAllMocks();
    });
 });
