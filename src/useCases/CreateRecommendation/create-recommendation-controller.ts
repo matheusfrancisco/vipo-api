@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateRecommendationUseCase } from "./create-recommendation-use-case";
+import { CreateRecommendationUseCase, ICreateRec } from "./create-recommendation-use-case";
 const buildErrorMessage = (message: string) => ({ error: message });
 
 export class CreateRecommendationController {
@@ -14,24 +14,21 @@ export class CreateRecommendationController {
     response: Response
   ): Promise<Response | undefined> {
     if (
+      !request.body.email ||
       !request.body.numberOfPeople ||
       !request.body.howMuch ||
-      !request.body.places
+      !request.body.like
     ) {
       response.status(400).json(buildErrorMessage("Parameters missing"));
       return;
     }
+    const {email, numberOfPeople, howMuch, like } = request.body
     try {
-      await this._createRecommendationUseCase.execute({
-        userEmail: request.body.email,
-        numberOfPeople: request.body.numberOfPeople,
-        howMuch: request.body.howMuch,
-        places: request.body.places,
-      });
+      const recommendations = await this._createRecommendationUseCase.execute(
+        {userEmail: email, numberOfPeople, howMuch, like } as ICreateRec
+      );
 
-      let answerRecommendation = { recommendation: "Night Pub" };
-
-      return response.status(201).send(answerRecommendation);
+      return response.status(200).json({recommendations});
     } catch (err) {
       return response.status(400).json({
         message: err.message || "Unexpected error.",

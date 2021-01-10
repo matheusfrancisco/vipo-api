@@ -8,6 +8,10 @@ import {
 } from "typeorm";
 
 import { UserEntity } from "./user-entity";
+interface Recommendation {
+  name: string,
+  description: string,
+}
 
 @Entity()
 export class UserAnswer {
@@ -20,14 +24,24 @@ export class UserAnswer {
   )
   user!: UserEntity;
 
-  @Column()
+  @Column({ nullable: false })
   numberOfPeople!: number;
 
-  @Column()
-  howMuch!: number;
+  @Column({ nullable: false })
+  howMuch!: string;
 
-  @Column()
-  like!: string;
+  @Column("simple-array",
+    { nullable: false }
+  )
+  like!: string[];
+
+  @Column({
+    type: 'jsonb',
+    array: false,
+    default: () => "'[]'",
+    nullable: false,
+  })
+  recommendations!: Array<Recommendation>;
 
   @CreateDateColumn({ name: "created_at", type: "timestamp with time zone" })
   createdAt!: Date;

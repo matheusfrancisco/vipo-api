@@ -2,7 +2,7 @@ import { UserRepository } from "src/domain/user/user-repository";
 import { UserEntity } from "./entity/user-entity";
 import { UserAnswer } from "./entity/user-answer";
 import { UserProfile } from "./entity/user-profile";
-import { Connection, getRepository } from "typeorm";
+import { Connection, getRepository, Like } from "typeorm";
 import User from "../domain/user/user";
 
 export class PostgresUserRepository implements UserRepository {
@@ -16,13 +16,14 @@ export class PostgresUserRepository implements UserRepository {
     await getRepository(UserEntity).save(entity);
   }
 
-  public async findByEmail(email: string): Promise<UserEntity | undefined> {
+  public async findByEmail(email: string): Promise<UserEntity | undefined| null> {
     const userRepository = await getRepository(UserEntity).findOne({
       email,
     });
-    if (userRepository) {
-      return userRepository;
+    if (!userRepository) {
+      return null;
     }
+    return userRepository;
   }
 
   public async updateUserProfile({ musicals, userId, foods, drinks }: any) {
@@ -56,15 +57,21 @@ export class PostgresUserRepository implements UserRepository {
     user,
     numberOfPeople,
     howMuch,
-    places,
+    recommendations,
+    like
   }: UserAnswer): Promise<void> {
     const entity = {
       user: user,
       numberOfPeople: numberOfPeople,
       howMuch: howMuch,
-      places: places,
+      recommendations: recommendations,
+      like: like,
     };
-
-    await getRepository(UserAnswer).save(entity);
+    console.log(entity)
+    try {
+      const t = await getRepository(UserAnswer).save(entity);
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
