@@ -15,7 +15,7 @@ export class createUseCaseFactory {
     const createUserController = new CreateUserController(createUserUseCase);
     return {
       createUserController,
-      userRepository
+      userRepository,
     };
   }
 }

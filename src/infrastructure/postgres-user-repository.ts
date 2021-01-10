@@ -1,7 +1,8 @@
 import { UserRepository } from "src/domain/user/user-repository";
 import { UserEntity } from "./entity/user-entity";
+import { UserAnswer } from "./entity/user-answer";
 import { UserProfile } from "./entity/user-profile";
-import { Connection, getRepository } from "typeorm";
+import { Connection, getRepository, Like } from "typeorm";
 import User from "../domain/user/user";
 
 export class PostgresUserRepository implements UserRepository {
@@ -10,50 +11,66 @@ export class PostgresUserRepository implements UserRepository {
     const entity = {
       name: name,
       email: email.value,
-      password: password
+      password: password,
     };
     await getRepository(UserEntity).save(entity);
   }
 
-  public async findByEmail(email: string): Promise<UserEntity | undefined> {
+  public async findByEmail(email: string): Promise<UserEntity | undefined| null> {
     const userRepository = await getRepository(UserEntity).findOne({
-      email
+      email,
     });
-    if (userRepository) {
-      return userRepository;
+    if (!userRepository) {
+      return null;
     }
+    return userRepository;
   }
 
-  public async updateUserProfile({
-    musicals,
-    userId,
-    foods,
-    drinks
-  }: any) {
-
+  public async updateUserProfile({ musicals, userId, foods, drinks }: any) {
     const userProfileRepository = getRepository(UserProfile);
-    const entity = { user: userId, musicals, foods, drinks }
+    const entity = { user: userId, musicals, foods, drinks };
 
     const userProfile = await userProfileRepository.findOne({
       where: {
-        user: entity.user
+        user: entity.user,
       },
-    })
+    });
 
     //#TODO for instance i don't read about
     //partial updating using typeorm but I think has a better away to do this.
     if (userProfile) {
-      await userProfileRepository.update(userProfile.id, entity)
+      await userProfileRepository.update(userProfile.id, entity);
     } else {
-      await userProfileRepository.save(entity)
+      await userProfileRepository.save(entity);
     }
 
     const findUserProfile = await userProfileRepository.findOne({
       where: {
-        user: entity.user
+        user: entity.user,
       },
-    })
+    });
 
-    return findUserProfile
+    return findUserProfile;
+  }
+
+  public async insertAnswer({
+    user,
+    numberOfPeople,
+    howMuch,
+    recommendations,
+    like
+  }: UserAnswer): Promise<void> {
+    const entity = {
+      user: user,
+      numberOfPeople: numberOfPeople,
+      howMuch: howMuch,
+      recommendations: recommendations,
+      like: like,
+    };
+    try {
+      const t = await getRepository(UserAnswer).save(entity);
+    } catch (err) {
+      console.log(err)
+    }
   }
 }

@@ -11,18 +11,19 @@ xdescribe("integratoin test", () => {
   let connection: any;
   let repository: any;
 
-  beforeEach(async () => {
+  beforeEach(async (done) => {
     userRoutes = await routerFactory("test");
-    const { app } = await server(userRoutes);
+    serverFactoryWithUserRoute = await server(userRoutes);
     connection = await CreateDatabaseConnection.createConnection("test");
     repository = await getRepository(UserEntity);
 
-    serverFactoryWithUserRoute = app;
+    jest.setTimeout(60000);
+    done()
   });
 
-  it("should register a user", async () => {
+  test("should register a user", async (done) => {
 
-    const res = await request(serverFactoryWithUserRoute)
+    const res = await request(serverFactoryWithUserRoute.app)
       .post("/users")
       .send({
         name: "mt",
@@ -31,11 +32,12 @@ xdescribe("integratoin test", () => {
       });
 
     expect(res.status).toEqual(201);
+    done()
   });
 
-  it("should throw  user already exist", async () => {
+  test("should throw  user already exist", async (done) => {
 
-    const res = await request(serverFactoryWithUserRoute)
+    const res = await request(serverFactoryWithUserRoute.app)
       .post("/users")
       .send({
         name: "mt",
@@ -43,7 +45,7 @@ xdescribe("integratoin test", () => {
         password: "123123"
       });
 
-    const res2 = await request(serverFactoryWithUserRoute)
+    const res2 = await request(serverFactoryWithUserRoute.app)
       .post("/users")
       .send({
         name: "mt",
@@ -52,6 +54,8 @@ xdescribe("integratoin test", () => {
       });
 
     expect(res2.body.message).toEqual("User already exists.");
+    done()
+
   });
 
 
@@ -59,5 +63,7 @@ xdescribe("integratoin test", () => {
     connection = await CreateDatabaseConnection.createConnection("test");
     const entities = await connection.entityMetadatas;
     await CreateDatabaseConnection.cleanAll(entities)
+    jest.clearAllMocks(); 
+    jest.resetAllMocks();
   });
 });

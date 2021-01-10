@@ -1,6 +1,6 @@
 version: "3"
 services:
-  database:
+  database_test:
     image: postgres:9.6.6
     ports:
       - 5433:5432
