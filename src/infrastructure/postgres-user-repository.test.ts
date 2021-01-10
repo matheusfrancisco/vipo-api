@@ -21,7 +21,7 @@ xdescribe("User Repository", () => {
 
   });
 
-  it("Should save a user", async () => {
+  test("Should save a user", async () => {
     const user = new User({
       name: "Matheus",
       email: "matheus2@hotmaaxil.com",

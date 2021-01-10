@@ -3,7 +3,7 @@ import request from "supertest";
 import { routerFactory } from "../../../routes";
 import { CreateDatabaseConnection } from "../../infrastructure/connection";
 
-describe("integratoin test recomentadion", () => {
+describe("integratoin test recomentadion profile", () => {
   let serverFactoryWithUserRoute: any;
   let userRoutes: any;
   let connection: any;
@@ -17,7 +17,7 @@ describe("integratoin test recomentadion", () => {
     done()
   });
 
-  it("should create an recommendation user profile", async () => {
+  test("should create an recommendation user profile", async () => {
     const res1 = await request(serverFactoryWithUserRoute)
       .post("/users")
       .send({

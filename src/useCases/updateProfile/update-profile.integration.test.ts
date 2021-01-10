@@ -18,7 +18,7 @@ xdescribe("integratoin test", () => {
 
   });
 
-  it("should update user profile", async () => {
+  test("should update user profile", async () => {
     const res1 = await request(serverFactoryWithUserRoute)
       .post("/users")
       .send({

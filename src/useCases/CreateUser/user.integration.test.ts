@@ -22,7 +22,7 @@ xdescribe("integratoin test", () => {
     done()
   });
 
-  it("should register a user", async () => {
+  test("should register a user", async () => {
 
     const res = await request(serverFactoryWithUserRoute)
       .post("/users")
@@ -35,7 +35,7 @@ xdescribe("integratoin test", () => {
     expect(res.status).toEqual(201);
   });
 
-  it("should throw  user already exist", async () => {
+  test("should throw  user already exist", async () => {
 
     const res = await request(serverFactoryWithUserRoute)
       .post("/users")
