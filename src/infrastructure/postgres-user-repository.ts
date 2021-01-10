@@ -67,7 +67,6 @@ export class PostgresUserRepository implements UserRepository {
       recommendations: recommendations,
       like: like,
     };
-    console.log(entity)
     try {
       const t = await getRepository(UserAnswer).save(entity);
     } catch (err) {

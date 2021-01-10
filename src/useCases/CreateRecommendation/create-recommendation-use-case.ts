@@ -33,7 +33,6 @@ export class CreateRecommendationUseCase {
         { "name": "Bar do jao", "description": "noite boa"},
       ]
       userRecommendation.addRecommendation(recomentadions)
-      console.log(userRecommendation)
       await this.userRepository.insertAnswer({...userRecommendation.toRepository(), user});
       return recomentadions;
     } catch (error) {
