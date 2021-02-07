@@ -8,16 +8,15 @@ xdescribe("integratoin test", () => {
   let userRoutes: any;
   let connection: any;
 
-  beforeEach(async (done) => {
+  beforeEach(async () => {
     userRoutes = await routerFactory("test");
     serverFactoryWithUserRoute = await server(userRoutes);
     connection = await CreateDatabaseConnection.createConnection("test");
     jest.setTimeout(60000);
-    done()
 
   });
 
-  test("should update user profile", async (done) => {
+  test("should update user profile", async () => {
     const res1 = await request(serverFactoryWithUserRoute.app)
       .post("/users")
       .send({
@@ -27,7 +26,7 @@ xdescribe("integratoin test", () => {
       });
 
     const r = await request(serverFactoryWithUserRoute.app)
-      .get('/signin')
+      .post('/signin')
       .send({
         email: "xicoooooodo@hotmail.com",
         password: "123123"
@@ -47,7 +46,6 @@ xdescribe("integratoin test", () => {
     expect(res.body.profile.drinks).toEqual(["coffe", "wine", "juice"]);
     expect(res.body.profile.foods).toEqual(["pasta"]);
     expect(res.body.profile.musicals).toEqual(["rock", "ki"]);
-    done()
   });
 
 

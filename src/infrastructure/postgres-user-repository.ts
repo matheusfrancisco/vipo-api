@@ -3,15 +3,25 @@ import { UserEntity } from "./entity/user-entity";
 import { UserAnswer } from "./entity/user-answer";
 import { UserProfile } from "./entity/user-profile";
 import { Connection, getRepository, Like } from "typeorm";
-import User from "../domain/user/user";
+import User, { IUser } from "../domain/user/user";
 
 export class PostgresUserRepository implements UserRepository {
   constructor(public connection: Connection) {}
-  public async save({ name, email, password }: User): Promise<void> {
+  public async save({
+    name,
+    email,
+    password,
+    gender,
+    birthDate,
+    lastName,
+  }: IUser): Promise<void> {
     const entity = {
       name: name,
-      email: email.value,
+      email: email,
       password: password,
+      birthDate: birthDate,
+      gender: gender,
+      lastName: lastName,
     };
     await getRepository(UserEntity).save(entity);
   }

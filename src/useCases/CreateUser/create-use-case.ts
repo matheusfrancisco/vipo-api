@@ -1,4 +1,4 @@
-import User from "../../domain/user/user";
+import User, { IUser } from "../../domain/user/user";
 import { UserRepository } from "../../domain/user/user-repository";
 import bcrypt from "bcrypt";
 
@@ -16,7 +16,7 @@ export class CreateUserUseCase {
     return hashPass;
   }
 
-  async execute({ name, email, password }: Record<string, string>) {
+  async execute({ name, email, password, lastName, birthDate, gender }: IUser) {
     const userAlreadyExists = await this.userRepository.findByEmail(email);
 
     if (userAlreadyExists) {
@@ -25,8 +25,14 @@ export class CreateUserUseCase {
 
     try {
       const hashPass = await this.cryptPass(password);
-      const user = new User({ name, password: hashPass, email });
-      await this.userRepository.save(user);
+      const user = new User({ name,
+          password: hashPass,
+          email,
+          lastName,
+          gender,
+          birthDate,
+        });
+      await this.userRepository.save({ ...user.toRepository()});
     } catch (error) {
       throw error;
     }
