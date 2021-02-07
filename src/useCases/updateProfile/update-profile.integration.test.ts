@@ -27,7 +27,7 @@ xdescribe("integratoin test", () => {
       });
 
     const r = await request(serverFactoryWithUserRoute.app)
-      .get('/signin')
+      .post('/signin')
       .send({
         email: "xicoooooodo@hotmail.com",
         password: "123123"

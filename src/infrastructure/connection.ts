@@ -56,7 +56,7 @@ export class CreateDatabaseConnection {
     }
   }
 
-  public static getConnection(config: string) {
+  public static getConnection(config: string = "prod") {
     return config === "test" ? this.connection_test : this.connection;
   }
 

@@ -5,7 +5,7 @@ import { CreateDatabaseConnection } from "../../infrastructure/connection";
 import { UserEntity } from "../../infrastructure/entity/user-entity";
 import { getRepository } from "typeorm";
 
-xdescribe("integratoin test", () => {
+describe("integratoin test", () => {
   let serverFactoryWithUserRoute: any;
   let userRoutes: any;
   let connection: any;
@@ -28,7 +28,10 @@ xdescribe("integratoin test", () => {
       .send({
         name: "mt",
         email: "xicoooooodo1@hotmail.com",
-        password: "123123"
+        password: "123123",
+        lastName: "Xico",
+        birthDate: "09/09/1994",
+        gender: "Male",
       });
 
     expect(res.status).toEqual(201);
@@ -42,7 +45,10 @@ xdescribe("integratoin test", () => {
       .send({
         name: "mt",
         email: "xicoooooodo2@hotmail.com",
-        password: "123123"
+        password: "123123",
+        lastName: "Xico",
+        birthDate: "09/09/1994",
+        gender: "Male",
       });
 
     const res2 = await request(serverFactoryWithUserRoute.app)
@@ -50,7 +56,10 @@ xdescribe("integratoin test", () => {
       .send({
         name: "mt",
         email: "xicoooooodo2@hotmail.com",
-        password: "123123"
+        password: "123123",
+        lastName: "Xico",
+        birthDate: "09/09/1994",
+        gender: "Male",
       });
 
     expect(res2.body.message).toEqual("User already exists.");
@@ -63,7 +72,7 @@ xdescribe("integratoin test", () => {
     connection = await CreateDatabaseConnection.createConnection("test");
     const entities = await connection.entityMetadatas;
     await CreateDatabaseConnection.cleanAll(entities)
-    jest.clearAllMocks(); 
+    jest.clearAllMocks();
     jest.resetAllMocks();
   });
 });

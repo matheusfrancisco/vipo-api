@@ -17,4 +17,5 @@ export default class Email {
     }
     return value;
   }
+
 }

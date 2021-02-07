@@ -33,13 +33,19 @@ describe("UserController", () => {
 
   const userEmail = "matheusmachadoufsc@gmail.com";
   const userName = "xi";
+  const lastName = "Franxico";
+  const bday = new Date("09/09/1994")
+  const gender = "Male"
   const userPass = "123123";
 
   const req = {
     body: {
       name: userName,
       email: userEmail,
-      password: userPass
+      password: userPass,
+      lastName: lastName,
+      birthDate: bday,
+      gender: gender,
     }
   };
   const reqWithoutEmail = { body: { password: userPass } };

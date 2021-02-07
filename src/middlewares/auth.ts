@@ -10,11 +10,12 @@ export class Auth {
     this.verify = this.verify.bind(this);
   }
 
+  //#TODO remove this code from middleware and create a useCase to login
   async singIn(
     request: Request,
     response: Response,
-    next: NextFunction
-  ): Promise<any> {
+    // next: NextFunction
+  ): Promise<Request| null> {
     try {
       const user = await this.userRepository.findByEmail(request.body.email);
       if (
@@ -25,7 +26,8 @@ export class Auth {
         // return token;
         request.body.token = token;
         request.body.user = user;
-        next();
+        // next();
+        return request
       }
       return null;
     } catch (error) {

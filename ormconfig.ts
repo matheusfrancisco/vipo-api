@@ -5,8 +5,9 @@ import { ConnectionOptions } from 'typeorm'
 const PROD_ENV = 'production'
 let connectionOptions: ConnectionOptions;
 
+//#TODO have alot dupliacate code, move to a method and get config from env
 
-if (process.env.NODE_ENV == 'test') {
+if (process.env.NODE_ENV === 'test') {
   connectionOptions = {
     type: 'postgres',
     host: "localhost",

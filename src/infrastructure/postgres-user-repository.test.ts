@@ -1,11 +1,11 @@
 import { UserRepository } from "../domain/user/user-repository";
 import User from "../domain/user/user";
 import { getRepository,  Repository } from "typeorm";
-import { UserEntity } from "./entity/user-entity";
+import { UserEntity, Gender } from "./entity/user-entity";
 import { PostgresUserRepository } from "./postgres-user-repository";
 import { CreateDatabaseConnection } from "./connection";
 
-xdescribe("User Repository", () => {
+describe("User Repository", () => {
   let repository: Repository<UserEntity>;
   let connection: any;
   let userRepository: UserRepository;
@@ -25,15 +25,20 @@ xdescribe("User Repository", () => {
     const user = new User({
       name: "Matheus",
       email: "matheus2@hotmaaxil.com",
-      password: "123123"
+      password: "123123",
+      lastName: "Xico",
+      gender: Gender.Male,
+      birthDate: new Date('09/09/1994')
     });
-    await userRepository.save(user);
+    await userRepository.save(user.toRepository());
     const foundUser = await repository.findOne({
       email: "matheus2@hotmaaxil.com"
     });
     expect(foundUser).toMatchObject({
       password: "123123",
-      email: "matheus2@hotmaaxil.com"
+      email: "matheus2@hotmaaxil.com",
+      lastName: "Xico",
+      gender: "male"
     });
     done()
   });

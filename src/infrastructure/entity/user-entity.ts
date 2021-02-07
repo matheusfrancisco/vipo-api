@@ -10,6 +10,12 @@ import {
 } from "typeorm";
 import { UserAnswer } from "./user-answer";
 
+export enum Gender {
+  Male = 'male',
+  Female = 'female',
+  Neuter = 'neuter'
+}
+
 @Entity()
 export class UserEntity {
   @PrimaryGeneratedColumn()
@@ -21,9 +27,26 @@ export class UserEntity {
   email!: string;
 
   @Column({
-    nullable: true,
+    nullable: false,
   })
   name!: string;
+
+  @Column({
+    nullable: false,
+  })
+  lastName!: string;
+
+  @Column({
+    nullable: false,
+  })
+  birthDate!: Date;
+
+  @Column({
+    type: "enum",
+    enum: Gender,
+    nullable: false,
+  })
+  gender!: Gender;
 
   @OneToMany(
     () => UserAnswer,
