@@ -21,7 +21,7 @@ describe("User Repository", () => {
 
   });
 
-  test("Should save a user", async (done) => {
+  test("Should save a user", async () => {
     const user = new User({
       name: "Matheus",
       email: "matheus2@hotmaaxil.com",
@@ -40,7 +40,6 @@ describe("User Repository", () => {
       lastName: "Xico",
       gender: "male"
     });
-    done()
   });
 
   afterEach(async () => {

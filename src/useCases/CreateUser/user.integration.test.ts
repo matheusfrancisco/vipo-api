@@ -11,17 +11,16 @@ describe("integratoin test", () => {
   let connection: any;
   let repository: any;
 
-  beforeEach(async (done) => {
+  beforeEach(async () => {
     userRoutes = await routerFactory("test");
     serverFactoryWithUserRoute = await server(userRoutes);
     connection = await CreateDatabaseConnection.createConnection("test");
     repository = await getRepository(UserEntity);
 
     jest.setTimeout(60000);
-    done()
   });
 
-  test("should register a user", async (done) => {
+  test("should register a user", async () => {
 
     const res = await request(serverFactoryWithUserRoute.app)
       .post("/users")
@@ -35,10 +34,9 @@ describe("integratoin test", () => {
       });
 
     expect(res.status).toEqual(201);
-    done()
   });
 
-  test("should throw  user already exist", async (done) => {
+  test("should throw  user already exist", async () => {
 
     const res = await request(serverFactoryWithUserRoute.app)
       .post("/users")
@@ -63,7 +61,6 @@ describe("integratoin test", () => {
       });
 
     expect(res2.body.message).toEqual("User already exists.");
-    done()
 
   });
 
