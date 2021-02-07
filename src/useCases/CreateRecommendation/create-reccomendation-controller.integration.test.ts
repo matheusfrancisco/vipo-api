@@ -15,7 +15,7 @@ describe("integratoin test recomentadion profile", () => {
     jest.setTimeout(60000);
   });
 
-  test("should create an recommendation user profile", async () => {
+  it("should create an recommendation user profile", async () => {
     const res1 = await request(serverFactoryWithUserRoute.app)
       .post("/users")
       .send({
