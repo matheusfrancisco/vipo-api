@@ -13,7 +13,7 @@ export class UpdateUserProfileController {
     findUserUseCase: FindUserUseCase,
   ) {
     this._updateUserProfileUseCase = updateUserProfileUseCase;
-    this._findUserUseCase = findUserUseCase;
+    this._findUserUseCase = findUserUseCase
   }
 
   async handle(
