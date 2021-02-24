@@ -24,10 +24,6 @@
       "prettier/prettier": [
         "error"
       ],
-      "quotes": [
-        "error",
-        "double"
-      ],
       "no-useless-constructor": "off"
     }
 }
