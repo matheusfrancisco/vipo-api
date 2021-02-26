@@ -21,6 +21,8 @@
   ],
   "rules": {
     "no-useless-constructor": "off",
-    "quotes": ["error", "double"]
+    "quotes": ["error", "double"],
+    "import/prefer-default-export": "off",
+    "class-methods-use-this": "off"
   }
 }
