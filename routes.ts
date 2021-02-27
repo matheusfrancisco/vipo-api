@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { UpdateUserUseCaseFactory } from "src/useCases/UpdateUser";
+import { UpdateUserUseCaseFactory } from "./src/useCases/UpdateUser";
 import { createUseCaseFactory } from "./src/useCases/CreateUser";
 import { UpdateUserProfileUseCaseFactory } from "./src/useCases/updateProfile";
 import { createRecommendationUseCaseFactory } from "./src/useCases/CreateRecommendation";
 import { Auth } from "./src/middlewares/auth";
 import { CreateDatabaseConnection } from "./src/infrastructure/connection";
 
-export const routerFactory = async (config = "prod") => {
+export const routerFactory = async (config = "prod"): Promise<Router> => {
   const connection = await CreateDatabaseConnection.createConnection(config);
 
   const {

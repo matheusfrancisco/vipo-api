@@ -1,4 +1,4 @@
-import { RequestHandler } from "express";
+import { Request, Response } from "express";
 import { UpdateUserUseCase } from "./update-user-use-case";
 
 const buildErrorMessage = (message: string) => ({ error: message });
@@ -6,7 +6,7 @@ const buildErrorMessage = (message: string) => ({ error: message });
 export class UpdateUserController {
   constructor(private updateUserUseCase: UpdateUserUseCase) {}
 
-  public handle: RequestHandler = async (request, response) => {
+  public async handle(request: Request, response: Response): Promise<Response> {
     const { name, lastName, userId } = request.body;
 
     if (!name || !lastName || !userId)
@@ -25,5 +25,5 @@ export class UpdateUserController {
         message: error.message || "Unexpected error."
       });
     }
-  };
+  }
 }

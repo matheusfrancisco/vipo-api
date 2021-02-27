@@ -1,5 +1,5 @@
-import { PostgresUserRepository } from "src/infrastructure/postgres-user-repository";
 import { Connection } from "typeorm";
+import { PostgresUserRepository } from "../../infrastructure/postgres-user-repository";
 import { UpdateUserController } from "./update-user-controller";
 import { UpdateUserUseCase } from "./update-user-use-case";
 
