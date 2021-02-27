@@ -1,14 +1,17 @@
 import { Connection, createConnection, getRepository } from "typeorm";
 
+console.log(process.env.DB_PROD_HOST);
+
 export class CreateDatabaseConnection {
   private static connection: Connection;
+
   private static connection_test: Connection;
 
-  public static async createConnection(config: string = "prod") {
-    //#TODO have alot dupliacate code, move to a method and get config from env
-    if(config === "test") {
+  public static async createConnection(config = "prod") {
+    // #TODO have alot dupliacate code, move to a method and get config from env
+    if (config === "test") {
       if (!this.connection_test) {
-        //#TODO this can be a method
+        // #TODO this can be a method
         this.connection_test = await createConnection({
           type: "postgres",
           host: "localhost",
@@ -19,44 +22,43 @@ export class CreateDatabaseConnection {
           entities: ["src/infrastructure/entity/**/*.ts"],
           migrations: ["src/migrations/**/*.ts"],
           cli: {
-            "migrationsDir": "src/migrations"
+            migrationsDir: "src/migrations"
           },
           extra: {
-            "connectionLimit": 5
+            connectionLimit: 5
           },
           synchronize: true,
           logging: false
         });
       }
-      return this.getConnection(config)
-    } else {
-      if (!this.connection) {
-        //#TODO this can be a method
-        this.connection = await createConnection({
-          name: "default",
-          type: "postgres",
-          host: "localhost",
-          port: 5432,
-          username: "postgres",
-          password: "postgres",
-          database: "vipo",
-          entities: ["src/infrastructure/entity/**/*.ts"],
-          migrations: ["src/migrations/**/*.ts"],
-          cli: {
-            "migrationsDir": "src/migrations"
-          },
-          extra: {
-            "connectionLimit": 5
-          },
-          synchronize: false,
-          logging: true
-        });
-      }
-      return this.connection;
+      return this.getConnection(config);
     }
+    if (!this.connection) {
+      // #TODO this can be a method
+      this.connection = await createConnection({
+        name: "default",
+        type: "postgres",
+        host: "localhost",
+        port: 5432,
+        username: "postgres",
+        password: "postgres",
+        database: "vipo",
+        entities: ["src/infrastructure/entity/**/*.ts"],
+        migrations: ["src/migrations/**/*.ts"],
+        cli: {
+          migrationsDir: "src/migrations"
+        },
+        extra: {
+          connectionLimit: 5
+        },
+        synchronize: false,
+        logging: true
+      });
+    }
+    return this.connection;
   }
 
-  public static getConnection(config: string = "prod") {
+  public static getConnection(config = "prod") {
     return config === "test" ? this.connection_test : this.connection;
   }
 
