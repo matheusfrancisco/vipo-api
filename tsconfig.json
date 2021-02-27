@@ -8,11 +8,20 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "build",
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/*"],
-      "src/*": ["./*"]
+      "@config/*": ["./src/config/*"],
+      "@domain/*": ["./src/domain/*"],
+      "@infrastructure/*": ["./src/infrastructure/*"],
+      "@middlewares/*": ["./src/middlewares/*"],
+      "@migrations/*": ["./src/migrations/*"],
+      "@useCases/*": ["./src/useCases/*"]
     },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/@types"
+    ],
+    "skipLibCheck": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },

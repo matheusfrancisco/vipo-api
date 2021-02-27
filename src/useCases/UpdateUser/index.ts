@@ -1,7 +1,7 @@
 import { Connection } from "typeorm";
-import { PostgresUserRepository } from "../../infrastructure/postgres-user-repository";
-import { UpdateUserController } from "./update-user-controller";
-import { UpdateUserUseCase } from "./update-user-use-case";
+import { PostgresUserRepository } from "@infrastructure/postgres-user-repository";
+import { UpdateUserController } from "@useCases/UpdateUser/update-user-controller";
+import { UpdateUserUseCase } from "@useCases/UpdateUser/update-user-use-case";
 
 interface IBuildResult {
   updateUserController: UpdateUserController;

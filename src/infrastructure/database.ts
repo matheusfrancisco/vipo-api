@@ -1,6 +1,6 @@
 import { ConnectionOptions } from "typeorm";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
-import envs from "../config/environment";
+import envs from "@config/environment";
 
 const prodOrDevConfig: PostgresConnectionOptions = {
   name: "default",

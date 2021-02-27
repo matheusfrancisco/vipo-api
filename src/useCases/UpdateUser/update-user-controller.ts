@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UpdateUserUseCase } from "./update-user-use-case";
+import { UpdateUserUseCase } from "@useCases/UpdateUser/update-user-use-case";
 
 const buildErrorMessage = (message: string) => ({ error: message });
 

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "format": "prettier --write \"**/*.*(js|ts|json|yml|yaml|md)\"",
+    "dev": "tsnd -r tsconfig-paths/register --transpile-only --respawn --inspect --ignore-watch node_modules --no-notify start.ts",
     "test": "NODE_ENV=test jest --forceExit --maxWorkers=4 --testTimeout=60000 --detectOpenHandles",
     "start": "nodemon --inspect",
     "migrations": "NODE_ENV=prod ts-node node_modules/typeorm/cli.js migration:run  ",
@@ -57,16 +58,9 @@
     "prettier": "^1.19.1",
     "sinon": "^7.5.0",
     "sinon-chai": "^3.3.0",
-    "ts-jest": "^24.3.0"
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "globals": {
-      "ts-jest": {
-        "diagnostics": false
-      }
-    }
+    "ts-jest": "^24.3.0",
+    "ts-node-dev": "^1.1.6",
+    "tsconfig-paths": "^3.9.0"
   },
   "author": "",
   "license": "ISC"

@@ -1,9 +1,9 @@
-import { UserRepository } from "src/domain/user/user-repository";
 import { Connection, getRepository } from "typeorm";
-import { UserEntity } from "./entity/user-entity";
-import { UserAnswer } from "./entity/user-answer";
-import { UserProfile } from "./entity/user-profile";
-import { IUser } from "../domain/user/user";
+import { UserRepository } from "@domain/user/user-repository";
+import { IUser } from "@domain/user/user";
+import { UserEntity } from "@infrastructure/entity/user-entity";
+import { UserAnswer } from "@infrastructure/entity/user-answer";
+import { UserProfile } from "@infrastructure/entity/user-profile";
 
 export class PostgresUserRepository implements UserRepository {
   constructor(public connection: Connection) {}
