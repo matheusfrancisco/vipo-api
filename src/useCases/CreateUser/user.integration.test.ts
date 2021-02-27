@@ -12,9 +12,9 @@ describe("integratoin test", () => {
   let repository: any;
 
   beforeEach(async () => {
+    connection = await CreateDatabaseConnection.createConnection();
     userRoutes = await routerFactory();
     serverFactoryWithUserRoute = await server(userRoutes);
-    connection = await CreateDatabaseConnection.createConnection();
     repository = await getRepository(UserEntity);
 
     jest.setTimeout(60000);

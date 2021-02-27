@@ -3,14 +3,12 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 import envs from "@config/environment";
 
 const prodOrDevConfig: PostgresConnectionOptions = {
-  name: "default",
   type: "postgres",
   database: "vipo",
   synchronize: false,
   logging: true
 };
 const testConfig: PostgresConnectionOptions = {
-  name: "test",
   type: "postgres",
   database: "postgres",
   synchronize: true,

@@ -8,7 +8,7 @@ import databaseConfig from "./database";
 
 export class CreateDatabaseConnection {
   public static async createConnection(): Promise<Connection> {
-    const connection = await createConnection(databaseConfig);
+    const connection = await createConnection();
 
     return connection;
   }
