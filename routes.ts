@@ -6,8 +6,8 @@ import { createRecommendationUseCaseFactory } from "./src/useCases/CreateRecomme
 import { Auth } from "./src/middlewares/auth";
 import { CreateDatabaseConnection } from "./src/infrastructure/connection";
 
-export const routerFactory = async (config = "prod"): Promise<Router> => {
-  const connection = await CreateDatabaseConnection.createConnection(config);
+export const routerFactory = async (): Promise<Router> => {
+  const connection = await CreateDatabaseConnection.createConnection();
 
   const {
     createUserController,
@@ -40,6 +40,9 @@ export const routerFactory = async (config = "prod"): Promise<Router> => {
         token: r.body.token
       });
     }
+
+    // #TODO remake this endpoint to return the correct information for the user
+    return response.end();
   });
 
   router.post("/users", (request, response) => {

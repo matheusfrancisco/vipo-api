@@ -1,7 +1,9 @@
 import express, { Router } from "express";
 import { routerFactory } from "./routes";
 
-export const server = async (router: Router) => {
+export const server = async (
+  router: Router
+): Promise<{ app: express.Express }> => {
   const app = await express();
 
   app.use(express.json());
@@ -10,7 +12,7 @@ export const server = async (router: Router) => {
 };
 
 export const startServer = async (): Promise<void> => {
-  const router = await routerFactory("prod");
+  const router = await routerFactory();
   const { app } = await server(router);
 
   app.listen(3000, () => {
