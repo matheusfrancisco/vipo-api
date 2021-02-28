@@ -1,5 +1,5 @@
 export default interface IChangePasswordDTO {
-  userId: string;
+  userId: number;
   dbPasswordHash: string;
   password: string;
   newPassword: string;

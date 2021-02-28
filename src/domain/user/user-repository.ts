@@ -2,7 +2,7 @@ import { IUser } from "./user";
 import { UserEntity } from "../../infrastructure/entity/user-entity";
 
 export interface IUserRepositoryUpdatePayload {
-  userId: string;
+  userId: number;
   name?: string;
   lastName?: string;
   password?: string;

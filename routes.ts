@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { ChangePasswordUseCaseFactory } from "@useCases/ChangePassword";
 import { UpdateUserUseCaseFactory } from "./src/useCases/UpdateUser";
 import { createUseCaseFactory } from "./src/useCases/CreateUser";
 import { UpdateUserProfileUseCaseFactory } from "./src/useCases/updateProfile";
@@ -13,6 +14,10 @@ export const routerFactory = async (): Promise<Router> => {
     createUserController,
     userRepository
   } = await createUseCaseFactory.build(connection);
+
+  const { changePasswordController } = await ChangePasswordUseCaseFactory.build(
+    connection
+  );
 
   // const { findUserController } = await FindUseCaseFactory.build(connection);
   const {
@@ -49,7 +54,11 @@ export const routerFactory = async (): Promise<Router> => {
     return createUserController.handle(request, response);
   });
 
-  router.patch("/users", async (request, response) => {
+  router.patch("/users/password", auth.verify, async (request, response) => {
+    return changePasswordController.handle(request, response);
+  });
+
+  router.patch("/users", auth.verify, async (request, response) => {
     return updateUserController.handle(request, response);
   });
 

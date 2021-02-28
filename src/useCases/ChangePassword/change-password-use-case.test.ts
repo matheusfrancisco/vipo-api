@@ -26,7 +26,7 @@ describe("ChangePasswordUseCase", () => {
     const { repository, provider, useCase } = makeFakeUseCase();
 
     const payload: IChangePasswordDTO = {
-      userId: "random-id",
+      userId: 456,
       dbPasswordHash: "old-password",
       password: "old-password",
       newPassword: "new-password"
@@ -37,7 +37,7 @@ describe("ChangePasswordUseCase", () => {
     expect(repository.update).toHaveBeenCalled();
     expect(provider.hashesMatch).toHaveBeenCalledWith(
       payload.dbPasswordHash,
-      payload.newPassword
+      payload.password
     );
     expect(provider.generateHash).toHaveBeenCalledWith(payload.newPassword);
   });
@@ -46,7 +46,7 @@ describe("ChangePasswordUseCase", () => {
     const { useCase } = makeFakeUseCase();
 
     const payload: IChangePasswordDTO = {
-      userId: "random-id",
+      userId: 456,
       dbPasswordHash: "old-password",
       password: "wrong-old-password",
       newPassword: "new-password"
