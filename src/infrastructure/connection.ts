@@ -4,7 +4,6 @@ import {
   EntityMetadata,
   getRepository
 } from "typeorm";
-import databaseConfig from "./database";
 
 export class CreateDatabaseConnection {
   public static async createConnection(): Promise<Connection> {
