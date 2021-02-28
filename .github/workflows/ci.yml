@@ -12,9 +12,10 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: vipo        
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
+          DB_PROD_HOST: localhost
+          DB_PROD_PORT: 5432
+          DB_PROD_USER: postgres
+          DB_PROD_PASS: postgres
         ports:
           - 5433:5432
         # Set health checks to wait until postgres has started
@@ -27,5 +28,10 @@ jobs:
       - uses: actions/checkout@v2
       - run: |
           npm install
-      - run: |
+      - run:
+          env:
+            DB_PROD_HOST: localhost
+            DB_PROD_PORT: 5432
+            DB_PROD_USER: postgres
+            DB_PROD_PASS: postgres
           npm run test
