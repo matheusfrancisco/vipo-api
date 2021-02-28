@@ -11,7 +11,6 @@ describe("User Repository", () => {
   let userRepository: UserRepository;
 
   beforeEach(async () => {
-    console.log("cheguei", process.env.NODE_ENV);
     connection = await CreateDatabaseConnection.createConnection();
     repository = await getRepository(UserEntity);
 
