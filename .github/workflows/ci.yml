@@ -12,10 +12,9 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          DB_PROD_HOST: localhost
-          DB_PROD_PORT: 5432
-          DB_PROD_USER: postgres
-          DB_PROD_PASS: postgres
+          POSTGRES_DB: vipo
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
         ports:
           - 5433:5432
         # Set health checks to wait until postgres has started
