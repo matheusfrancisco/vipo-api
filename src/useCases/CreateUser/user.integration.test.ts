@@ -1,27 +1,26 @@
-import { server } from "../../../index";
 import request from "supertest";
+import { Connection, getRepository } from "typeorm";
+import { server } from "../../../index";
 import { routerFactory } from "../../../routes";
 import { CreateDatabaseConnection } from "../../infrastructure/connection";
 import { UserEntity } from "../../infrastructure/entity/user-entity";
-import { getRepository } from "typeorm";
 
 describe("integratoin test", () => {
   let serverFactoryWithUserRoute: any;
   let userRoutes: any;
-  let connection: any;
+  let connection: Connection;
   let repository: any;
 
   beforeEach(async () => {
-    userRoutes = await routerFactory("test");
+    connection = await CreateDatabaseConnection.createConnection();
+    userRoutes = await routerFactory();
     serverFactoryWithUserRoute = await server(userRoutes);
-    connection = await CreateDatabaseConnection.createConnection("test");
     repository = await getRepository(UserEntity);
 
     jest.setTimeout(60000);
   });
 
   test("should register a user", async () => {
-
     const res = await request(serverFactoryWithUserRoute.app)
       .post("/users")
       .send({
@@ -30,14 +29,13 @@ describe("integratoin test", () => {
         password: "123123",
         lastName: "Xico",
         birthDate: "09/09/1994",
-        gender: "Male",
+        gender: "Male"
       });
 
     expect(res.status).toEqual(201);
   });
 
   test("should throw  user already exist", async () => {
-
     const res = await request(serverFactoryWithUserRoute.app)
       .post("/users")
       .send({
@@ -46,7 +44,7 @@ describe("integratoin test", () => {
         password: "123123",
         lastName: "Xico",
         birthDate: "09/09/1994",
-        gender: "Male",
+        gender: "Male"
       });
 
     const res2 = await request(serverFactoryWithUserRoute.app)
@@ -57,18 +55,16 @@ describe("integratoin test", () => {
         password: "123123",
         lastName: "Xico",
         birthDate: "09/09/1994",
-        gender: "Male",
+        gender: "Male"
       });
 
     expect(res2.body.message).toEqual("User already exists.");
-
   });
 
-
   afterEach(async () => {
-    connection = await CreateDatabaseConnection.createConnection("test");
+    connection = await CreateDatabaseConnection.createConnection();
     const entities = await connection.entityMetadatas;
-    await CreateDatabaseConnection.cleanAll(entities)
+    await CreateDatabaseConnection.cleanAll(entities);
     jest.clearAllMocks();
     jest.resetAllMocks();
   });

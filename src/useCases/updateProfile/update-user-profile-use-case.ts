@@ -1,7 +1,6 @@
-
 import { UserRepository } from "../../domain/user/user-repository";
-import UserProfile from '../../domain/user/user-profile';
-import bcrypt from "bcrypt";
+import UserProfile from "../../domain/user/user-profile";
+import IUpdateUserProfileDTO from "./update-user-profile-dto";
 
 export interface UserResource {
   id: number;
@@ -12,24 +11,21 @@ export interface UserResource {
 export class UpdateUserProfileUseCase {
   constructor(private userRepository: UserRepository) {}
 
-  //#TODO improve type any
-  async execute({ userId, profileInformations }: any) {
-    try {
+  async execute({
+    userId,
+    profileInformations
+  }: IUpdateUserProfileDTO): Promise<any> {
+    const userProfile = new UserProfile({
+      userId,
+      musicals: profileInformations.musicals,
+      drinks: profileInformations.drinks,
+      foods: profileInformations.foods
+    });
 
-      const userProfile = new UserProfile({
-        userId,
-        musicals: profileInformations.musicals,
-        drinks: profileInformations.drinks,
-        foods: profileInformations.foods,
-      })
+    const profileUpdate = await this.userRepository.updateUserProfile({
+      ...userProfile.toRepository()
+    });
 
-      const profileUpdate = await this.userRepository.updateUserProfile({
-        ...userProfile.toRepository(),
-      })
-
-      return profileUpdate
-    } catch (error) {
-      throw error;
-    }
+    return profileUpdate;
   }
 }

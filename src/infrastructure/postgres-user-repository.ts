@@ -1,34 +1,37 @@
-import { UserRepository } from "src/domain/user/user-repository";
-import { UserEntity } from "./entity/user-entity";
-import { UserAnswer } from "./entity/user-answer";
-import { UserProfile } from "./entity/user-profile";
-import { Connection, getRepository, Like } from "typeorm";
-import User, { IUser } from "../domain/user/user";
+import { Connection, getRepository } from "typeorm";
+import { UserRepository } from "@domain/user/user-repository";
+import { IUser } from "@domain/user/user";
+import { UserEntity } from "@infrastructure/entity/user-entity";
+import { UserAnswer } from "@infrastructure/entity/user-answer";
+import { UserProfile } from "@infrastructure/entity/user-profile";
 
 export class PostgresUserRepository implements UserRepository {
   constructor(public connection: Connection) {}
+
   public async save({
     name,
     email,
     password,
     gender,
     birthDate,
-    lastName,
+    lastName
   }: IUser): Promise<void> {
     const entity = {
-      name: name,
-      email: email,
-      password: password,
-      birthDate: birthDate,
-      gender: gender,
-      lastName: lastName,
+      name,
+      email,
+      password,
+      birthDate,
+      gender,
+      lastName
     };
     await getRepository(UserEntity).save(entity);
   }
 
-  public async findByEmail(email: string): Promise<UserEntity | undefined| null> {
+  public async findByEmail(
+    email: string
+  ): Promise<UserEntity | undefined | null> {
     const userRepository = await getRepository(UserEntity).findOne({
-      email,
+      email
     });
     if (!userRepository) {
       return null;
@@ -42,12 +45,12 @@ export class PostgresUserRepository implements UserRepository {
 
     const userProfile = await userProfileRepository.findOne({
       where: {
-        user: entity.user,
-      },
+        user: entity.user
+      }
     });
 
-    //#TODO for instance i don't read about
-    //partial updating using typeorm but I think has a better away to do this.
+    // #TODO for instance i don't read about
+    // partial updating using typeorm but I think has a better away to do this.
     if (userProfile) {
       await userProfileRepository.update(userProfile.id, entity);
     } else {
@@ -56,11 +59,21 @@ export class PostgresUserRepository implements UserRepository {
 
     const findUserProfile = await userProfileRepository.findOne({
       where: {
-        user: entity.user,
-      },
+        user: entity.user
+      }
     });
 
     return findUserProfile;
+  }
+
+  public async update({ userId, name, lastName }: any): Promise<IUser> {
+    const usersRepository = getRepository(UserEntity);
+
+    const user = await usersRepository.findOneOrFail(userId);
+
+    const updatedUser = await usersRepository.save({ ...user, name, lastName });
+
+    return updatedUser;
   }
 
   public async insertAnswer({
@@ -71,16 +84,16 @@ export class PostgresUserRepository implements UserRepository {
     like
   }: UserAnswer): Promise<void> {
     const entity = {
-      user: user,
-      numberOfPeople: numberOfPeople,
-      howMuch: howMuch,
-      recommendations: recommendations,
-      like: like,
+      user,
+      numberOfPeople,
+      howMuch,
+      recommendations,
+      like
     };
     try {
       const t = await getRepository(UserAnswer).save(entity);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
 }

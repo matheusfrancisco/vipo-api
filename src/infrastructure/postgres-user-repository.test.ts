@@ -1,24 +1,23 @@
+import { Connection, getRepository, Repository } from "typeorm";
 import { UserRepository } from "../domain/user/user-repository";
 import User from "../domain/user/user";
-import { getRepository,  Repository } from "typeorm";
 import { UserEntity, Gender } from "./entity/user-entity";
 import { PostgresUserRepository } from "./postgres-user-repository";
 import { CreateDatabaseConnection } from "./connection";
 
 describe("User Repository", () => {
   let repository: Repository<UserEntity>;
-  let connection: any;
+  let connection: Connection;
   let userRepository: UserRepository;
 
   beforeEach(async () => {
-    connection = await CreateDatabaseConnection.createConnection("test");
+    connection = await CreateDatabaseConnection.createConnection();
     repository = await getRepository(UserEntity);
 
     userRepository = new PostgresUserRepository(connection);
 
     repository.delete({});
     jest.setTimeout(60000);
-
   });
 
   test("Should save a user", async () => {
@@ -28,7 +27,7 @@ describe("User Repository", () => {
       password: "123123",
       lastName: "Xico",
       gender: Gender.Male,
-      birthDate: new Date('09/09/1994')
+      birthDate: new Date("09/09/1994")
     });
     await userRepository.save(user.toRepository());
     const foundUser = await repository.findOne({
@@ -43,11 +42,10 @@ describe("User Repository", () => {
   });
 
   afterEach(async () => {
-    connection = await CreateDatabaseConnection.createConnection("test");
+    connection = await CreateDatabaseConnection.createConnection();
     const entities = await connection.entityMetadatas;
     await CreateDatabaseConnection.cleanAll(entities);
-    jest.clearAllMocks(); 
+    jest.clearAllMocks();
     jest.resetAllMocks();
-    
-   });
+  });
 });

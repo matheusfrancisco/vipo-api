@@ -1,17 +1,18 @@
-import { server } from "../../../index";
 import request from "supertest";
+import { Connection } from "typeorm";
+import { server } from "../../../index";
 import { routerFactory } from "../../../routes";
 import { CreateDatabaseConnection } from "../../infrastructure/connection";
 
 describe("integratoin test recomentadion profile", () => {
   let serverFactoryWithUserRoute: any;
   let userRoutes: any;
-  let connection: any;
+  let connection: Connection;
 
   beforeEach(async () => {
-    userRoutes = await routerFactory("test");
-    serverFactoryWithUserRoute=  await server(userRoutes);
-    connection = await CreateDatabaseConnection.createConnection("test");
+    userRoutes = await routerFactory();
+    serverFactoryWithUserRoute = await server(userRoutes);
+    connection = await CreateDatabaseConnection.createConnection();
     jest.setTimeout(60000);
   });
 
@@ -28,36 +29,34 @@ describe("integratoin test recomentadion profile", () => {
       });
 
     const r = await request(serverFactoryWithUserRoute.app)
-      .post('/signin')
+      .post("/signin")
       .send({
         email: "xicoooooo1@hotmail.com",
         password: "123123"
-      })
+      });
     const res = await request(serverFactoryWithUserRoute.app)
       .post("/user/recommendation")
-      .set({ authorization: `Bearer ${r.body.token}`})
+      .set({ authorization: `Bearer ${r.body.token}` })
       .send({
         email: "xicooooood2o@hotmail.com",
-        "howMuch": "R$10 - R$100",
-        "numberOfPeople": 4,
-        "like": ["party", "food", "rock"]  
-    })
+        howMuch: "R$10 - R$100",
+        numberOfPeople: 4,
+        like: ["party", "food", "rock"]
+      });
 
     const recomentadion = [
-      { "name": "Bar do jao", "description": "noite boa"},
-      { "name": "Bar do jao", "description": "noite boa"},
-      { "name": "Bar do jao", "description": "noite boa"},
-    ]
+      { name: "Bar do jao", description: "noite boa" },
+      { name: "Bar do jao", description: "noite boa" },
+      { name: "Bar do jao", description: "noite boa" }
+    ];
     expect(res.body.recommendations).toEqual(recomentadion);
   });
 
-
-
   afterEach(async () => {
-    connection = await CreateDatabaseConnection.createConnection("test");
+    connection = await CreateDatabaseConnection.createConnection();
     const entities = await connection.entityMetadatas;
-    await CreateDatabaseConnection.cleanAll(entities)
-    jest.clearAllMocks(); 
+    await CreateDatabaseConnection.cleanAll(entities);
+    jest.clearAllMocks();
     jest.resetAllMocks();
   });
 });

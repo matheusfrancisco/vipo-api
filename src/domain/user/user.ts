@@ -1,5 +1,5 @@
+import { Gender } from "@infrastructure/entity/user-entity";
 import Email from "./email";
-import { Gender } from "../../infrastructure/entity/user-entity";
 
 export interface IUser {
   name: string;
@@ -12,20 +12,18 @@ export interface IUser {
 
 export default class User {
   private _name: string;
+
   private _lastName: string;
+
   private _birthDate: Date;
+
   private _gender: Gender;
+
   public readonly email: Email;
+
   public readonly password: string;
 
-  constructor({
-    email,
-    password,
-    name,
-    lastName,
-    birthDate,
-    gender,
-  }: IUser) {
+  constructor({ email, password, name, lastName, birthDate, gender }: IUser) {
     this.email = new Email(email);
     this.password = password;
     this._name = name;
@@ -63,7 +61,7 @@ export default class User {
       password: this.password,
       gender: this._gender,
       birthDate: this._birthDate,
-      lastName: this._lastName,
+      lastName: this._lastName
     };
   }
 }
