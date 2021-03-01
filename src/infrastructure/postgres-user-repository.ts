@@ -1,5 +1,8 @@
 import { Connection, getRepository } from "typeorm";
-import { UserRepository } from "@domain/user/user-repository";
+import {
+  IUserRepositoryUpdatePayload,
+  UserRepository
+} from "@domain/user/user-repository";
 import { IUser } from "@domain/user/user";
 import { UserEntity } from "@infrastructure/entity/user-entity";
 import { UserAnswer } from "@infrastructure/entity/user-answer";
@@ -66,12 +69,18 @@ export class PostgresUserRepository implements UserRepository {
     return findUserProfile;
   }
 
-  public async update({ userId, name, lastName }: any): Promise<IUser> {
+  public async update({
+    userId,
+    ...updateFields
+  }: IUserRepositoryUpdatePayload): Promise<IUser> {
     const usersRepository = getRepository(UserEntity);
 
     const user = await usersRepository.findOneOrFail(userId);
 
-    const updatedUser = await usersRepository.save({ ...user, name, lastName });
+    const updatedUser = await usersRepository.save({
+      ...user,
+      ...updateFields
+    });
 
     return updatedUser;
   }
