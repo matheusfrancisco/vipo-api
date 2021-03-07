@@ -105,4 +105,10 @@ export class PostgresUserRepository implements UserRepository {
       console.log(err);
     }
   }
+
+  public async findAllProfileInformationsByEmail(
+    email: string
+  ): Promise<void> {
+    throw("NOT IMPLEMENTED")
+  }
 }

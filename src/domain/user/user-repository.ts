@@ -14,4 +14,6 @@ export interface UserRepository {
   update: (user: IUserRepositoryUpdatePayload) => Promise<IUser>;
   updateUserProfile: (userProfile: any) => Promise<any>;
   insertAnswer: (userAnswer: any) => Promise<void>;
+  // #TODO not implemented yet
+  findAllProfileInformationsByEmail: (email: string) => Promise<void>;
 }
