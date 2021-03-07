@@ -8,9 +8,9 @@
     "dev": "tsnd -r tsconfig-paths/register --transpile-only --respawn --inspect --ignore-watch node_modules --no-notify start.ts",
     "test": "NODE_ENV=test jest --forceExit --maxWorkers=4 --testTimeout=60000 --detectOpenHandles",
     "start": "nodemon --inspect",
-    "migrations": "NODE_ENV=prod ts-node node_modules/typeorm/cli.js migration:run  ",
-    "generate": "NODE_ENV=prod ts-node node_modules/typeorm/cli.js migration:generate -n  ",
-    "create-migration": "NODE_ENV=prod ts-node node_modules/typeorm/cli.js migration:create -n"
+    "migrations": "NODE_ENV=prod ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:run  ",
+    "generate": "NODE_ENV=prod ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:generate -n  ",
+    "create-migration": "NODE_ENV=prod ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:create -n"
   },
   "dependencies": {
     "@types/bcrypt": "^3.0.0",
@@ -25,7 +25,7 @@
     "jsonwebtoken": "^8.5.1",
     "mocha": "^6.2.2",
     "nodemon": "^2.0.2",
-    "pg": "^7.18.2",
+    "pg": "^8.0.3",
     "pg-god": "^1.0.11",
     "reflect-metadata": "^0.1.13",
     "supertest": "^4.0.2",
