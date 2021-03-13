@@ -3,7 +3,7 @@ import { server } from "../../../index";
 import { routerFactory } from "../../../routes";
 import { CreateDatabaseConnection } from "../../infrastructure/connection";
 
-describe("integration test", () => {
+describe("profile user integration test", () => {
   let serverFactoryWithUserRoute: any;
   let userRoutes: any;
 
@@ -27,6 +27,8 @@ describe("integration test", () => {
     const register = await request(serverFactoryWithUserRoute.app)
       .post("/users")
       .send(user);
+
+    console.log(register.body);
 
     expect(register.status).toBe(201);
 
@@ -56,6 +58,7 @@ describe("integration test", () => {
 
   afterEach(async () => {
     await CreateDatabaseConnection.cleanAll();
+    await CreateDatabaseConnection.endConnection();
     jest.clearAllMocks();
     jest.resetAllMocks();
   });
