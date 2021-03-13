@@ -32,4 +32,10 @@ export class CreateDatabaseConnection {
       throw new Error(`ERROR: Cleaning test db: ${error}`);
     }
   }
+
+  public static async endConnection(): Promise<void> {
+    const connection = await getConnection();
+
+    await connection.close();
+  }
 }
