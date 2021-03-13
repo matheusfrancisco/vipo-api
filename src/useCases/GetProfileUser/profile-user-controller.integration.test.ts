@@ -1,3 +1,4 @@
+import { UserRepository } from "@domain/user/user-repository";
 import request from "supertest";
 import { Connection, getRepository } from "typeorm";
 import { server } from "../../../index";
@@ -5,11 +6,11 @@ import { routerFactory } from "../../../routes";
 import { CreateDatabaseConnection } from "../../infrastructure/connection";
 import { UserEntity } from "../../infrastructure/entity/user-entity";
 
-describe("integratoin test", () => {
+describe("integration test", () => {
   let serverFactoryWithUserRoute: any;
   let userRoutes: any;
   let connection: Connection;
-  let repository: any;
+  let repository: UserRepository;
 
   beforeEach(async () => {
     userRoutes = await routerFactory();
@@ -37,10 +38,9 @@ describe("integratoin test", () => {
         email: "xicoooooodo1@hotmail.com",
         password: "123123"
       });
-    const email = "xicoooooodo1@hotmail.com";
-    // # is this the best options, or we can get the email fron jwt?
+
     const profileUserInfo = await request(serverFactoryWithUserRoute.app)
-      .get(`/profile/${email}`)
+      .get("/profile")
       .set({ authorization: `Bearer ${r.body.token}` });
 
     expect(res.status).toEqual(200);
@@ -58,9 +58,9 @@ describe("integratoin test", () => {
   });
 
   afterEach(async () => {
-    connection = await CreateDatabaseConnection.createConnection();
+    /*  connection = await CreateDatabaseConnection.createConnection();
     const entities = await connection.entityMetadatas;
-    await CreateDatabaseConnection.cleanAll(entities);
+    await CreateDatabaseConnection.cleanAll(entities); */
     jest.clearAllMocks();
     jest.resetAllMocks();
   });

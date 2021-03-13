@@ -8,13 +8,11 @@ interface IBuildResult {
   profileUserController: ProfileUserController;
 }
 
-export class ChangePasswordUseCaseFactory {
+export class GetProfileUserUseCaseFactory {
   public static build(connection: Connection): IBuildResult {
     const userRepository = new PostgresUserRepository(connection);
 
-    const profileUserUseCase = new ProfileUserUseCase(
-      userRepository,
-    );
+    const profileUserUseCase = new ProfileUserUseCase(userRepository);
     const findUseCase = new FindUserUseCase(userRepository);
 
     const profileUserController = new ProfileUserController(

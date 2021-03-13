@@ -2,6 +2,7 @@ import { Router } from "express";
 import { ChangePasswordUseCaseFactory } from "@useCases/ChangePassword";
 import { UpdateUserUseCaseFactory } from "./src/useCases/UpdateUser";
 import { createUseCaseFactory } from "./src/useCases/CreateUser";
+import { GetProfileUserUseCaseFactory } from "./src/useCases/GetProfileUser";
 import { UpdateUserProfileUseCaseFactory } from "./src/useCases/updateProfile";
 import { createRecommendationUseCaseFactory } from "./src/useCases/CreateRecommendation";
 import { Auth } from "./src/middlewares/auth";
@@ -20,6 +21,11 @@ export const routerFactory = async (): Promise<Router> => {
   );
 
   // const { findUserController } = await FindUseCaseFactory.build(connection);
+
+  const { profileUserController } = GetProfileUserUseCaseFactory.build(
+    connection
+  );
+
   const {
     updateUserProfileController
   } = await UpdateUserProfileUseCaseFactory.build(connection);
@@ -60,6 +66,10 @@ export const routerFactory = async (): Promise<Router> => {
 
   router.patch("/users", auth.verify, async (request, response) => {
     return updateUserController.handle(request, response);
+  });
+
+  router.get("/profile", auth.verify, (request, response) => {
+    return profileUserController.handle(request, response);
   });
 
   router.patch("/profile", auth.verify, async (request, response) => {
