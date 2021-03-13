@@ -6,17 +6,22 @@ import {
 } from "typeorm";
 
 export class CreateDatabaseConnection {
+  public static connection: Connection
   public static async createConnection(): Promise<Connection> {
-    const connection = await createConnection();
-
-    return connection;
+    if (!this.connection) {
+      this.connection = await createConnection();
+      return this.connection;
+    } else {
+      return this.connection;
+    }
   }
 
   public static async getConnection(): Promise<Connection | undefined> {
     return getConnection();
   }
 
-  public static async cleanAll(): Promise<void> {
+
+  public static async cleanAll(entities: EntityMetadata[]): Promise<void> {
     try {
       const connection = await getConnection();
 
