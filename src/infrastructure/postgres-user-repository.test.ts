@@ -42,9 +42,7 @@ describe("User Repository", () => {
   });
 
   afterEach(async () => {
-    connection = await CreateDatabaseConnection.createConnection();
-    const entities = await connection.entityMetadatas;
-    await CreateDatabaseConnection.cleanAll(entities);
+    await CreateDatabaseConnection.cleanAll();
     jest.clearAllMocks();
     jest.resetAllMocks();
   });

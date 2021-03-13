@@ -1,7 +1,7 @@
 import {
   Connection,
   createConnection,
-  EntityMetadata,
+  getConnection,
   getRepository
 } from "typeorm";
 
@@ -12,8 +12,18 @@ export class CreateDatabaseConnection {
     return connection;
   }
 
-  public static async cleanAll(entities: EntityMetadata[]): Promise<void> {
+  public static async getConnection(): Promise<Connection | undefined> {
+    return getConnection();
+  }
+
+  public static async cleanAll(): Promise<void> {
     try {
+      const connection = await getConnection();
+
+      if (!connection) throw new Error("There are no active connections");
+
+      const entities = await connection.entityMetadatas;
+
       entities.forEach(async entity => {
         const repository = await getRepository(entity.name);
         await repository.query(`DELETE FROM ${entity.tableName};`);

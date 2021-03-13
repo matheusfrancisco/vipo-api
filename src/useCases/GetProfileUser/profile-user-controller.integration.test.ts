@@ -1,49 +1,46 @@
-import { UserRepository } from "@domain/user/user-repository";
 import request from "supertest";
-import { Connection, getRepository } from "typeorm";
 import { server } from "../../../index";
 import { routerFactory } from "../../../routes";
 import { CreateDatabaseConnection } from "../../infrastructure/connection";
-import { UserEntity } from "../../infrastructure/entity/user-entity";
 
 describe("integration test", () => {
   let serverFactoryWithUserRoute: any;
   let userRoutes: any;
-  let connection: Connection;
-  let repository: UserRepository;
 
   beforeEach(async () => {
     userRoutes = await routerFactory();
     serverFactoryWithUserRoute = await server(userRoutes);
-    repository = await getRepository(UserEntity);
 
     jest.setTimeout(60000);
   });
 
   test("should register a user and get all profile informations", async () => {
-    const res = await request(serverFactoryWithUserRoute.app)
-      .post("/users")
-      .send({
-        name: "mt",
-        email: "xicoooooodo1@hotmail.com",
-        password: "123123",
-        lastName: "Xico",
-        birthDate: "09/09/1994",
-        gender: "Male"
-      });
+    const user = {
+      name: "mt",
+      email: "xicoooooodo1@hotmail.com",
+      password: "123123",
+      lastName: "Xico",
+      birthDate: "09/09/1994",
+      gender: "Male"
+    };
 
-    const r = await request(serverFactoryWithUserRoute.app)
+    const register = await request(serverFactoryWithUserRoute.app)
+      .post("/users")
+      .send(user);
+
+    expect(register.status).toBe(201);
+
+    const login = await request(serverFactoryWithUserRoute.app)
       .post("/signin")
       .send({
-        email: "xicoooooodo1@hotmail.com",
-        password: "123123"
+        email: user.email,
+        password: user.password
       });
 
     const profileUserInfo = await request(serverFactoryWithUserRoute.app)
       .get("/profile")
-      .set({ authorization: `Bearer ${r.body.token}` });
+      .set({ authorization: `Bearer ${login.body.token}` });
 
-    expect(res.status).toEqual(200);
     expect(profileUserInfo.body).toEqual({
       name: "mt",
       lastName: "Xico",
@@ -58,9 +55,7 @@ describe("integration test", () => {
   });
 
   afterEach(async () => {
-    /*  connection = await CreateDatabaseConnection.createConnection();
-    const entities = await connection.entityMetadatas;
-    await CreateDatabaseConnection.cleanAll(entities); */
+    await CreateDatabaseConnection.cleanAll();
     jest.clearAllMocks();
     jest.resetAllMocks();
   });
