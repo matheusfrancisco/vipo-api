@@ -12,7 +12,6 @@ describe("integratoin test recomentadion profile", () => {
   beforeEach(async () => {
     userRoutes = await routerFactory();
     serverFactoryWithUserRoute = await server(userRoutes);
-    connection = await CreateDatabaseConnection.createConnection();
     jest.setTimeout(60000);
   });
 

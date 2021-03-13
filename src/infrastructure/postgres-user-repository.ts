@@ -7,6 +7,7 @@ import { IUser } from "@domain/user/user";
 import { UserEntity } from "@infrastructure/entity/user-entity";
 import { UserAnswer } from "@infrastructure/entity/user-answer";
 import { UserProfile } from "@infrastructure/entity/user-profile";
+import { IUserProfile } from "@domain/user/user-profile";
 
 export class PostgresUserRepository implements UserRepository {
   constructor(public connection: Connection) {}
@@ -106,9 +107,22 @@ export class PostgresUserRepository implements UserRepository {
     }
   }
 
-  public async findAllProfileInformationsByEmail(
-    email: string
-  ): Promise<void> {
-    throw("NOT IMPLEMENTED")
+  public async findUserProfile(
+    user: number
+  ): Promise<IUserProfile | undefined> {
+    const userProfileRepository = getRepository(UserProfile);
+
+    const userProfile = await userProfileRepository.findOne({
+      where: { user }
+    });
+
+    if (!userProfile) return undefined;
+
+    return {
+      user,
+      drinks: userProfile.drinks,
+      foods: userProfile.foods,
+      musicals: userProfile.musicals
+    };
   }
 }

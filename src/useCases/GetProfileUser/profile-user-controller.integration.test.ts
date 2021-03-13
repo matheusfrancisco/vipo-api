@@ -12,7 +12,6 @@ describe("integratoin test", () => {
   let repository: any;
 
   beforeEach(async () => {
-    connection = await CreateDatabaseConnection.createConnection();
     userRoutes = await routerFactory();
     serverFactoryWithUserRoute = await server(userRoutes);
     repository = await getRepository(UserEntity);
@@ -38,16 +37,15 @@ describe("integratoin test", () => {
         email: "xicoooooodo1@hotmail.com",
         password: "123123"
       });
-    const email = "xicoooooodo1@hotmail.com"
+    const email = "xicoooooodo1@hotmail.com";
     // # is this the best options, or we can get the email fron jwt?
     const profileUserInfo = await request(serverFactoryWithUserRoute.app)
       .get(`/profile/${email}`)
-      .set({ authorization: `Bearer ${r.body.token}` })
-
+      .set({ authorization: `Bearer ${r.body.token}` });
 
     expect(res.status).toEqual(200);
     expect(profileUserInfo.body).toEqual({
-      name:"mt",
+      name: "mt",
       lastName: "Xico",
       birthDate: "09/09/1994",
       gender: "Male",
@@ -56,10 +54,8 @@ describe("integratoin test", () => {
         // foods: ["pasta"],
         // drinks: ["coffe", "wine", "juice"]
       }
-    })
+    });
   });
-
-
 
   afterEach(async () => {
     connection = await CreateDatabaseConnection.createConnection();

@@ -16,7 +16,7 @@ export class UpdateUserProfileUseCase {
     profileInformations
   }: IUpdateUserProfileDTO): Promise<any> {
     const userProfile = new UserProfile({
-      userId,
+      user: userId,
       musicals: profileInformations.musicals,
       drinks: profileInformations.drinks,
       foods: profileInformations.foods

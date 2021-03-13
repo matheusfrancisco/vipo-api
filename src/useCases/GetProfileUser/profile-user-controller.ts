@@ -22,7 +22,7 @@ export class ProfileUserController {
       if (!existingUser) throw new Error("User does not exist");
 
       const user = await this.profileUserUseCase.execute({
-        email: email,
+        email
       });
 
       return response.status(201).json({ user });

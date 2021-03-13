@@ -1,21 +1,14 @@
 import request from "supertest";
-import { Connection, getRepository } from "typeorm";
 import { server } from "../../../index";
 import { routerFactory } from "../../../routes";
 import { CreateDatabaseConnection } from "../../infrastructure/connection";
-import { UserEntity } from "../../infrastructure/entity/user-entity";
 
 describe("integratoin test", () => {
   let serverFactoryWithUserRoute: any;
-  let userRoutes: any;
-  let connection: Connection;
-  let repository: any;
 
   beforeEach(async () => {
-    connection = await CreateDatabaseConnection.createConnection();
-    userRoutes = await routerFactory();
+    const userRoutes = await routerFactory();
     serverFactoryWithUserRoute = await server(userRoutes);
-    repository = await getRepository(UserEntity);
 
     jest.setTimeout(60000);
   });
@@ -62,7 +55,7 @@ describe("integratoin test", () => {
   });
 
   afterEach(async () => {
-    connection = await CreateDatabaseConnection.createConnection();
+    const connection = await CreateDatabaseConnection.createConnection();
     const entities = await connection.entityMetadatas;
     await CreateDatabaseConnection.cleanAll(entities);
     jest.clearAllMocks();

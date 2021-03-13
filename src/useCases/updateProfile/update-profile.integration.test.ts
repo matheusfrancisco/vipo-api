@@ -49,7 +49,6 @@ xdescribe("integratoin test", () => {
   });
 
   afterEach(async () => {
-    connection = await CreateDatabaseConnection.createConnection();
     const entities = await connection.entityMetadatas;
     await CreateDatabaseConnection.cleanAll(entities);
     jest.clearAllMocks();

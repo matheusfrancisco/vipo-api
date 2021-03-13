@@ -1,35 +1,32 @@
 export interface IUserProfile {
-  userId: number;
+  user: number;
   musicals: string[];
   foods: string[];
   drinks: string[];
 }
 
-export default class UserProfile{
-  private _userId: number;
-  private _musicals?: string[];
-  private _foods?: string[];
-  private _drinks?: string[];
+export default class UserProfile {
+  private _user: number;
 
-  constructor({
-    userId,
-    musicals,
-    foods,
-    drinks,
-  }: IUserProfile) {
-    this._userId = userId;
+  private _musicals: string[];
+
+  private _foods: string[];
+
+  private _drinks: string[];
+
+  constructor({ user, musicals, foods, drinks }: IUserProfile) {
+    this._user = user;
     this._musicals = musicals;
     this._foods = foods;
     this._drinks = drinks;
   }
 
-  public toRepository() {
+  public toRepository(): IUserProfile {
     return {
-      userId: this._userId,
+      user: this._user,
       musicals: this._musicals,
       foods: this._foods,
-      drinks: this._drinks,
-    }
+      drinks: this._drinks
+    };
   }
-
 }
