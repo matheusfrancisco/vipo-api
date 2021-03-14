@@ -25,12 +25,12 @@ describe("user integration test", () => {
         gender: "Male"
       });
 
-    console.log(res.body);
+    console.log(res.body, res.status);
 
     expect(res.status).toEqual(201);
   });
 
-  xtest("should throw user already exist", async () => {
+  test("should throw user already exist", async () => {
     const user = {
       name: "mt",
       email: "xicoooooodo2@hotmail.com",

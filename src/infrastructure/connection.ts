@@ -26,7 +26,7 @@ export class CreateDatabaseConnection {
 
       const entities = await connection.entityMetadatas;
 
-      entities.forEach(async entity => {
+      await entities.forEach(async entity => {
         const repository = await getRepository(entity.name);
         await repository.query(`DELETE FROM ${entity.tableName};`);
       });
