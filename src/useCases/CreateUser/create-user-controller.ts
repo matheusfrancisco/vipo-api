@@ -1,19 +1,13 @@
 import { Request, Response } from "express";
 import { CreateUserUseCase } from "./create-use-case";
+import { Gender } from "../../infrastructure/entity/user-entity";
+
 const buildErrorMessage = (message: string) => ({ error: message });
-import { Gender } from '../../infrastructure/entity/user-entity';
 
 export class CreateUserController {
-  private _createUserUseCase: CreateUserUseCase;
+  constructor(private createUserUseCase: CreateUserUseCase) {}
 
-  constructor(createUserUseCase: CreateUserUseCase) {
-    this._createUserUseCase = createUserUseCase;
-  }
-
-  async handle(
-    request: Request,
-    response: Response
-  ): Promise<Response | undefined> {
+  async handle(request: Request, response: Response): Promise<Response> {
     if (
       !request.body ||
       !request.body.name ||
@@ -23,18 +17,17 @@ export class CreateUserController {
       !request.body.email ||
       !request.body.password
     ) {
-      response.status(400).json(buildErrorMessage("Parameters missing"));
-      return;
+      return response.status(400).json(buildErrorMessage("Parameters missing"));
     }
-    const gender = request.body.gender as |"Male"| "Female"| "Neuter"
+    const gender = request.body.gender as "Male" | "Female" | "Neuter";
     try {
-      await this._createUserUseCase.execute({
+      await this.createUserUseCase.execute({
         name: request.body.name,
         email: request.body.email,
         password: request.body.password,
         lastName: request.body.lastName,
         gender: Gender[gender],
-        birthDate: new Date(request.body.birthDate),
+        birthDate: new Date(request.body.birthDate)
       });
 
       return response.status(201).send();

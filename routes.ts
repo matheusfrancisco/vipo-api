@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { ChangePasswordUseCaseFactory } from "@useCases/ChangePassword";
 import { UpdateUserUseCaseFactory } from "./src/useCases/UpdateUser";
-import { createUseCaseFactory } from "./src/useCases/CreateUser";
+import { CreateUseCaseFactory } from "./src/useCases/CreateUser";
 import { GetProfileUserUseCaseFactory } from "./src/useCases/GetProfileUser";
 import { UpdateUserProfileUseCaseFactory } from "./src/useCases/updateProfile";
 import { createRecommendationUseCaseFactory } from "./src/useCases/CreateRecommendation";
@@ -14,7 +14,7 @@ export const routerFactory = async (): Promise<Router> => {
   const {
     createUserController,
     userRepository
-  } = await createUseCaseFactory.build(connection);
+  } = await CreateUseCaseFactory.build(connection);
 
   const { changePasswordController } = await ChangePasswordUseCaseFactory.build(
     connection

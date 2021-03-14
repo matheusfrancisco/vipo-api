@@ -19,7 +19,7 @@ export class PostgresUserRepository implements UserRepository {
     gender,
     birthDate,
     lastName
-  }: IUser): Promise<void> {
+  }: IUser): Promise<Omit<IUser, "password">> {
     const entity = {
       name,
       email,
@@ -28,7 +28,15 @@ export class PostgresUserRepository implements UserRepository {
       gender,
       lastName
     };
-    await getRepository(UserEntity).save(entity);
+    const user = await getRepository(UserEntity).save(entity);
+
+    return {
+      name: user.name,
+      lastName: user.lastName,
+      email: user.email,
+      birthDate: user.birthDate,
+      gender: user.gender
+    };
   }
 
   public async findByEmail(

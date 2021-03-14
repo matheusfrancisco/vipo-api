@@ -4,7 +4,7 @@ import { routerFactory } from "../../../routes";
 import { CreateDatabaseConnection } from "../../infrastructure/connection";
 
 describe("user integration test", () => {
-  let serverFactoryWithUserRoute: { app: any };
+  let serverFactoryWithUserRoute: { app: Express.Application };
 
   beforeEach(async () => {
     const userRoutes = await routerFactory();
@@ -25,10 +25,12 @@ describe("user integration test", () => {
         gender: "Male"
       });
 
+    console.log(res.body);
+
     expect(res.status).toEqual(201);
   });
 
-  test("should throw user already exist", async () => {
+  xtest("should throw user already exist", async () => {
     const user = {
       name: "mt",
       email: "xicoooooodo2@hotmail.com",

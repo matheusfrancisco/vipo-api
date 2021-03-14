@@ -2,15 +2,15 @@ import chai from "chai";
 import sinon from "sinon";
 import sinonChai from "sinon-chai";
 import chaiAsPromised from "chai-as-promised";
-
-chai.use(chaiAsPromised);
-chai.use(sinonChai);
-const expect = chai.expect;
 import { ServiceError } from "../../service-error";
 import { CreateUserController } from "./create-user-controller";
 import { CreateUserUseCase } from "./create-use-case";
 import { UserRepository } from "../../domain/user/user-repository";
 import { UserEntity } from "../../infrastructure/entity/user-entity";
+
+chai.use(chaiAsPromised);
+chai.use(sinonChai);
+const { expect } = chai;
 
 describe("UserController", () => {
   let execute: sinon.SinonSpy;
@@ -34,8 +34,8 @@ describe("UserController", () => {
   const userEmail = "matheusmachadoufsc@gmail.com";
   const userName = "xi";
   const lastName = "Franxico";
-  const bday = new Date("09/09/1994")
-  const gender = "Male"
+  const bday = new Date("09/09/1994");
+  const gender = "Male";
   const userPass = "123123";
 
   const req = {
@@ -43,9 +43,9 @@ describe("UserController", () => {
       name: userName,
       email: userEmail,
       password: userPass,
-      lastName: lastName,
+      lastName,
       birthDate: bday,
-      gender: gender,
+      gender
     }
   };
   const reqWithoutEmail = { body: { password: userPass } };
