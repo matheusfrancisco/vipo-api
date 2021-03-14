@@ -25,8 +25,6 @@ describe("user integration test", () => {
         gender: "Male"
       });
 
-    console.log(res.body, res.status);
-
     expect(res.status).toEqual(201);
   });
 

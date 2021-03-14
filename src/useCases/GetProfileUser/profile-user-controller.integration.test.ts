@@ -4,11 +4,10 @@ import { routerFactory } from "../../../routes";
 import { CreateDatabaseConnection } from "../../infrastructure/connection";
 
 describe("profile user integration test", () => {
-  let serverFactoryWithUserRoute: any;
-  let userRoutes: any;
+  let serverFactoryWithUserRoute: { app: Express.Application };
 
   beforeEach(async () => {
-    userRoutes = await routerFactory();
+    const userRoutes = await routerFactory();
     serverFactoryWithUserRoute = await server(userRoutes);
 
     jest.setTimeout(60000);
@@ -27,8 +26,6 @@ describe("profile user integration test", () => {
     const register = await request(serverFactoryWithUserRoute.app)
       .post("/users")
       .send(user);
-
-    console.log(register.body);
 
     expect(register.status).toBe(201);
 
