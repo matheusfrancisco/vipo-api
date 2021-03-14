@@ -44,7 +44,7 @@ describe("profile user integration test", () => {
       user: {
         name: "mt",
         lastName: "Xico",
-        birthDate: "1994-09-09T03:00:00.000Z",
+        birthDate: "1994-09-09T00:00:00.000Z",
         gender: "male",
         email: "xicoooooodo11@hotmail.com",
         profileInformations: {
