@@ -1,5 +1,4 @@
 import request from "supertest";
-import { Connection } from "typeorm";
 import { server } from "../../../index";
 import { routerFactory } from "../../../routes";
 import { CreateDatabaseConnection } from "../../infrastructure/connection";
@@ -7,12 +6,10 @@ import { CreateDatabaseConnection } from "../../infrastructure/connection";
 describe("integratoin test recomentadion profile", () => {
   let serverFactoryWithUserRoute: any;
   let userRoutes: any;
-  let connection: Connection;
 
   beforeEach(async () => {
     userRoutes = await routerFactory();
     serverFactoryWithUserRoute = await server(userRoutes);
-    connection = await CreateDatabaseConnection.createConnection();
     jest.setTimeout(60000);
   });
 
@@ -53,9 +50,7 @@ describe("integratoin test recomentadion profile", () => {
   });
 
   afterEach(async () => {
-    connection = await CreateDatabaseConnection.createConnection();
-    const entities = await connection.entityMetadatas;
-    await CreateDatabaseConnection.cleanAll(entities);
+    await CreateDatabaseConnection.cleanAll();
     jest.clearAllMocks();
     jest.resetAllMocks();
   });

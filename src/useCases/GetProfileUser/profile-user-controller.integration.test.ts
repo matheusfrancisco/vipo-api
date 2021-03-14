@@ -3,24 +3,24 @@ import { server } from "../../../index";
 import { routerFactory } from "../../../routes";
 import { CreateDatabaseConnection } from "../../infrastructure/connection";
 
-describe("update profile integration test", () => {
-  let serverFactoryWithUserRoute: any;
+describe("profile user integration test", () => {
+  let serverFactoryWithUserRoute: { app: Express.Application };
 
   beforeEach(async () => {
     const userRoutes = await routerFactory();
     serverFactoryWithUserRoute = await server(userRoutes);
+
     jest.setTimeout(60000);
   });
 
-  test("should update user profile", async () => {
+  test("should register a user and get all profile informations", async () => {
     const user = {
-      name: "Matthew",
-      email: "xico1ooooodo1@hotmail.com",
+      name: "mt",
+      email: "xicoooooodo11@hotmail.com",
       password: "123123",
       lastName: "Xico",
       birthDate: "09/09/1994",
       gender: "Male"
-
     };
 
     const register = await request(serverFactoryWithUserRoute.app)
@@ -36,21 +36,24 @@ describe("update profile integration test", () => {
         password: user.password
       });
 
-    expect(login.status).toBe(200);
+    const profileUserInfo = await request(serverFactoryWithUserRoute.app)
+      .get("/profile")
+      .set({ authorization: `Bearer ${login.body.token}` });
 
-    const update = await request(serverFactoryWithUserRoute.app)
-      .patch("/profile")
-      .set({ authorization: `Bearer ${login.body.token}` })
-      .send({
+    expect(profileUserInfo.body).toEqual({
+      user: {
+        name: "mt",
+        lastName: "Xico",
+        birthDate: "1994-09-09T00:00:00.000Z",
+        gender: "male",
+        email: "xicoooooodo11@hotmail.com",
         profileInformations: {
-          musicals: ["rock", "ki"],
-          foods: ["pasta"],
-          drinks: ["coffe", "wine", "juice"]
+          musicals: [],
+          foods: [],
+          drinks: []
         }
-      });
-    expect(update.body.profile.drinks).toEqual(["coffe", "wine", "juice"]);
-    expect(update.body.profile.foods).toEqual(["pasta"]);
-    expect(update.body.profile.musicals).toEqual(["rock", "ki"]);
+      }
+    });
   });
 
   afterEach(async () => {

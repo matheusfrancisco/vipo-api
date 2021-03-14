@@ -1,21 +1,30 @@
+import { Connection } from "typeorm";
+import makeHashProvider from "@providers/HashProvider";
 import { PostgresUserRepository } from "../../infrastructure/postgres-user-repository";
 import { CreateUserController } from "./create-user-controller";
-import { Connection, createConnection } from "typeorm";
 import { UserRepository } from "../../domain/user/user-repository";
 import { CreateUserUseCase } from "./create-use-case";
 
-export class createUseCaseFactory {
-  public static async build(connection: Connection) {
-    let userRepository: UserRepository;
+interface IBuildResult {
+  userRepository: UserRepository;
+  createUserController: CreateUserController;
+}
 
-    userRepository = new PostgresUserRepository(connection);
+export class CreateUseCaseFactory {
+  public static async build(connection: Connection): Promise<IBuildResult> {
+    const userRepository = new PostgresUserRepository(connection);
+    const hashProvider = makeHashProvider();
 
-    const createUserUseCase = new CreateUserUseCase(userRepository);
+    const createUserUseCase = new CreateUserUseCase(
+      userRepository,
+      hashProvider
+    );
 
     const createUserController = new CreateUserController(createUserUseCase);
+
     return {
       createUserController,
-      userRepository,
+      userRepository
     };
   }
 }

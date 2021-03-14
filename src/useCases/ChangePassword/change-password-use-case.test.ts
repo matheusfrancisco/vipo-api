@@ -1,20 +1,11 @@
-import { UserRepository } from "@domain/user/user-repository";
-import IHashProvider from "@providers/HashProvider/models/IHashProvider";
+import MockUserRepository from "@domain/user/mocks/mock-user-repository";
+import MockHashProvider from "@providers/HashProvider/mocks/MockHashProvider";
 import IChangePasswordDTO from "./change-password-dto";
 import { ChangePasswordUseCase } from "./change-password-use-case";
 
 const makeFakeUseCase = () => {
-  const repository: UserRepository = {
-    findByEmail: jest.fn(),
-    insertAnswer: jest.fn(),
-    save: jest.fn(),
-    update: jest.fn(),
-    updateUserProfile: jest.fn()
-  };
-  const provider: IHashProvider = {
-    generateHash: jest.fn(async payload => payload),
-    hashesMatch: jest.fn(async (payload, expected) => payload === expected)
-  };
+  const repository = new MockUserRepository();
+  const provider = new MockHashProvider();
 
   const useCase = new ChangePasswordUseCase(repository, provider);
 

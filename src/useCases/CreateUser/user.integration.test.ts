@@ -1,21 +1,14 @@
 import request from "supertest";
-import { Connection, getRepository } from "typeorm";
 import { server } from "../../../index";
 import { routerFactory } from "../../../routes";
 import { CreateDatabaseConnection } from "../../infrastructure/connection";
-import { UserEntity } from "../../infrastructure/entity/user-entity";
 
-describe("integratoin test", () => {
-  let serverFactoryWithUserRoute: any;
-  let userRoutes: any;
-  let connection: Connection;
-  let repository: any;
+describe("user integration test", () => {
+  let serverFactoryWithUserRoute: { app: Express.Application };
 
   beforeEach(async () => {
-    connection = await CreateDatabaseConnection.createConnection();
-    userRoutes = await routerFactory();
+    const userRoutes = await routerFactory();
     serverFactoryWithUserRoute = await server(userRoutes);
-    repository = await getRepository(UserEntity);
 
     jest.setTimeout(60000);
   });
@@ -24,9 +17,9 @@ describe("integratoin test", () => {
     const res = await request(serverFactoryWithUserRoute.app)
       .post("/users")
       .send({
-        name: "mt",
-        email: "xicoooooodo1@hotmail.com",
-        password: "123123",
+        name: "matheus",
+        email: "xicooooo2odo1@hotmail.com",
+        password: "1231233",
         lastName: "Xico",
         birthDate: "09/09/1994",
         gender: "Male"
@@ -35,36 +28,29 @@ describe("integratoin test", () => {
     expect(res.status).toEqual(201);
   });
 
-  test("should throw  user already exist", async () => {
-    const res = await request(serverFactoryWithUserRoute.app)
-      .post("/users")
-      .send({
-        name: "mt",
-        email: "xicoooooodo2@hotmail.com",
-        password: "123123",
-        lastName: "Xico",
-        birthDate: "09/09/1994",
-        gender: "Male"
-      });
+  test("should throw user already exist", async () => {
+    const user = {
+      name: "mt",
+      email: "xicoooooodo2@hotmail.com",
+      password: "123123",
+      lastName: "Xico",
+      birthDate: "09/09/1994",
+      gender: "Male"
+    };
 
-    const res2 = await request(serverFactoryWithUserRoute.app)
+    await request(serverFactoryWithUserRoute.app)
       .post("/users")
-      .send({
-        name: "mt",
-        email: "xicoooooodo2@hotmail.com",
-        password: "123123",
-        lastName: "Xico",
-        birthDate: "09/09/1994",
-        gender: "Male"
-      });
+      .send(user);
 
-    expect(res2.body.message).toEqual("User already exists.");
+    const alreadyCreatedResponse = await request(serverFactoryWithUserRoute.app)
+      .post("/users")
+      .send(user);
+
+    expect(alreadyCreatedResponse.body.message).toEqual("User already exists.");
   });
 
   afterEach(async () => {
-    connection = await CreateDatabaseConnection.createConnection();
-    const entities = await connection.entityMetadatas;
-    await CreateDatabaseConnection.cleanAll(entities);
+    await CreateDatabaseConnection.cleanAll();
     jest.clearAllMocks();
     jest.resetAllMocks();
   });

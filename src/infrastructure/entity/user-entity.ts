@@ -38,6 +38,7 @@ export class UserEntity {
 
   @Column({
     nullable: false,
+    type: "timestamp without time zone"
   })
   birthDate!: Date;
 

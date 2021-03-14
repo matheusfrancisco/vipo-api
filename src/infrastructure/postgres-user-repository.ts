@@ -7,6 +7,7 @@ import { IUser } from "@domain/user/user";
 import { UserEntity } from "@infrastructure/entity/user-entity";
 import { UserAnswer } from "@infrastructure/entity/user-answer";
 import { UserProfile } from "@infrastructure/entity/user-profile";
+import { IUserProfile } from "@domain/user/user-profile";
 
 export class PostgresUserRepository implements UserRepository {
   constructor(public connection: Connection) {}
@@ -18,7 +19,7 @@ export class PostgresUserRepository implements UserRepository {
     gender,
     birthDate,
     lastName
-  }: IUser): Promise<void> {
+  }: IUser): Promise<Omit<IUser, "password">> {
     const entity = {
       name,
       email,
@@ -27,7 +28,15 @@ export class PostgresUserRepository implements UserRepository {
       gender,
       lastName
     };
-    await getRepository(UserEntity).save(entity);
+    const user = await getRepository(UserEntity).save(entity);
+
+    return {
+      name: user.name,
+      lastName: user.lastName,
+      email: user.email,
+      birthDate: user.birthDate,
+      gender: user.gender
+    };
   }
 
   public async findByEmail(
@@ -42,9 +51,9 @@ export class PostgresUserRepository implements UserRepository {
     return userRepository;
   }
 
-  public async updateUserProfile({ musicals, userId, foods, drinks }: any) {
+  public async updateUserProfile({ musicals, user, foods, drinks }: any) {
     const userProfileRepository = getRepository(UserProfile);
-    const entity = { user: userId, musicals, foods, drinks };
+    const entity = { user, musicals, foods, drinks };
 
     const userProfile = await userProfileRepository.findOne({
       where: {
@@ -104,5 +113,24 @@ export class PostgresUserRepository implements UserRepository {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  public async findUserProfile(
+    user: number
+  ): Promise<IUserProfile | undefined> {
+    const userProfileRepository = getRepository(UserProfile);
+
+    const userProfile = await userProfileRepository.findOne({
+      where: { user }
+    });
+
+    if (!userProfile) return undefined;
+
+    return {
+      user,
+      drinks: userProfile.drinks,
+      foods: userProfile.foods,
+      musicals: userProfile.musicals
+    };
   }
 }

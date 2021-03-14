@@ -14,7 +14,6 @@ export const server = async (
 export const startServer = async (): Promise<void> => {
   const router = await routerFactory();
   const { app } = await server(router);
-
   app.listen(3000, () => {
     console.log("Server running");
   });
