@@ -27,10 +27,9 @@ export class ProfileUserUseCase {
 
     const userProfile = await this.userRepository.findUserProfile(user.id);
 
-    if (!userProfile) return undefined;
-
     // I'm creating a new return object so there are no connections from the other layers, meaning whatever happens to the data structures on the repository
     // the controller can always expect the same return value
+    // remove undefined from  birthDate, gender..
     return {
       name: user.name,
       lastName: user.lastName,
@@ -38,9 +37,9 @@ export class ProfileUserUseCase {
       birthDate: user.birthDate,
       gender: user.gender,
       profileInformations: {
-        drinks: userProfile.drinks,
-        foods: userProfile.foods,
-        musicals: userProfile.musicals
+        drinks: userProfile ? userProfile.drinks: [],
+        foods: userProfile ? userProfile.foods : [],
+        musicals: userProfile ? userProfile.musicals : []
       }
     };
   }

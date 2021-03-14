@@ -51,9 +51,9 @@ export class PostgresUserRepository implements UserRepository {
     return userRepository;
   }
 
-  public async updateUserProfile({ musicals, userId, foods, drinks }: any) {
+  public async updateUserProfile({ musicals, user, foods, drinks }: any) {
     const userProfileRepository = getRepository(UserProfile);
-    const entity = { user: userId, musicals, foods, drinks };
+    const entity = { user, musicals, foods, drinks };
 
     const userProfile = await userProfileRepository.findOne({
       where: {

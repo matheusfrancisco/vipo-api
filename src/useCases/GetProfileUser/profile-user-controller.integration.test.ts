@@ -16,7 +16,7 @@ describe("profile user integration test", () => {
   test("should register a user and get all profile informations", async () => {
     const user = {
       name: "mt",
-      email: "xicoooooodo1@hotmail.com",
+      email: "xicoooooodo11@hotmail.com",
       password: "123123",
       lastName: "Xico",
       birthDate: "09/09/1994",
@@ -41,14 +41,17 @@ describe("profile user integration test", () => {
       .set({ authorization: `Bearer ${login.body.token}` });
 
     expect(profileUserInfo.body).toEqual({
-      name: "mt",
-      lastName: "Xico",
-      birthDate: "09/09/1994",
-      gender: "Male",
-      profileInformations: {
-        // musicals: ["rock", "ki"],
-        // foods: ["pasta"],
-        // drinks: ["coffe", "wine", "juice"]
+      user: {
+        name: "mt",
+        lastName: "Xico",
+        birthDate: "1994-09-09T03:00:00.000Z",
+        gender: "male",
+        email: "xicoooooodo11@hotmail.com",
+        profileInformations: {
+          musicals: [],
+          foods: [],
+          drinks: []
+        }
       }
     });
   });

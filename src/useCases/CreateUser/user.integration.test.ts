@@ -17,9 +17,9 @@ describe("user integration test", () => {
     const res = await request(serverFactoryWithUserRoute.app)
       .post("/users")
       .send({
-        name: "mt",
-        email: "xicoooooodo1@hotmail.com",
-        password: "123123",
+        name: "matheus",
+        email: "xicooooo2odo1@hotmail.com",
+        password: "1231233",
         lastName: "Xico",
         birthDate: "09/09/1994",
         gender: "Male"
@@ -51,7 +51,6 @@ describe("user integration test", () => {
 
   afterEach(async () => {
     await CreateDatabaseConnection.cleanAll();
-    await CreateDatabaseConnection.endConnection();
     jest.clearAllMocks();
     jest.resetAllMocks();
   });

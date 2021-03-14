@@ -15,8 +15,12 @@ describe("update profile integration test", () => {
   test("should update user profile", async () => {
     const user = {
       name: "Matthew",
-      email: "xicoooooodo@hotmail.com",
-      password: "123123"
+      email: "xico1ooooodo1@hotmail.com",
+      password: "123123",
+      lastName: "Xico",
+      birthDate: "09/09/1994",
+      gender: "Male"
+
     };
 
     const register = await request(serverFactoryWithUserRoute.app)
@@ -31,6 +35,8 @@ describe("update profile integration test", () => {
         email: user.email,
         password: user.password
       });
+
+    expect(login.status).toBe(200);
 
     const update = await request(serverFactoryWithUserRoute.app)
       .patch("/profile")

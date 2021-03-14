@@ -13,23 +13,6 @@ describe("Profile User Use Case", () => {
     expect(result).toBeUndefined();
   });
 
-  it("should return undefined when no user profile exists", async () => {
-    const usersRepository = new MockUserRepository();
-    usersRepository.findByEmail = jest.fn(() => ({
-      id: 20,
-      name: "Fake"
-    }));
-
-    const useCase = new ProfileUserUseCase(usersRepository);
-
-    const email = "my_random_mail@email.com";
-
-    const result = await useCase.execute({ email });
-
-    expect(result).toBeUndefined();
-    expect(usersRepository.findUserProfile).toHaveBeenCalled();
-  });
-
   it("should return the user and its profile correctly", async () => {
     const user = {
       name: "Fake",

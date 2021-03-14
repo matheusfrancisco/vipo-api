@@ -34,6 +34,7 @@ export class CreateUserController {
     } catch (err) {
       // const status = error.constructor.name === "ServiceError" ? 400 : 500;
       // res.status(status).json(buildErrorMessage(error.message));
+      // console.log(err)
       return response.status(400).json({
         message: err.message || "Unexpected error."
       });

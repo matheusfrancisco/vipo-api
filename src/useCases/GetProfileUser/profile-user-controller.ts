@@ -17,7 +17,7 @@ export class ProfileUserController {
       return response.status(400).json(buildErrorMessage("Parameters missing"));
 
     try {
-      const existingUser = await this.findUseCase.execute(email);
+      const existingUser = await this.findUseCase.execute({ email });
 
       if (!existingUser) throw new Error("User does not exist");
 
