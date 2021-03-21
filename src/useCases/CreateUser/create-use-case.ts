@@ -1,12 +1,12 @@
 import IHashProvider from "@providers/HashProvider/models/IHashProvider";
 import User, { IUser } from "../../domain/user/user";
-import { UserRepository } from "../../domain/user/user-repository";
+import { IUserRepository } from "../../domain/user/user-repository";
 
 type UserResource = Omit<IUser, "password">;
 
 export class CreateUserUseCase {
   constructor(
-    private userRepository: UserRepository,
+    private userRepository: IUserRepository,
     private hashProvider: IHashProvider
   ) {}
 

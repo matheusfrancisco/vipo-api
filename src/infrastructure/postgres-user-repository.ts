@@ -1,7 +1,7 @@
 import { Connection, getRepository } from "typeorm";
 import {
   IUserRepositoryUpdatePayload,
-  UserRepository
+  IUserRepository
 } from "@domain/user/user-repository";
 import { IUser } from "@domain/user/user";
 import { UserEntity } from "@infrastructure/entity/user-entity";
@@ -9,7 +9,7 @@ import { UserAnswer } from "@infrastructure/entity/user-answer";
 import { UserProfile } from "@infrastructure/entity/user-profile";
 import { IUserProfile } from "@domain/user/user-profile";
 
-export class PostgresUserRepository implements UserRepository {
+export class PostgresUserRepository implements IUserRepository {
   constructor(public connection: Connection) {}
 
   public async save({

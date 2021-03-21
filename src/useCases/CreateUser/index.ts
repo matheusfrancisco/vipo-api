@@ -2,11 +2,11 @@ import { Connection } from "typeorm";
 import makeHashProvider from "@providers/HashProvider";
 import { PostgresUserRepository } from "../../infrastructure/postgres-user-repository";
 import { CreateUserController } from "./create-user-controller";
-import { UserRepository } from "../../domain/user/user-repository";
+import { IUserRepository } from "../../domain/user/user-repository";
 import { CreateUserUseCase } from "./create-use-case";
 
 interface IBuildResult {
-  userRepository: UserRepository;
+  userRepository: IUserRepository;
   createUserController: CreateUserController;
 }
 

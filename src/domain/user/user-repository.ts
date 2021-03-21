@@ -9,7 +9,7 @@ export interface IUserRepositoryUpdatePayload {
   password?: string;
 }
 
-export interface UserRepository {
+export interface IUserRepository {
   save: (user: IUser) => Promise<Omit<IUser, "password">>;
   findByEmail: (email: string) => Promise<UserEntity | undefined | null>;
   update: (user: IUserRepositoryUpdatePayload) => Promise<IUser>;

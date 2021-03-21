@@ -1,4 +1,4 @@
-import { UserRepository } from "../../domain/user/user-repository";
+import { IUserRepository } from "../../domain/user/user-repository";
 import UserProfile from "../../domain/user/user-profile";
 import IUpdateUserProfileDTO from "./update-user-profile-dto";
 
@@ -9,13 +9,12 @@ export interface UserResource {
 }
 
 export class UpdateUserProfileUseCase {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: IUserRepository) {}
 
   async execute({
     userId,
     profileInformations
   }: IUpdateUserProfileDTO): Promise<any> {
-
     const userProfile = new UserProfile({
       user: userId,
       musicals: profileInformations.musicals,

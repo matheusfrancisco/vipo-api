@@ -5,7 +5,7 @@ import chaiAsPromised from "chai-as-promised";
 import { ServiceError } from "../../service-error";
 import { CreateUserController } from "./create-user-controller";
 import { CreateUserUseCase } from "./create-use-case";
-import { UserRepository } from "../../domain/user/user-repository";
+import { IUserRepository } from "../../domain/user/user-repository";
 import { UserEntity } from "../../infrastructure/entity/user-entity";
 
 chai.use(chaiAsPromised);
@@ -62,7 +62,7 @@ describe("UserController", () => {
 
   class CreateUserUseCaseMock extends CreateUserUseCase {
     constructor(
-      userRepository: UserRepository,
+      userRepository: IUserRepository,
       execute: ({
         name,
         email,

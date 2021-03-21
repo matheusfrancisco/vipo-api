@@ -1,5 +1,5 @@
-import { UserRepository } from "../../domain/user/user-repository";
-import UserAnswer, {IUserAnswer} from "../../domain/user/user-answer";
+import { IUserRepository } from "../../domain/user/user-repository";
+import UserAnswer, { IUserAnswer } from "../../domain/user/user-answer";
 
 interface IEmail {
   userEmail: string;
@@ -7,14 +7,9 @@ interface IEmail {
 export type ICreateRec = IUserAnswer & IEmail;
 
 export class CreateRecommendationUseCase {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: IUserRepository) {}
 
-  async execute({
-    userEmail,
-    numberOfPeople,
-    howMuch,
-    like,
-  }: ICreateRec) {
+  async execute({ userEmail, numberOfPeople, howMuch, like }: ICreateRec) {
     try {
       const user = await this.userRepository.findByEmail(userEmail);
 
@@ -23,17 +18,20 @@ export class CreateRecommendationUseCase {
       }
       const userRecommendation = new UserAnswer({
         userId: user.id,
-        numberOfPeople: numberOfPeople,
-        howMuch: howMuch,
-        like: like,
-      })
+        numberOfPeople,
+        howMuch,
+        like
+      });
       const recomentadions = [
-        { "name": "Bar do jao", "description": "noite boa"},
-        { "name": "Bar do jao", "description": "noite boa"},
-        { "name": "Bar do jao", "description": "noite boa"},
-      ]
-      userRecommendation.addRecommendation(recomentadions)
-      await this.userRepository.insertAnswer({...userRecommendation.toRepository(), user});
+        { name: "Bar do jao", description: "noite boa" },
+        { name: "Bar do jao", description: "noite boa" },
+        { name: "Bar do jao", description: "noite boa" }
+      ];
+      userRecommendation.addRecommendation(recomentadions);
+      await this.userRepository.insertAnswer({
+        ...userRecommendation.toRepository(),
+        user
+      });
       return recomentadions;
     } catch (error) {
       throw error;
