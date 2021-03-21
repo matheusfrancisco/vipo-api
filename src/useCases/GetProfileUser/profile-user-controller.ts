@@ -11,7 +11,7 @@ export class ProfileUserController {
   ) {}
 
   public async handle(request: Request, response: Response): Promise<Response> {
-    const { email } = request.body;
+    const { email } = request.user;
 
     if (!email)
       return response.status(400).json(buildErrorMessage("Parameters missing"));

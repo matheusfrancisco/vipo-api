@@ -15,7 +15,6 @@ interface IExecute {
     gender: IUser["gender"];
     birthDate: IUser["birthDate"];
     createdAt: Date;
-    answers: IUserAnswer[];
   };
 }
 
@@ -51,14 +50,7 @@ export class LogUserUseCase {
         email: user.email,
         gender: user.gender,
         birthDate: user.birthDate,
-        createdAt: user.createdAt,
-        answers: user.answers.map(answer => ({
-          howMuch: answer.howMuch,
-          like: answer.like,
-          numberOfPeople: answer.numberOfPeople,
-          recommendations: answer.recommendations,
-          userId: user.id
-        }))
+        createdAt: user.createdAt
       }
     };
   }

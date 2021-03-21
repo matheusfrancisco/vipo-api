@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { FindUserUseCase } from "./find-user-use-case";
 import { UserEntity } from "src/infrastructure/entity/user-entity";
+import { FindUserUseCase } from "./find-user-use-case";
+
 const buildErrorMessage = (message: string) => ({ error: message });
 
 export class FindUserController {

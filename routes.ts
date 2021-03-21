@@ -1,12 +1,12 @@
 import { Router } from "express";
 import { ChangePasswordUseCaseFactory } from "@useCases/ChangePassword";
 import { LogUserUseCaseFactory } from "@useCases/LogUser";
+import ensureAuthenticated from "@middlewares/ensureAuthenticated";
 import { UpdateUserUseCaseFactory } from "./src/useCases/UpdateUser";
 import { CreateUseCaseFactory } from "./src/useCases/CreateUser";
 import { GetProfileUserUseCaseFactory } from "./src/useCases/GetProfileUser";
 import { UpdateUserProfileUseCaseFactory } from "./src/useCases/updateProfile";
 import { createRecommendationUseCaseFactory } from "./src/useCases/CreateRecommendation";
-import { Auth } from "./src/middlewares/auth";
 import { CreateDatabaseConnection } from "./src/infrastructure/connection";
 
 export const routerFactory = async (): Promise<Router> => {
@@ -41,7 +41,7 @@ export const routerFactory = async (): Promise<Router> => {
     createRecommendationController
   } = await createRecommendationUseCaseFactory.build(connection);
 
-  const auth = await new Auth(userRepository);
+  const authMiddleware = ensureAuthenticated(userRepository);
   const router = Router();
 
   router.post("/signin", async (request, response) => {
@@ -52,23 +52,23 @@ export const routerFactory = async (): Promise<Router> => {
     return createUserController.handle(request, response);
   });
 
-  router.patch("/users/password", auth.verify, async (request, response) => {
+  router.patch("/users/password", authMiddleware, async (request, response) => {
     return changePasswordController.handle(request, response);
   });
 
-  router.patch("/users", auth.verify, async (request, response) => {
+  router.patch("/users", authMiddleware, async (request, response) => {
     return updateUserController.handle(request, response);
   });
 
-  router.get("/profile", auth.verify, (request, response) => {
+  router.get("/profile", authMiddleware, (request, response) => {
     return profileUserController.handle(request, response);
   });
 
-  router.patch("/profile", auth.verify, async (request, response) => {
+  router.patch("/profile", authMiddleware, async (request, response) => {
     return updateUserProfileController.handle(request, response);
   });
 
-  router.post("/user/recommendation", auth.verify, (request, response) => {
+  router.post("/user/recommendation", authMiddleware, (request, response) => {
     return createRecommendationController.handle(request, response);
   });
 

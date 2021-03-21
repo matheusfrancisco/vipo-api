@@ -28,7 +28,7 @@ describe("Log User Use Case", () => {
       birthDate: new Date()
     };
 
-    repository.findByEmail = jest.fn(async () => ({ ...user, answers: [] }));
+    repository.findByEmail = jest.fn(async () => user);
 
     const result = await useCase.execute({
       email: user.email,
@@ -64,7 +64,7 @@ describe("Log User Use Case", () => {
       birthDate: new Date()
     };
 
-    repository.findByEmail = jest.fn(async () => ({ ...user, answers: [] }));
+    repository.findByEmail = jest.fn(async () => user);
 
     await expect(
       useCase.execute({ email: user.email, password: "invalid-password" })
