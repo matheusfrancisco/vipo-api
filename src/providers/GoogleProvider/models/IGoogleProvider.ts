@@ -1,5 +1,7 @@
 export interface IGoogleUserPayload {
   email: string;
+  name: string;
+  lastName: string;
   id: string;
 }
 

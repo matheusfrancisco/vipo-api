@@ -1,7 +1,8 @@
 import { Connection, getRepository } from "typeorm";
 import {
   IUserRepositoryUpdatePayload,
-  IUserRepository
+  IUserRepository,
+  ISavedUser
 } from "@domain/user/user-repository";
 import { IUser } from "@domain/user/user";
 import { UserEntity } from "@infrastructure/entity/user-entity";
@@ -19,7 +20,7 @@ export class PostgresUserRepository implements IUserRepository {
     gender,
     birthDate,
     lastName
-  }: IUser): Promise<Omit<IUser, "password">> {
+  }: IUser): Promise<ISavedUser> {
     const entity = {
       name,
       email,
@@ -31,11 +32,13 @@ export class PostgresUserRepository implements IUserRepository {
     const user = await getRepository(UserEntity).save(entity);
 
     return {
+      id: user.id,
       name: user.name,
       lastName: user.lastName,
       email: user.email,
       birthDate: user.birthDate,
-      gender: user.gender
+      gender: user.gender,
+      createdAt: user.createdAt
     };
   }
 

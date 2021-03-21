@@ -20,6 +20,8 @@ export default class GoogleAuthProvider implements IGoogleProvider {
 
     return {
       email: payload.email,
+      name: payload.given_name || "",
+      lastName: payload.family_name || "",
       id: payload.sub
     };
   }
