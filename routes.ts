@@ -2,6 +2,7 @@ import { Router } from "express";
 import { ChangePasswordUseCaseFactory } from "@useCases/ChangePassword";
 import { LogUserUseCaseFactory } from "@useCases/LogUser";
 import ensureAuthenticated from "@middlewares/ensureAuthenticated";
+import { SignWithGoogleUseCaseFactory } from "@useCases/SignWithGoogleUseCase";
 import { UpdateUserUseCaseFactory } from "./src/useCases/UpdateUser";
 import { CreateUseCaseFactory } from "./src/useCases/CreateUser";
 import { GetProfileUserUseCaseFactory } from "./src/useCases/GetProfileUser";
@@ -29,6 +30,10 @@ export const routerFactory = async (): Promise<Router> => {
 
   const { logUserController } = LogUserUseCaseFactory.build(connection);
 
+  const { signWithGoogleController } = SignWithGoogleUseCaseFactory.build(
+    connection
+  );
+
   const {
     updateUserProfileController
   } = await UpdateUserProfileUseCaseFactory.build(connection);
@@ -43,6 +48,10 @@ export const routerFactory = async (): Promise<Router> => {
 
   const authMiddleware = ensureAuthenticated(userRepository);
   const router = Router();
+
+  router.post("/signin/google", async (request, response) => {
+    return signWithGoogleController.handle(request, response);
+  });
 
   router.post("/signin", async (request, response) => {
     return logUserController.handle(request, response);
