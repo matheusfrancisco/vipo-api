@@ -9,7 +9,7 @@ interface IBuildResult {
   logUserController: LogUserController;
 }
 
-export class GetLogUserUseCaseFactory {
+export class LogUserUseCaseFactory {
   public static build(connection: Connection): IBuildResult {
     const usersRepository = new PostgresUserRepository(connection);
     const hashProvider = makeHashProvider();

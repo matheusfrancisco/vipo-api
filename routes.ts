@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { ChangePasswordUseCaseFactory } from "@useCases/ChangePassword";
+import { LogUserUseCaseFactory } from "@useCases/LogUser";
 import { UpdateUserUseCaseFactory } from "./src/useCases/UpdateUser";
 import { CreateUseCaseFactory } from "./src/useCases/CreateUser";
 import { GetProfileUserUseCaseFactory } from "./src/useCases/GetProfileUser";
@@ -26,6 +27,8 @@ export const routerFactory = async (): Promise<Router> => {
     connection
   );
 
+  const { logUserController } = LogUserUseCaseFactory.build(connection);
+
   const {
     updateUserProfileController
   } = await UpdateUserProfileUseCaseFactory.build(connection);
@@ -42,18 +45,7 @@ export const routerFactory = async (): Promise<Router> => {
   const router = Router();
 
   router.post("/signin", async (request, response) => {
-    // const userProfileInformation = findUserController.handle(request, response);
-    // #TODO remove sensitive informations from user
-    const r = await auth.singIn(request, response);
-    if (r) {
-      return response.status(200).send({
-        user: r.body.user,
-        token: r.body.token
-      });
-    }
-
-    // #TODO remake this endpoint to return the correct information for the user
-    return response.end();
+    return logUserController.handle(request, response);
   });
 
   router.post("/users", (request, response) => {
