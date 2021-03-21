@@ -1,0 +1,26 @@
+import IGoogleProvider, {
+  IGoogleUserPayload
+} from "@providers/GoogleProvider/models/IGoogleProvider";
+import { OAuth2Client } from "google-auth-library";
+import env from "@config/environment";
+
+const authClient = new OAuth2Client(env.GOOGLE_CLIENT_ID);
+
+export default class GoogleAuthProvider implements IGoogleProvider {
+  public async getUserLoginData(token: string): Promise<IGoogleUserPayload> {
+    const ticket = await await authClient.verifyIdToken({
+      idToken: token,
+      audience: env.GOOGLE_CLIENT_ID
+    });
+
+    const payload = ticket.getPayload();
+
+    if (!payload || !payload.email)
+      throw new Error("Error authenticating with Google");
+
+    return {
+      email: payload.email,
+      id: payload.sub
+    };
+  }
+}
