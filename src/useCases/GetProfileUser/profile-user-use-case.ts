@@ -1,6 +1,6 @@
 import { IUser } from "@domain/user/user";
 import { IUserProfile } from "@domain/user/user-profile";
-import { UserRepository } from "@domain/user/user-repository";
+import { IUserRepository } from "@domain/user/user-repository";
 
 interface IProfileUser {
   email: string;
@@ -16,7 +16,7 @@ interface IUserWithProfile {
 }
 
 export class ProfileUserUseCase {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: IUserRepository) {}
 
   public async execute({
     email
@@ -37,7 +37,7 @@ export class ProfileUserUseCase {
       birthDate: user.birthDate,
       gender: user.gender,
       profileInformations: {
-        drinks: userProfile ? userProfile.drinks: [],
+        drinks: userProfile ? userProfile.drinks : [],
         foods: userProfile ? userProfile.foods : [],
         musicals: userProfile ? userProfile.musicals : []
       }

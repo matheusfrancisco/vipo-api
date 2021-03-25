@@ -1,12 +1,12 @@
 import { IUser } from "@domain/user/user";
-import { UserRepository } from "@domain/user/user-repository";
+import { IUserRepository } from "@domain/user/user-repository";
 import IHashProvider from "@providers/HashProvider/models/IHashProvider";
 import { ServiceError } from "../../service-error";
 import IChangePasswordDTO from "./change-password-dto";
 
 export class ChangePasswordUseCase {
   constructor(
-    private userRepository: UserRepository,
+    private userRepository: IUserRepository,
     private hashProvider: IHashProvider
   ) {}
 

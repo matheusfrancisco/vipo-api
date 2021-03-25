@@ -32,5 +32,6 @@ jobs:
           DB_PROD_PORT: 5433
           DB_PROD_USER: postgres
           DB_PROD_PASS: postgres
+          GOOGLE_CLIENT_ID: wrong_id
         run: |
           npm run test

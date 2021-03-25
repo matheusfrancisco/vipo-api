@@ -1,6 +1,4 @@
-import User from "../../domain/user/user";
-import { UserRepository } from "../../domain/user/user-repository";
-import bcrypt from "bcrypt";
+import { IUserRepository } from "../../domain/user/user-repository";
 
 export interface UserResource {
   id: number;
@@ -9,8 +7,7 @@ export interface UserResource {
 }
 
 export class FindUserUseCase {
-  constructor(private userRepository: UserRepository) {}
-
+  constructor(private userRepository: IUserRepository) {}
 
   async execute({ name, email }: Record<string, string>) {
     try {

@@ -1,6 +1,6 @@
-import { UserRepository } from "@domain/user/user-repository";
+import { IUserRepository } from "@domain/user/user-repository";
 
-export default class MockUserRepository implements UserRepository {
+export default class MockUserRepository implements IUserRepository {
   public save = jest.fn();
 
   public findByEmail = jest.fn();

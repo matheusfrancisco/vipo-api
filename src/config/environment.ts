@@ -7,10 +7,17 @@ const {
   DB_PROD_PORT,
   DB_PROD_USER,
   DB_PROD_PASS,
+  GOOGLE_CLIENT_ID,
   NODE_ENV
 } = process.env;
 
-if (!DB_PROD_HOST || !DB_PROD_PORT || !DB_PROD_USER || !DB_PROD_PASS)
+if (
+  !DB_PROD_HOST ||
+  !DB_PROD_PORT ||
+  !DB_PROD_USER ||
+  !DB_PROD_PASS ||
+  !GOOGLE_CLIENT_ID
+)
   throw new Error("Missing environment variables!");
 
 export default {
@@ -18,5 +25,6 @@ export default {
   DB_PROD_PORT: Number(DB_PROD_PORT),
   DB_PROD_USER,
   DB_PROD_PASS,
+  GOOGLE_CLIENT_ID,
   NODE_ENV
 };

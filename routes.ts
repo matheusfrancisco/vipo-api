@@ -1,11 +1,13 @@
 import { Router } from "express";
 import { ChangePasswordUseCaseFactory } from "@useCases/ChangePassword";
+import { LogUserUseCaseFactory } from "@useCases/LogUser";
+import ensureAuthenticated from "@middlewares/ensureAuthenticated";
+import { SignWithGoogleUseCaseFactory } from "@useCases/SignWithGoogleUseCase";
 import { UpdateUserUseCaseFactory } from "./src/useCases/UpdateUser";
 import { CreateUseCaseFactory } from "./src/useCases/CreateUser";
 import { GetProfileUserUseCaseFactory } from "./src/useCases/GetProfileUser";
 import { UpdateUserProfileUseCaseFactory } from "./src/useCases/updateProfile";
 import { createRecommendationUseCaseFactory } from "./src/useCases/CreateRecommendation";
-import { Auth } from "./src/middlewares/auth";
 import { CreateDatabaseConnection } from "./src/infrastructure/connection";
 
 export const routerFactory = async (): Promise<Router> => {
@@ -26,6 +28,12 @@ export const routerFactory = async (): Promise<Router> => {
     connection
   );
 
+  const { logUserController } = LogUserUseCaseFactory.build(connection);
+
+  const { signWithGoogleController } = SignWithGoogleUseCaseFactory.build(
+    connection
+  );
+
   const {
     updateUserProfileController
   } = await UpdateUserProfileUseCaseFactory.build(connection);
@@ -38,45 +46,38 @@ export const routerFactory = async (): Promise<Router> => {
     createRecommendationController
   } = await createRecommendationUseCaseFactory.build(connection);
 
-  const auth = await new Auth(userRepository);
+  const authMiddleware = ensureAuthenticated(userRepository);
   const router = Router();
 
-  router.post("/signin", async (request, response) => {
-    // const userProfileInformation = findUserController.handle(request, response);
-    // #TODO remove sensitive informations from user
-    const r = await auth.singIn(request, response);
-    if (r) {
-      return response.status(200).send({
-        user: r.body.user,
-        token: r.body.token
-      });
-    }
+  router.post("/signin/google", async (request, response) => {
+    return signWithGoogleController.handle(request, response);
+  });
 
-    // #TODO remake this endpoint to return the correct information for the user
-    return response.end();
+  router.post("/signin", async (request, response) => {
+    return logUserController.handle(request, response);
   });
 
   router.post("/users", (request, response) => {
     return createUserController.handle(request, response);
   });
 
-  router.patch("/users/password", auth.verify, async (request, response) => {
+  router.patch("/users/password", authMiddleware, async (request, response) => {
     return changePasswordController.handle(request, response);
   });
 
-  router.patch("/users", auth.verify, async (request, response) => {
+  router.patch("/users", authMiddleware, async (request, response) => {
     return updateUserController.handle(request, response);
   });
 
-  router.get("/profile", auth.verify, (request, response) => {
+  router.get("/profile", authMiddleware, (request, response) => {
     return profileUserController.handle(request, response);
   });
 
-  router.patch("/profile", auth.verify, async (request, response) => {
+  router.patch("/profile", authMiddleware, async (request, response) => {
     return updateUserProfileController.handle(request, response);
   });
 
-  router.post("/user/recommendation", auth.verify, (request, response) => {
+  router.post("/user/recommendation", authMiddleware, (request, response) => {
     return createRecommendationController.handle(request, response);
   });
 

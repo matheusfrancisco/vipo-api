@@ -1,14 +1,11 @@
+import { Connection } from "typeorm";
 import { PostgresUserRepository } from "../../infrastructure/postgres-user-repository";
 import { CreateRecommendationController } from "./create-recommendation-controller";
-import { Connection, createConnection } from "typeorm";
-import { CreateRecommendationUseCase } from "../CreateRecommendation/create-recommendation-use-case";
-import { UserRepository } from "src/domain/user/user-repository";
+import { CreateRecommendationUseCase } from "./create-recommendation-use-case";
 
 export class createRecommendationUseCaseFactory {
   public static async build(connection: Connection) {
-    let userRepository: UserRepository;
-
-    userRepository = new PostgresUserRepository(connection);
+    const userRepository = new PostgresUserRepository(connection);
 
     const createRecommendationUseCase = new CreateRecommendationUseCase(
       userRepository
@@ -17,7 +14,7 @@ export class createRecommendationUseCaseFactory {
       createRecommendationUseCase
     );
     return {
-      createRecommendationController,
+      createRecommendationController
     };
   }
 }

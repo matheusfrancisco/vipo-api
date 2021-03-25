@@ -1,36 +1,25 @@
 import { Request, Response } from "express";
-import { UpdateUserProfileUseCase } from "./update-user-profile-use-case";
-import { FindUserUseCase } from '../FindUser/find-user-use-case';
 import { UserEntity } from "src/infrastructure/entity/user-entity";
-const buildErrorMessage = (message: string) => ({ error: message });
+import { UpdateUserProfileUseCase } from "./update-user-profile-use-case";
+import { FindUserUseCase } from "../FindUser/find-user-use-case";
 
 export class UpdateUserProfileController {
-  private _updateUserProfileUseCase: UpdateUserProfileUseCase;
-  private _findUserUseCase: FindUserUseCase;
-
   constructor(
-    updateUserProfileUseCase: UpdateUserProfileUseCase,
-    findUserUseCase: FindUserUseCase,
-  ) {
-    this._updateUserProfileUseCase = updateUserProfileUseCase;
-    this._findUserUseCase = findUserUseCase
-  }
+    private updateUserProfileUseCase: UpdateUserProfileUseCase,
+    private findUserUseCase: FindUserUseCase
+  ) {}
 
   async handle(
     request: Request,
     response: Response
   ): Promise<UserEntity | undefined | Response<any>> {
-
-    if (!request.body || !request.body.email) {
-      response.status(400).json(buildErrorMessage("Parameters missing"));
-      return;
-    }
+    const { email } = request.user;
+    const { profileInformations } = request.body;
 
     try {
-
-      const user = await this._findUserUseCase.execute({
-        email: request.body.email,
-      })
+      const user = await this.findUserUseCase.execute({
+        email
+      });
 
       if (!user) {
         return response.status(404).json({
@@ -38,13 +27,13 @@ export class UpdateUserProfileController {
         });
       }
 
-      const userProfile = await this._updateUserProfileUseCase.execute({
+      const userProfile = await this.updateUserProfileUseCase.execute({
         userId: user.id,
-        profileInformations: request.body.profileInformations,
+        profileInformations
       });
 
       return response.status(200).json({
-        profile: userProfile,
+        profile: userProfile
       });
     } catch (err) {
       // const status = error.constructor.name === "ServiceError" ? 400 : 500;
