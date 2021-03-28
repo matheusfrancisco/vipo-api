@@ -10,7 +10,7 @@ export class addResetPasswordTokenUserEntity1616935308195
       new TableColumn({
         name: "reset_password_token",
         type: "varchar",
-        isNullable: false
+        isNullable: true
       })
     );
   }

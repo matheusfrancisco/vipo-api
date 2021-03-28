@@ -59,7 +59,8 @@ export class UserEntity {
   password!: string;
 
   @Column({
-    name: "reset_password_token"
+    name: "reset_password_token",
+    nullable: true
   })
   resetPasswordToken?: string;
 
