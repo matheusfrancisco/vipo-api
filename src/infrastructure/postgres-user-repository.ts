@@ -54,7 +54,26 @@ export class PostgresUserRepository implements IUserRepository {
     return userRepository;
   }
 
-  public async updateUserProfile({ musicals, user, foods, drinks }: any) {
+  public async updateResetPasswordToken(
+    id: number,
+    token?: string
+  ): Promise<void> {
+    const usersRepository = getRepository(UserEntity);
+
+    const user = await usersRepository.findOneOrFail(id);
+
+    await usersRepository.save({
+      ...user,
+      resetPasswordToken: token
+    });
+  }
+
+  public async updateUserProfile({
+    musicals,
+    user,
+    foods,
+    drinks
+  }: any): Promise<any> {
     const userProfileRepository = getRepository(UserProfile);
     const entity = { user, musicals, foods, drinks };
 
