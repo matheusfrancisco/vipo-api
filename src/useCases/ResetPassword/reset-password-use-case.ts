@@ -21,7 +21,8 @@ export class ResetPasswordUseCase {
     if (!user) throw new Error("User does not exist");
 
     const tokenPayload = {
-      userId: user.id
+      userId: user.id,
+      email: user.email
     };
 
     const resetToken = await this.tokenProvider.generateToken(tokenPayload, {
