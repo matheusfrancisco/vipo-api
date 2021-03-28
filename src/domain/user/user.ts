@@ -8,6 +8,7 @@ export interface IUser {
   lastName: string;
   birthDate: Date;
   gender: Gender;
+  resetPasswordToken?: string;
 }
 
 export default class User {
@@ -23,9 +24,20 @@ export default class User {
 
   public readonly password: string;
 
-  constructor({ email, password, name, lastName, birthDate, gender }: IUser) {
+  public readonly resetPasswordToken?: string;
+
+  constructor({
+    email,
+    password,
+    name,
+    lastName,
+    birthDate,
+    gender,
+    resetPasswordToken
+  }: IUser) {
     this.email = new Email(email);
     this.password = password;
+    this.resetPasswordToken = resetPasswordToken;
     this._name = name;
     this._lastName = lastName;
     this._birthDate = birthDate;
@@ -61,7 +73,8 @@ export default class User {
       password: this.password,
       gender: this._gender,
       birthDate: this._birthDate,
-      lastName: this._lastName
+      lastName: this._lastName,
+      resetPasswordToken: this.resetPasswordToken
     };
   }
 }
