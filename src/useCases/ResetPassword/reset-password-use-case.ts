@@ -3,6 +3,8 @@ import IMailProvider from "@providers/MailProvider/models/IMailProvider";
 import ITokenProvider from "@providers/TokenProvider/models/ITokenProvider";
 import IResetPasswordDTO from "@useCases/ResetPassword/reset-password-dto";
 
+const TOKEN_EXPIRE_TIME = "30m";
+
 export class ResetPasswordUseCase {
   constructor(
     private usersRepository: IUserRepository,
@@ -22,7 +24,9 @@ export class ResetPasswordUseCase {
       userId: user.id
     };
 
-    const resetToken = await this.tokenProvider.generateToken(tokenPayload);
+    const resetToken = await this.tokenProvider.generateToken(tokenPayload, {
+      expiresIn: TOKEN_EXPIRE_TIME
+    });
 
     await this.usersRepository.updateResetPasswordToken(user.id, resetToken);
 

@@ -1,15 +1,20 @@
 import jwt from "jsonwebtoken";
-import ITokenProvider from "@providers/TokenProvider/models/ITokenProvider";
+import ITokenProvider, {
+  IGenerateTokenOptions
+} from "@providers/TokenProvider/models/ITokenProvider";
 
 const SECRET = "SECRET";
-const EXPIRES_IN = "2h";
+const DEFAULT_EXPIRES_IN = "2h";
 
 export default class JwtTokenProvider implements ITokenProvider {
   public async generateToken(
-    payload: Record<string, unknown>
+    payload: Record<string, unknown>,
+    options?: IGenerateTokenOptions
   ): Promise<string> {
+    const expiresIn = options?.expiresIn || DEFAULT_EXPIRES_IN;
+
     const token = jwt.sign(payload, SECRET, {
-      expiresIn: EXPIRES_IN
+      expiresIn
     });
 
     return token;
