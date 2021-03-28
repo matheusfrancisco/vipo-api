@@ -4,6 +4,7 @@ import { LogUserUseCaseFactory } from "@useCases/LogUser";
 import ensureAuthenticated from "@middlewares/ensureAuthenticated";
 import { SignWithGoogleUseCaseFactory } from "@useCases/SignWithGoogleUseCase";
 import { ResetPasswordUseCaseFactory } from "@useCases/ResetPassword";
+import { CreateNewPasswordUseCaseFactory } from "@useCases/CreateNewPassword";
 import { UpdateUserUseCaseFactory } from "./src/useCases/UpdateUser";
 import { CreateUseCaseFactory } from "./src/useCases/CreateUser";
 import { GetProfileUserUseCaseFactory } from "./src/useCases/GetProfileUser";
@@ -22,6 +23,10 @@ export const routerFactory = async (): Promise<Router> => {
   const { changePasswordController } = await ChangePasswordUseCaseFactory.build(
     connection
   );
+
+  const {
+    createNewPasswordController
+  } = await CreateNewPasswordUseCaseFactory.build(connection);
 
   const {
     createRecommendationController
@@ -66,6 +71,10 @@ export const routerFactory = async (): Promise<Router> => {
 
   router.post("/users/reset-password", async (request, response) => {
     return resetPasswordController.handle(request, response);
+  });
+
+  router.patch("/users/password/new", async (request, response) => {
+    return createNewPasswordController.handle(request, response);
   });
 
   router.patch("/users/password", authMiddleware, async (request, response) => {
