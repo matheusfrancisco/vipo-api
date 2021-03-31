@@ -6,14 +6,14 @@ import {
   UpdateDateColumn,
   BeforeInsert,
   AfterUpdate,
-  OneToMany,
+  OneToMany
 } from "typeorm";
 import { UserAnswer } from "./user-answer";
 
 export enum Gender {
-  Male = 'male',
-  Female = 'female',
-  Neuter = 'neuter'
+  Male = "male",
+  Female = "female",
+  Neuter = "neuter"
 }
 
 @Entity()
@@ -22,17 +22,17 @@ export class UserEntity {
   id!: number;
 
   @Column({
-    unique: true,
+    unique: true
   })
   email!: string;
 
   @Column({
-    nullable: false,
+    nullable: false
   })
   name!: string;
 
   @Column({
-    nullable: false,
+    nullable: false
   })
   lastName!: string;
 
@@ -45,18 +45,24 @@ export class UserEntity {
   @Column({
     type: "enum",
     enum: Gender,
-    nullable: false,
+    nullable: false
   })
   gender!: Gender;
 
   @OneToMany(
     () => UserAnswer,
-    (answer) => answer.user
+    answer => answer.user
   )
   answers!: UserAnswer[];
 
   @Column()
   password!: string;
+
+  @Column({
+    name: "reset_password_token",
+    nullable: true
+  })
+  resetPasswordToken?: string;
 
   @CreateDateColumn({ name: "created_at", type: "timestamp with time zone" })
   createdAt!: Date;
@@ -65,12 +71,12 @@ export class UserEntity {
   updatedAt!: Date;
 
   @BeforeInsert()
-  updateDateCreation() {
+  updateDateCreation(): void {
     this.createdAt = new Date();
   }
 
   @AfterUpdate()
-  updateDateUpdate() {
+  updateDateUpdate(): void {
     this.updatedAt = new Date();
   }
 }

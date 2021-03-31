@@ -3,6 +3,8 @@ import { ChangePasswordUseCaseFactory } from "@useCases/ChangePassword";
 import { LogUserUseCaseFactory } from "@useCases/LogUser";
 import ensureAuthenticated from "@middlewares/ensureAuthenticated";
 import { SignWithGoogleUseCaseFactory } from "@useCases/SignWithGoogleUseCase";
+import { ResetPasswordUseCaseFactory } from "@useCases/ResetPassword";
+import { CreateNewPasswordUseCaseFactory } from "@useCases/CreateNewPassword";
 import { UpdateUserUseCaseFactory } from "./src/useCases/UpdateUser";
 import { CreateUseCaseFactory } from "./src/useCases/CreateUser";
 import { GetProfileUserUseCaseFactory } from "./src/useCases/GetProfileUser";
@@ -22,9 +24,19 @@ export const routerFactory = async (): Promise<Router> => {
     connection
   );
 
-  // const { findUserController } = await FindUseCaseFactory.build(connection);
+  const {
+    createNewPasswordController
+  } = await CreateNewPasswordUseCaseFactory.build(connection);
+
+  const {
+    createRecommendationController
+  } = await createRecommendationUseCaseFactory.build(connection);
 
   const { profileUserController } = GetProfileUserUseCaseFactory.build(
+    connection
+  );
+
+  const { resetPasswordController } = ResetPasswordUseCaseFactory.build(
     connection
   );
 
@@ -42,10 +54,6 @@ export const routerFactory = async (): Promise<Router> => {
     connection
   );
 
-  const {
-    createRecommendationController
-  } = await createRecommendationUseCaseFactory.build(connection);
-
   const authMiddleware = ensureAuthenticated(userRepository);
   const router = Router();
 
@@ -59,6 +67,14 @@ export const routerFactory = async (): Promise<Router> => {
 
   router.post("/users", (request, response) => {
     return createUserController.handle(request, response);
+  });
+
+  router.post("/users/reset-password", async (request, response) => {
+    return resetPasswordController.handle(request, response);
+  });
+
+  router.patch("/users/password/new", async (request, response) => {
+    return createNewPasswordController.handle(request, response);
   });
 
   router.patch("/users/password", authMiddleware, async (request, response) => {
