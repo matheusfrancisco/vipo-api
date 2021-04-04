@@ -3,6 +3,7 @@ import IGoogleProvider, {
 } from "@providers/GoogleProvider/models/IGoogleProvider";
 import { OAuth2Client } from "google-auth-library";
 import env from "@config/environment";
+import { ServiceError } from "@errors/service-error";
 
 const authClient = new OAuth2Client(env.GOOGLE_CLIENT_ID);
 
@@ -16,7 +17,7 @@ export default class GoogleAuthProvider implements IGoogleProvider {
     const payload = ticket.getPayload();
 
     if (!payload || !payload.email)
-      throw new Error("Error authenticating with Google");
+      throw new ServiceError("Error authenticating with Google");
 
     return {
       email: payload.email,

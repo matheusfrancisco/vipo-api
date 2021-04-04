@@ -1,5 +1,5 @@
+import { ServiceError } from "@errors/service-error";
 import Email from "./email";
-import { ServiceError } from "../../service-error";
 
 describe("User", () => {
   const validEmail = "matheusmachadoufsc@gmail.com";
@@ -12,7 +12,7 @@ describe("User", () => {
 
   it("should throw for invalid email", () => {
     expect(() => new Email("zueira")).toThrow(
-      new ServiceError("invalid email")
+      new ServiceError("Invalid email")
     );
   });
 });

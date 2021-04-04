@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { ChangePasswordUseCase } from "@useCases/ChangePassword/change-password-use-case";
 import { FindUserUseCase } from "@useCases/FindUser/find-user-use-case";
+import { ServiceError } from "@errors/service-error";
 
 const buildErrorMessage = (message: string) => ({ error: message });
 
@@ -16,23 +17,17 @@ export class ChangePasswordController {
     if (!password || !newPassword || !email)
       return response.status(400).json(buildErrorMessage("Parameters missing"));
 
-    try {
-      const existingUser = await this.findUseCase.execute(email);
+    const existingUser = await this.findUseCase.execute(email);
 
-      if (!existingUser) throw new Error("User does not exist");
+    if (!existingUser) throw new ServiceError("User does not exist", 404);
 
-      const user = await this.changePasswordUseCase.execute({
-        userId: existingUser.id,
-        dbPasswordHash: existingUser.password,
-        password,
-        newPassword
-      });
+    const user = await this.changePasswordUseCase.execute({
+      userId: existingUser.id,
+      dbPasswordHash: existingUser.password,
+      password,
+      newPassword
+    });
 
-      return response.status(201).json({ user });
-    } catch (error) {
-      return response.status(400).json({
-        message: error.message || "Unexpected error."
-      });
-    }
+    return response.status(201).json({ user });
   }
 }

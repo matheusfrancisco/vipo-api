@@ -1,4 +1,4 @@
-import { ServiceError } from "../../service-error";
+import { ServiceError } from "@errors/service-error";
 
 export default class Email {
   constructor(readonly value: string) {
@@ -6,16 +6,15 @@ export default class Email {
   }
 
   private validateEmail(value: string) {
-    //copy from stackoverflow :-)
+    // copy from stackoverflow :-)
     const emailRegExpValidation = new RegExp(
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
     const isValid = emailRegExpValidation.test(value);
 
     if (!isValid) {
-      throw new ServiceError("invalid email");
+      throw new ServiceError("Invalid email");
     }
     return value;
   }
-
 }

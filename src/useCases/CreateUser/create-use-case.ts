@@ -1,4 +1,5 @@
 import IHashProvider from "@providers/HashProvider/models/IHashProvider";
+import { ServiceError } from "@errors/service-error";
 import User, { IUser } from "../../domain/user/user";
 import { IUserRepository } from "../../domain/user/user-repository";
 
@@ -21,7 +22,7 @@ export class CreateUserUseCase {
     const userAlreadyExists = await this.userRepository.findByEmail(email);
 
     if (userAlreadyExists) {
-      throw new Error("User already exists.");
+      throw new ServiceError("User already exists.");
     }
 
     const hashPass = await this.hashProvider.generateHash(password);

@@ -2,7 +2,7 @@ import chai from "chai";
 import sinon from "sinon";
 import sinonChai from "sinon-chai";
 import chaiAsPromised from "chai-as-promised";
-import { ServiceError } from "../../service-error";
+import { ServiceError } from "@errors/service-error";
 import { CreateUserController } from "./create-user-controller";
 import { CreateUserUseCase } from "./create-use-case";
 import { IUserRepository } from "../../domain/user/user-repository";
@@ -56,10 +56,6 @@ describe("UserController", () => {
     findByEmail: (): Promise<UserEntity | undefined> => Promise.resolve()
   };
 
-  const promiseThatThrows = () => {
-    throw new Error("Unknown error");
-  };
-
   class CreateUserUseCaseMock extends CreateUserUseCase {
     constructor(
       userRepository: IUserRepository,
@@ -104,31 +100,32 @@ describe("UserController", () => {
 
   describe("POST userController.handle", () => {
     it("Should return status code 201", async () => {
-      const r = await userController.handle(req, resMockSuccess);
+      await userController.handle(req, resMockSuccess);
       expect(status).to.have.been.calledWith(201);
       expect(send).to.have.been.called;
     });
 
     it("Should return status code 400 if email is not present post user", async () => {
-      await userController.handle(reqWithoutEmail, resMock);
-      expect(status).to.have.been.calledWith(400);
+      await expect(userController.handle(reqWithoutEmail, resMock)).to.be
+        .rejected;
       // expect(json).to.have.been.calledWith({ error: "Parameters missing" });
     });
 
     it("Should return status code 400 if pass is not present", async () => {
-      await userController.handle(reqWithoutPass, resMock);
+      await expect(userController.handle(reqWithoutPass, resMock)).to.be
+        .rejected;
       expect(status).to.have.been.calledWith(400);
       // expect(json).to.have.been.calledWith({ error: "Parameters missing" });
     });
 
     it("Should return status code 400 if error thrown", async () => {
-      await failingUserController.handle(req, resMock);
+      await expect(failingUserController.handle(req, resMock)).to.be.rejected;
       expect(status).to.have.been.calledWith(400);
       // expect(json).to.have.been.calledWith({ error: "Service error" });
     });
 
     it("Should return status code 400 if body is empty", async () => {
-      await userController.handle({}, resMock);
+      await expect(userController.handle({}, resMock)).to.be.rejected;
       expect(status).to.have.been.calledWith(400);
       expect(json).to.have.been.calledWith({ error: "Parameters missing" });
     });
