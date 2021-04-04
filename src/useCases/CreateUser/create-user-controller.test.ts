@@ -3,7 +3,7 @@ import MockHashProvider from "@providers/HashProvider/mocks/MockHashProvider";
 import { CreateUserUseCase } from "@useCases/CreateUser/create-use-case";
 import { CreateUserController } from "@useCases/CreateUser/create-user-controller";
 import faker from "faker";
-import { Request, request, Response } from "express";
+import { Request, Response } from "express";
 
 class MockCreateUserUseCase extends CreateUserUseCase {
   constructor() {

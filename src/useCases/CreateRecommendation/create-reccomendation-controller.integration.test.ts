@@ -3,7 +3,7 @@ import { server } from "../../../index";
 import { routerFactory } from "../../../routes";
 import { CreateDatabaseConnection } from "../../infrastructure/connection";
 
-describe("integratoin test recomentadion profile", () => {
+describe("Integration test: Recommendation profile", () => {
   let serverFactoryWithUserRoute: any;
   let userRoutes: any;
 
@@ -14,39 +14,44 @@ describe("integratoin test recomentadion profile", () => {
   });
 
   it("should create an recommendation user profile", async () => {
-    const res1 = await request(serverFactoryWithUserRoute.app)
-      .post("/users")
-      .send({
-        name: "mt",
-        email: "xicoooooo1@hotmail.com",
-        password: "123123",
-        lastName: "Fran",
-        birthDate: "09/09/1994",
-        gender: "Male"
-      });
+    const user = {
+      name: "mt",
+      email: "xicoooooo1@hotmail.com",
+      password: "123123",
+      lastName: "Fran",
+      birthDate: "09/09/1994",
+      gender: "Male"
+    };
 
-    const r = await request(serverFactoryWithUserRoute.app)
+    await request(serverFactoryWithUserRoute.app)
+      .post("/users")
+      .send(user);
+
+    const loginResponse = await request(serverFactoryWithUserRoute.app)
       .post("/signin")
       .send({
-        email: "xicoooooo1@hotmail.com",
-        password: "123123"
+        email: user.email,
+        password: user.password
       });
-    const res = await request(serverFactoryWithUserRoute.app)
+
+    const recommendationResponse = await request(serverFactoryWithUserRoute.app)
       .post("/user/recommendation")
-      .set({ authorization: `Bearer ${r.body.token}` })
+      .set({ authorization: `Bearer ${loginResponse.body.token}` })
       .send({
-        email: "xicooooood2o@hotmail.com",
+        email: user.email,
         howMuch: "R$10 - R$100",
         numberOfPeople: 4,
         like: ["party", "food", "rock"]
       });
 
-    const recomentadion = [
+    const recommendations = [
       { name: "Bar do jao", description: "noite boa" },
       { name: "Bar do jao", description: "noite boa" },
       { name: "Bar do jao", description: "noite boa" }
     ];
-    expect(res.body.recommendations).toEqual(recomentadion);
+    expect(recommendationResponse.body.recommendations).toEqual(
+      recommendations
+    );
   });
 
   afterEach(async () => {

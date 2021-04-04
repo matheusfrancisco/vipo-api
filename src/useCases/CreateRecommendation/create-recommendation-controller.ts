@@ -6,11 +6,9 @@ import {
 } from "./create-recommendation-use-case";
 
 export class CreateRecommendationController {
-  private _createRecommendationUseCase: CreateRecommendationUseCase;
-
-  constructor(createRecommendationUseCase: CreateRecommendationUseCase) {
-    this._createRecommendationUseCase = createRecommendationUseCase;
-  }
+  constructor(
+    private createRecommendationUseCase: CreateRecommendationUseCase
+  ) {}
 
   async handle(
     request: Request,
@@ -26,7 +24,7 @@ export class CreateRecommendationController {
 
     const { email, numberOfPeople, howMuch, like } = request.body;
 
-    const recommendations = await this._createRecommendationUseCase.execute({
+    const recommendations = await this.createRecommendationUseCase.execute({
       userEmail: email,
       numberOfPeople,
       howMuch,
