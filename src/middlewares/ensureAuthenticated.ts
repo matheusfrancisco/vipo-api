@@ -1,7 +1,7 @@
 import { IUserRepository } from "@domain/user/user-repository";
 import makeTokenProvider from "@providers/TokenProvider";
 import { RequestHandler } from "express";
-import { ServiceError } from "../service-error";
+import { ServiceError } from "@errors/service-error";
 
 interface ITokenPayload {
   id: string;
@@ -24,7 +24,7 @@ const ensureAuthenticated: IEnsureAuthenticated = usersRepository => async (
   const [prefix, token] = authorization.split(" ");
 
   if (prefix !== "Bearer" || !token || token === "undefined")
-    throw new ServiceError("BadRequest");
+    throw new ServiceError("Bad jwt token sent");
 
   const tokenProvider = makeTokenProvider();
 
@@ -32,7 +32,7 @@ const ensureAuthenticated: IEnsureAuthenticated = usersRepository => async (
 
   const userExists = await usersRepository.findByEmail(userPayload.email);
 
-  if (!userExists) throw new ServiceError("Unauthorized");
+  if (!userExists) throw new ServiceError("Unauthorized", 403);
 
   request.user = userPayload;
 

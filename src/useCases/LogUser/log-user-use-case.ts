@@ -4,6 +4,7 @@ import { IUserRepository } from "@domain/user/user-repository";
 import IHashProvider from "@providers/HashProvider/models/IHashProvider";
 import ITokenProvider from "@providers/TokenProvider/models/ITokenProvider";
 import ILogUserDTO from "@useCases/LogUser/log-user-dto";
+import { ServiceError } from "@errors/service-error";
 
 interface IExecute {
   token: string;
@@ -28,11 +29,11 @@ export class LogUserUseCase {
   public async execute({ email, password }: ILogUserDTO): Promise<IExecute> {
     const user = await this.usersRepository.findByEmail(email);
 
-    if (!user) throw new Error("User does not exist");
+    if (!user) throw new ServiceError("User does not exist");
 
     const match = await this.hashProvider.hashesMatch(password, user.password);
 
-    if (!match) throw new Error("Passwords don't match");
+    if (!match) throw new ServiceError("Passwords don't match");
 
     const tokenPayload = {
       id: user.id,

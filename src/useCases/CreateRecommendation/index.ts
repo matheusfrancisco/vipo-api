@@ -3,8 +3,12 @@ import { PostgresUserRepository } from "../../infrastructure/postgres-user-repos
 import { CreateRecommendationController } from "./create-recommendation-controller";
 import { CreateRecommendationUseCase } from "./create-recommendation-use-case";
 
+interface IBuildResult {
+  createRecommendationController: CreateRecommendationController;
+}
+
 export class createRecommendationUseCaseFactory {
-  public static async build(connection: Connection) {
+  public static build(connection: Connection): IBuildResult {
     const userRepository = new PostgresUserRepository(connection);
 
     const createRecommendationUseCase = new CreateRecommendationUseCase(

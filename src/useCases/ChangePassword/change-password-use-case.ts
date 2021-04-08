@@ -1,7 +1,7 @@
 import { IUser } from "@domain/user/user";
 import { IUserRepository } from "@domain/user/user-repository";
 import IHashProvider from "@providers/HashProvider/models/IHashProvider";
-import { ServiceError } from "../../service-error";
+import { ServiceError } from "@errors/service-error";
 import IChangePasswordDTO from "./change-password-dto";
 
 export class ChangePasswordUseCase {

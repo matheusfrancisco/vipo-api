@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import { FindUserUseCase } from "@useCases/FindUser/find-user-use-case";
 import { ProfileUserUseCase } from "@useCases/GetProfileUser/profile-user-use-case";
-
-const buildErrorMessage = (message: string) => ({ error: message });
+import { ServiceError } from "@errors/service-error";
 
 export class ProfileUserController {
   constructor(
@@ -13,23 +12,16 @@ export class ProfileUserController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { email } = request.user;
 
-    if (!email)
-      return response.status(400).json(buildErrorMessage("Parameters missing"));
+    if (!email) throw new ServiceError("Parameters missing");
 
-    try {
-      const existingUser = await this.findUseCase.execute({ email });
+    const existingUser = await this.findUseCase.execute({ email });
 
-      if (!existingUser) throw new Error("User does not exist");
+    if (!existingUser) throw new Error("User does not exist");
 
-      const user = await this.profileUserUseCase.execute({
-        email
-      });
+    const user = await this.profileUserUseCase.execute({
+      email
+    });
 
-      return response.status(201).json({ user });
-    } catch (error) {
-      return response.status(400).json({
-        message: error.message || "Unexpected error."
-      });
-    }
+    return response.status(201).json({ user });
   }
 }

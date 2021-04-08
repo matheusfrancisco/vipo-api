@@ -2,6 +2,7 @@ import { IUserRepository } from "@domain/user/user-repository";
 import IMailProvider from "@providers/MailProvider/models/IMailProvider";
 import ITokenProvider from "@providers/TokenProvider/models/ITokenProvider";
 import IResetPasswordDTO from "@useCases/ResetPassword/reset-password-dto";
+import { ServiceError } from "@errors/service-error";
 
 const TOKEN_EXPIRE_TIME = "30m";
 
@@ -18,7 +19,7 @@ export class ResetPasswordUseCase {
   }: IResetPasswordDTO): Promise<void> {
     const user = await this.usersRepository.findByEmail(email);
 
-    if (!user) throw new Error("User does not exist");
+    if (!user) throw new ServiceError("User does not exist");
 
     const tokenPayload = {
       userId: user.id,
