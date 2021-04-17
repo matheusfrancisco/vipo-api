@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ServiceError } from "@errors/service-error";
+import { Gender } from "@domain/user/user";
 import { CreateUserUseCase } from "./create-use-case";
-import { Gender } from "../../infrastructure/entity/user-entity";
 
 export class CreateUserController {
   constructor(private createUserUseCase: CreateUserUseCase) {}

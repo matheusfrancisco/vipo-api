@@ -1,6 +1,5 @@
-import User, { IUser } from "@domain/user/user";
+import User, { Gender, IUser } from "@domain/user/user";
 import { ISavedUser, IUserRepository } from "@domain/user/user-repository";
-import { Gender } from "@infrastructure/entity/user-entity";
 import IGoogleProvider, {
   IGoogleUserPayload
 } from "@providers/GoogleProvider/models/IGoogleProvider";

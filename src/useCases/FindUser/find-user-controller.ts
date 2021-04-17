@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ServiceError } from "@errors/service-error";
-import { UserEntity } from "src/infrastructure/entity/user-entity";
+import { UserEntity } from "@infrastructure/database/entity/user-entity";
 import { FindUserUseCase } from "./find-user-use-case";
 
 export class FindUserController {

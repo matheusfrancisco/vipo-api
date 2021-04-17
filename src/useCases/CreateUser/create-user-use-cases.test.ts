@@ -1,6 +1,6 @@
 import MockUserRepository from "@domain/user/mocks/mock-user-repository";
+import { Gender } from "@domain/user/user";
 import MockHashProvider from "@providers/HashProvider/mocks/MockHashProvider";
-import { Gender } from "../../infrastructure/entity/user-entity";
 import { CreateUserUseCase } from "./create-use-case";
 
 xdescribe("CreateUserUseCase", () => {

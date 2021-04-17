@@ -1,6 +1,6 @@
 import { IUserProfile } from "@domain/user/user-profile";
+import { UserEntity } from "@infrastructure/database/entity/user-entity";
 import { IUser } from "./user";
-import { UserEntity } from "../../infrastructure/entity/user-entity";
 
 export interface IUserRepositoryUpdatePayload {
   userId: number;

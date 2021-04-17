@@ -9,29 +9,23 @@ import {
   OneToOne,
   JoinColumn
 } from "typeorm";
-import { UserEntity } from './user-entity';
+import { UserEntity } from "./user-entity";
 
 @Entity()
 export class UserProfile {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column("simple-array",
-    { nullable: true }
-  )
+  @Column("simple-array", { nullable: true })
   musicals!: string[];
 
-  @Column("simple-array",
-    { nullable: true }
-  )
+  @Column("simple-array", { nullable: true })
   foods!: string[];
 
-  @Column("simple-array",
-    { nullable: true }
-  )
+  @Column("simple-array", { nullable: true })
   drinks!: string[];
 
-  @OneToOne(type => UserEntity,  { onDelete: "CASCADE" })
+  @OneToOne(() => UserEntity, { onDelete: "CASCADE" })
   @JoinColumn()
   user!: UserEntity;
 
@@ -42,12 +36,12 @@ export class UserProfile {
   updatedAt!: Date;
 
   @BeforeInsert()
-  updateDateCreation() {
+  updateDateCreation(): void {
     this.createdAt = new Date();
   }
 
   @AfterUpdate()
-  updateDateUpdate() {
+  updateDateUpdate(): void {
     this.updatedAt = new Date();
   }
 }

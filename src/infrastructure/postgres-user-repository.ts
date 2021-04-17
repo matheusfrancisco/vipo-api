@@ -5,9 +5,9 @@ import {
   ISavedUser
 } from "@domain/user/user-repository";
 import { IUser } from "@domain/user/user";
-import { UserEntity } from "@infrastructure/entity/user-entity";
-import { UserAnswer } from "@infrastructure/entity/user-answer";
-import { UserProfile } from "@infrastructure/entity/user-profile";
+import { UserEntity } from "@infrastructure/database/entity/user-entity";
+import { UserAnswer } from "@infrastructure/database/entity/user-answer";
+import { UserProfile } from "@infrastructure/database/entity/user-profile";
 import { IUserProfile } from "@domain/user/user-profile";
 
 export class PostgresUserRepository implements IUserRepository {

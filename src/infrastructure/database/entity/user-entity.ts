@@ -1,3 +1,4 @@
+import { Gender } from "@domain/user/user";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -9,12 +10,6 @@ import {
   OneToMany
 } from "typeorm";
 import { UserAnswer } from "./user-answer";
-
-export enum Gender {
-  Male = "male",
-  Female = "female",
-  Neuter = "neuter"
-}
 
 @Entity()
 export class UserEntity {
