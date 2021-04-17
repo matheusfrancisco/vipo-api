@@ -1,5 +1,5 @@
-import handleInternalServerError from "@middlewares/handleInternalServerError";
-import handleServiceError from "@middlewares/handleServiceError";
+import handleInternalServerError from "@infrastructure/middlewares/handleInternalServerError";
+import handleServiceError from "@infrastructure/middlewares/handleServiceError";
 import express, { Router } from "express";
 import { routerFactory } from "./routes";
 import "express-async-errors";

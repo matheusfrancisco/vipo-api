@@ -1,11 +1,11 @@
 import { Router } from "express";
+import ensureAuthenticated from "@infrastructure/middlewares/ensureAuthenticated";
+import { CreateDatabaseConnection } from "@infrastructure/database/connection";
 import { ChangePasswordUseCaseFactory } from "@useCases/ChangePassword";
 import { LogUserUseCaseFactory } from "@useCases/LogUser";
-import ensureAuthenticated from "@middlewares/ensureAuthenticated";
 import { SignWithGoogleUseCaseFactory } from "@useCases/SignWithGoogleUseCase";
 import { ResetPasswordUseCaseFactory } from "@useCases/ResetPassword";
 import { CreateNewPasswordUseCaseFactory } from "@useCases/CreateNewPassword";
-import { CreateDatabaseConnection } from "@infrastructure/database/connection";
 import { UpdateUserUseCaseFactory } from "@useCases/UpdateUser";
 import { CreateUseCaseFactory } from "@useCases/CreateUser";
 import { GetProfileUserUseCaseFactory } from "@useCases/GetProfileUser";

@@ -14,7 +14,6 @@
       "@domain/*": ["./src/domain/*"],
       "@errors/*": ["./src/errors/*"],
       "@infrastructure/*": ["./src/infrastructure/*"],
-      "@middlewares/*": ["./src/middlewares/*"],
       "@migrations/*": ["./src/migrations/*"],
       "@providers/*": ["./src/providers/*"],
       "@useCases/*": ["./src/useCases/*"]
