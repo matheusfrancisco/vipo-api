@@ -1,7 +1,7 @@
 import request from "supertest";
+import { CreateDatabaseConnection } from "@infrastructure/database/connection";
 import { server } from "../../../index";
 import { routerFactory } from "../../../routes";
-import { CreateDatabaseConnection } from "../../infrastructure/connection";
 
 describe("profile user integration test", () => {
   let serverFactoryWithUserRoute: { app: Express.Application };

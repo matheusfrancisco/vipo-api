@@ -5,12 +5,12 @@ import ensureAuthenticated from "@middlewares/ensureAuthenticated";
 import { SignWithGoogleUseCaseFactory } from "@useCases/SignWithGoogleUseCase";
 import { ResetPasswordUseCaseFactory } from "@useCases/ResetPassword";
 import { CreateNewPasswordUseCaseFactory } from "@useCases/CreateNewPassword";
-import { UpdateUserUseCaseFactory } from "./src/useCases/UpdateUser";
-import { CreateUseCaseFactory } from "./src/useCases/CreateUser";
-import { GetProfileUserUseCaseFactory } from "./src/useCases/GetProfileUser";
-import { UpdateUserProfileUseCaseFactory } from "./src/useCases/updateProfile";
-import { createRecommendationUseCaseFactory } from "./src/useCases/CreateRecommendation";
-import { CreateDatabaseConnection } from "./src/infrastructure/connection";
+import { CreateDatabaseConnection } from "@infrastructure/database/connection";
+import { UpdateUserUseCaseFactory } from "@useCases/UpdateUser";
+import { CreateUseCaseFactory } from "@useCases/CreateUser";
+import { GetProfileUserUseCaseFactory } from "@useCases/GetProfileUser";
+import { UpdateUserProfileUseCaseFactory } from "@useCases/updateProfile";
+import { createRecommendationUseCaseFactory } from "@useCases/CreateRecommendation";
 
 export const routerFactory = async (): Promise<Router> => {
   const connection = await CreateDatabaseConnection.createConnection();

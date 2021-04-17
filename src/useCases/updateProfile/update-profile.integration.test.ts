@@ -1,7 +1,7 @@
 import request from "supertest";
+import { CreateDatabaseConnection } from "@infrastructure/database/connection";
 import { server } from "../../../index";
 import { routerFactory } from "../../../routes";
-import { CreateDatabaseConnection } from "../../infrastructure/connection";
 
 describe("update profile integration test", () => {
   let serverFactoryWithUserRoute: any;
@@ -20,7 +20,6 @@ describe("update profile integration test", () => {
       lastName: "Xico",
       birthDate: "09/09/1994",
       gender: "Male"
-
     };
 
     const register = await request(serverFactoryWithUserRoute.app)
