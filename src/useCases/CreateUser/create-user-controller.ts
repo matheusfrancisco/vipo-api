@@ -3,6 +3,11 @@ import { ServiceError } from "@errors/service-error";
 import { Gender } from "@domain/user/user";
 import { CreateUserUseCase } from "./create-use-case";
 
+const validGenders = ["Male", "Female", "Neuter"];
+
+const isGenderValid = (gender: string): gender is Gender =>
+  validGenders.includes(gender);
+
 export class CreateUserController {
   constructor(private createUserUseCase: CreateUserUseCase) {}
 
@@ -17,6 +22,9 @@ export class CreateUserController {
       !request.body.password
     )
       throw new ServiceError("Parameters missing.");
+
+    if (!isGenderValid(request.body.gender))
+      throw new ServiceError("Invalid gender.");
 
     const gender = request.body.gender as "Male" | "Female" | "Neuter";
 
