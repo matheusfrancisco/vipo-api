@@ -1,7 +1,7 @@
 import request from "supertest";
 import { CreateDatabaseConnection } from "@infrastructure/database/connection";
+import { routerFactory } from "@infrastructure/routes";
 import { server } from "../../../index";
-import { routerFactory } from "../../../routes";
 
 describe("Integration test: Recommendation profile", () => {
   let serverFactoryWithUserRoute: any;
@@ -35,7 +35,7 @@ describe("Integration test: Recommendation profile", () => {
       });
 
     const recommendationResponse = await request(serverFactoryWithUserRoute.app)
-      .post("/user/recommendation")
+      .post("/users/recommendation")
       .set({ authorization: `Bearer ${loginResponse.body.token}` })
       .send({
         email: user.email,

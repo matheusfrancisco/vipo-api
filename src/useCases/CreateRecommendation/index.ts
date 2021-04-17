@@ -6,7 +6,7 @@ interface IBuildResult {
   createRecommendationController: CreateRecommendationController;
 }
 
-export class createRecommendationUseCaseFactory {
+export class CreateRecommendationUseCaseFactory {
   public static build(): IBuildResult {
     const userRepository = new PostgresUserRepository();
 

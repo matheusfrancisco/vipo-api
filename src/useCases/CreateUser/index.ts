@@ -8,7 +8,7 @@ interface IBuildResult {
 }
 
 export class CreateUseCaseFactory {
-  public static async build(): Promise<IBuildResult> {
+  public static build(): IBuildResult {
     const userRepository = new PostgresUserRepository();
     const hashProvider = makeHashProvider();
 
