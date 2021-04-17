@@ -11,7 +11,7 @@ interface IBuildResult {
 
 export class SignWithGoogleUseCaseFactory {
   public static build(connection: Connection): IBuildResult {
-    const usersRepository = new PostgresUserRepository(connection);
+    const usersRepository = new PostgresUserRepository();
     const googleProvider = makeGoogleProvider();
     const tokenProvider = makeTokenProvider();
 

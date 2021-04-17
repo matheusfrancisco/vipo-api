@@ -1,4 +1,4 @@
-import { Connection, getRepository } from "typeorm";
+import { getRepository } from "typeorm";
 import {
   IUserRepositoryUpdatePayload,
   IUserRepository,
@@ -11,8 +11,6 @@ import { UserProfile } from "@infrastructure/database/entity/user-profile";
 import { IUserProfile } from "@domain/user/user-profile";
 
 export class PostgresUserRepository implements IUserRepository {
-  constructor(public connection: Connection) {}
-
   public async save({
     name,
     email,

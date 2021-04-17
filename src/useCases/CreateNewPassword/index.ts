@@ -11,7 +11,7 @@ interface IBuildResult {
 
 export class CreateNewPasswordUseCaseFactory {
   public static build(connection: Connection): IBuildResult {
-    const usersRepository = new PostgresUserRepository(connection);
+    const usersRepository = new PostgresUserRepository();
     const tokenProvider = makeTokenProvider();
     const hashProvider = makeHashProvider();
 

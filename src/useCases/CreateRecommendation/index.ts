@@ -9,7 +9,7 @@ interface IBuildResult {
 
 export class createRecommendationUseCaseFactory {
   public static build(connection: Connection): IBuildResult {
-    const userRepository = new PostgresUserRepository(connection);
+    const userRepository = new PostgresUserRepository();
 
     const createRecommendationUseCase = new CreateRecommendationUseCase(
       userRepository

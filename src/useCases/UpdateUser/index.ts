@@ -9,7 +9,7 @@ interface IBuildResult {
 
 export class UpdateUserUseCaseFactory {
   public static build(connection: Connection): IBuildResult {
-    const userRepository = new PostgresUserRepository(connection);
+    const userRepository = new PostgresUserRepository();
     const updateUseCases = new UpdateUserUseCase(userRepository);
 
     const updateUserController = new UpdateUserController(updateUseCases);

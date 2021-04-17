@@ -1,4 +1,4 @@
-import { Connection, getRepository, Repository } from "typeorm";
+import { getRepository, Repository } from "typeorm";
 import { CreateDatabaseConnection } from "@infrastructure/database/connection";
 import { UserEntity } from "@infrastructure/database/entity/user-entity";
 import { IUserRepository } from "@domain/user/user-repository";
@@ -7,14 +7,13 @@ import { PostgresUserRepository } from "./postgres-user-repository";
 
 describe("User Repository", () => {
   let repository: Repository<UserEntity>;
-  let connection: Connection;
   let userRepository: IUserRepository;
 
   beforeEach(async () => {
-    connection = await CreateDatabaseConnection.createConnection();
+    await CreateDatabaseConnection.createConnection();
     repository = await getRepository(UserEntity);
 
-    userRepository = new PostgresUserRepository(connection);
+    userRepository = new PostgresUserRepository();
 
     repository.delete({});
     jest.setTimeout(60000);
