@@ -1,4 +1,3 @@
-import { Connection } from "typeorm";
 import { PostgresUserRepository } from "@infrastructure/database/postgres-user-repository";
 import { UpdateUserProfileUseCase } from "./update-user-profile-use-case";
 import { UpdateUserProfileController } from "./update-user-profile-controller";
@@ -9,7 +8,7 @@ interface IBuild {
 }
 
 export class UpdateUserProfileUseCaseFactory {
-  public static build(connection: Connection): IBuild {
+  public static build(): IBuild {
     const userRepository = new PostgresUserRepository();
     const updateUseCases = new UpdateUserProfileUseCase(userRepository);
     const findUseCases = new FindUserUseCase(userRepository);

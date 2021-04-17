@@ -1,4 +1,3 @@
-import { Connection } from "typeorm";
 import { PostgresUserRepository } from "@infrastructure/database/postgres-user-repository";
 import { FindUserUseCase } from "@useCases/FindUser/find-user-use-case";
 import { ProfileUserController } from "./profile-user-controller";
@@ -9,7 +8,7 @@ interface IBuildResult {
 }
 
 export class GetProfileUserUseCaseFactory {
-  public static build(connection: Connection): IBuildResult {
+  public static build(): IBuildResult {
     const userRepository = new PostgresUserRepository();
 
     const profileUserUseCase = new ProfileUserUseCase(userRepository);

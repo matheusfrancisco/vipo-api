@@ -3,14 +3,13 @@ import makeHashProvider from "@providers/HashProvider";
 import makeTokenProvider from "@providers/TokenProvider";
 import { LogUserController } from "@useCases/LogUser/log-user-controller";
 import { LogUserUseCase } from "@useCases/LogUser/log-user-use-case";
-import { Connection } from "typeorm";
 
 interface IBuildResult {
   logUserController: LogUserController;
 }
 
 export class LogUserUseCaseFactory {
-  public static build(connection: Connection): IBuildResult {
+  public static build(): IBuildResult {
     const usersRepository = new PostgresUserRepository();
     const hashProvider = makeHashProvider();
     const tokenProvider = makeTokenProvider();

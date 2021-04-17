@@ -13,48 +13,36 @@ import { UpdateUserProfileUseCaseFactory } from "@useCases/updateProfile";
 import { createRecommendationUseCaseFactory } from "@useCases/CreateRecommendation";
 
 export const routerFactory = async (): Promise<Router> => {
-  const connection = await CreateDatabaseConnection.createConnection();
+  await CreateDatabaseConnection.createConnection();
+
+  const { createUserController } = await CreateUseCaseFactory.build();
 
   const {
-    createUserController,
-    userRepository
-  } = await CreateUseCaseFactory.build(connection);
-
-  const { changePasswordController } = await ChangePasswordUseCaseFactory.build(
-    connection
-  );
+    changePasswordController
+  } = await ChangePasswordUseCaseFactory.build();
 
   const {
     createNewPasswordController
-  } = await CreateNewPasswordUseCaseFactory.build(connection);
+  } = await CreateNewPasswordUseCaseFactory.build();
 
   const {
     createRecommendationController
-  } = await createRecommendationUseCaseFactory.build(connection);
+  } = await createRecommendationUseCaseFactory.build();
 
-  const { profileUserController } = GetProfileUserUseCaseFactory.build(
-    connection
-  );
+  const { profileUserController } = GetProfileUserUseCaseFactory.build();
 
-  const { resetPasswordController } = ResetPasswordUseCaseFactory.build(
-    connection
-  );
+  const { resetPasswordController } = ResetPasswordUseCaseFactory.build();
 
-  const { logUserController } = LogUserUseCaseFactory.build(connection);
+  const { logUserController } = LogUserUseCaseFactory.build();
 
-  const { signWithGoogleController } = SignWithGoogleUseCaseFactory.build(
-    connection
-  );
+  const { signWithGoogleController } = SignWithGoogleUseCaseFactory.build();
 
   const {
     updateUserProfileController
-  } = await UpdateUserProfileUseCaseFactory.build(connection);
+  } = await UpdateUserProfileUseCaseFactory.build();
 
-  const { updateUserController } = await UpdateUserUseCaseFactory.build(
-    connection
-  );
+  const { updateUserController } = await UpdateUserUseCaseFactory.build();
 
-  const authMiddleware = ensureAuthenticated(userRepository);
   const router = Router();
 
   router.post("/signin/google", async (request, response) => {
@@ -77,25 +65,33 @@ export const routerFactory = async (): Promise<Router> => {
     return createNewPasswordController.handle(request, response);
   });
 
-  router.patch("/users/password", authMiddleware, async (request, response) => {
-    return changePasswordController.handle(request, response);
-  });
+  router.patch(
+    "/users/password",
+    ensureAuthenticated,
+    async (request, response) => {
+      return changePasswordController.handle(request, response);
+    }
+  );
 
-  router.patch("/users", authMiddleware, async (request, response) => {
+  router.patch("/users", ensureAuthenticated, async (request, response) => {
     return updateUserController.handle(request, response);
   });
 
-  router.get("/profile", authMiddleware, (request, response) => {
+  router.get("/profile", ensureAuthenticated, (request, response) => {
     return profileUserController.handle(request, response);
   });
 
-  router.patch("/profile", authMiddleware, async (request, response) => {
+  router.patch("/profile", ensureAuthenticated, async (request, response) => {
     return updateUserProfileController.handle(request, response);
   });
 
-  router.post("/user/recommendation", authMiddleware, (request, response) => {
-    return createRecommendationController.handle(request, response);
-  });
+  router.post(
+    "/user/recommendation",
+    ensureAuthenticated,
+    (request, response) => {
+      return createRecommendationController.handle(request, response);
+    }
+  );
 
   return router;
 };

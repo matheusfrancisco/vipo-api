@@ -1,4 +1,3 @@
-import { Connection } from "typeorm";
 import { PostgresUserRepository } from "@infrastructure/database/postgres-user-repository";
 import makeHashProvider from "@providers/HashProvider";
 import { FindUserUseCase } from "@useCases/FindUser/find-user-use-case";
@@ -10,7 +9,7 @@ interface IBuildResult {
 }
 
 export class ChangePasswordUseCaseFactory {
-  public static build(connection: Connection): IBuildResult {
+  public static build(): IBuildResult {
     const userRepository = new PostgresUserRepository();
     const hashProvider = makeHashProvider();
 
