@@ -23,7 +23,7 @@ const databaseConfig: ConnectionOptions = {
   host: envs.DB_PROD_HOST,
   username: envs.DB_PROD_USER,
   password: envs.DB_PROD_PASS,
-  entities: ["src/infrastructure/entity/**/*.ts"],
+  entities: ["src/infrastructure/database/entity/**/*.ts"],
   migrations: ["src/migrations/**/*.ts"],
   cli: {
     migrationsDir: "src/migrations"
