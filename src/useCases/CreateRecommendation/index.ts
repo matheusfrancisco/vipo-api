@@ -1,5 +1,5 @@
 import { Connection } from "typeorm";
-import { PostgresUserRepository } from "../../infrastructure/postgres-user-repository";
+import { PostgresUserRepository } from "@infrastructure/database/postgres-user-repository";
 import { CreateRecommendationController } from "./create-recommendation-controller";
 import { CreateRecommendationUseCase } from "./create-recommendation-use-case";
 

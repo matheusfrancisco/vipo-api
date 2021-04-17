@@ -1,5 +1,5 @@
 import { Connection } from "typeorm";
-import { PostgresUserRepository } from "@infrastructure/postgres-user-repository";
+import { PostgresUserRepository } from "@infrastructure/database/postgres-user-repository";
 import { FindUserUseCase } from "@useCases/FindUser/find-user-use-case";
 import { ProfileUserController } from "./profile-user-controller";
 import { ProfileUserUseCase } from "./profile-user-use-case";

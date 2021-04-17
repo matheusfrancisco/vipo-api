@@ -1,4 +1,4 @@
-import { PostgresUserRepository } from "@infrastructure/postgres-user-repository";
+import { PostgresUserRepository } from "@infrastructure/database/postgres-user-repository";
 import makeGoogleProvider from "@providers/GoogleProvider";
 import makeTokenProvider from "@providers/TokenProvider";
 import { SignWithGoogleController } from "@useCases/SignWithGoogleUseCase/sign-with-google-controller";

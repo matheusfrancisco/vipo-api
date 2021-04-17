@@ -1,4 +1,4 @@
-import { PostgresUserRepository } from "@infrastructure/postgres-user-repository";
+import { PostgresUserRepository } from "@infrastructure/database/postgres-user-repository";
 import makeHashProvider from "@providers/HashProvider";
 import makeTokenProvider from "@providers/TokenProvider";
 import { LogUserController } from "@useCases/LogUser/log-user-controller";

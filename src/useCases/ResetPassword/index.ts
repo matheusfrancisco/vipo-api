@@ -1,4 +1,4 @@
-import { PostgresUserRepository } from "@infrastructure/postgres-user-repository";
+import { PostgresUserRepository } from "@infrastructure/database/postgres-user-repository";
 import makeMailProvider from "@providers/MailProvider";
 import makeTokenProvider from "@providers/TokenProvider";
 import { ResetPasswordController } from "@useCases/ResetPassword/reset-password-controller";

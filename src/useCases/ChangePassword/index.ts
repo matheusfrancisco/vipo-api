@@ -1,5 +1,5 @@
 import { Connection } from "typeorm";
-import { PostgresUserRepository } from "@infrastructure/postgres-user-repository";
+import { PostgresUserRepository } from "@infrastructure/database/postgres-user-repository";
 import makeHashProvider from "@providers/HashProvider";
 import { FindUserUseCase } from "@useCases/FindUser/find-user-use-case";
 import { ChangePasswordController } from "./change-password-controller";
