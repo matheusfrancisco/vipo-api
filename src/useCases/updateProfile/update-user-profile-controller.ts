@@ -17,6 +17,15 @@ export class UpdateUserProfileController {
     const { email } = request.user;
     const { profileInformations } = request.body;
 
+    if (!profileInformations) throw new ServiceError("Parameters missing!");
+
+    if (
+      !profileInformations.musicals ||
+      !profileInformations.drinks ||
+      !profileInformations.foods
+    )
+      throw new ServiceError("Profile informations missing!");
+
     const user = await this.findUserUseCase.execute({
       email
     });

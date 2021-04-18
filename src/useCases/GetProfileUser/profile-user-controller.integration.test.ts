@@ -37,7 +37,7 @@ describe("profile user integration test", () => {
       });
 
     const profileUserInfo = await request(serverFactoryWithUserRoute.app)
-      .get("/profile")
+      .get("/profiles")
       .set({ authorization: `Bearer ${login.body.token}` });
 
     expect(profileUserInfo.body).toEqual({

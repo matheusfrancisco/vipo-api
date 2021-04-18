@@ -38,7 +38,7 @@ describe("update profile integration test", () => {
     expect(login.status).toBe(200);
 
     const update = await request(serverFactoryWithUserRoute.app)
-      .patch("/profile")
+      .patch("/profiles")
       .set({ authorization: `Bearer ${login.body.token}` })
       .send({
         profileInformations: {

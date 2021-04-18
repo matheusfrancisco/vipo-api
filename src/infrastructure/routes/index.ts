@@ -11,7 +11,7 @@ export const routerFactory = async (): Promise<Router> => {
 
   router.use("/users", userRoutes);
 
-  router.use("/profile", profileRoutes);
+  router.use("/profiles", profileRoutes);
 
   router.use("/signin", signinRoutes);
 
