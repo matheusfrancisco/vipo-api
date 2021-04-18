@@ -16,8 +16,6 @@ export class ChangePasswordUseCase {
     password,
     newPassword
   }: IChangePasswordDTO): Promise<Omit<IUser, "password">> {
-    console.log(password, dbPasswordHash);
-
     const passwordsMatch = await this.hashProvider.hashesMatch(
       dbPasswordHash,
       password

@@ -2,11 +2,12 @@ import handleInternalServerError from "@infrastructure/middlewares/handleInterna
 import handleServiceError from "@infrastructure/middlewares/handleServiceError";
 import { routerFactory } from "@infrastructure/routes";
 import express, { Router } from "express";
-import "express-async-errors";
 
 export const server = async (
   router: Router
 ): Promise<{ app: express.Express }> => {
+  await import("express-async-errors");
+
   const app = await express();
 
   app.use(express.json());

@@ -9,8 +9,8 @@ export default class BCryptHashProvider implements IHashProvider {
     return hashPass;
   }
 
-  public async hashesMatch(hash: string, expected: string): Promise<boolean> {
-    const result = await bcrypt.compare(expected, hash);
+  public async hashesMatch(hash: string, data: string): Promise<boolean> {
+    const result = await bcrypt.compare(data, hash);
 
     return result;
   }

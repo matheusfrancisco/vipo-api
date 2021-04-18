@@ -14,7 +14,7 @@ describe("user integration test", () => {
   });
 
   test("should register a user", async () => {
-    const res = await request(serverFactoryWithUserRoute.app)
+    const response = await request(serverFactoryWithUserRoute.app)
       .post("/users")
       .send({
         name: "matheus",
@@ -25,7 +25,7 @@ describe("user integration test", () => {
         gender: "Male"
       });
 
-    expect(res.status).toEqual(201);
+    expect(response.status).toEqual(201);
   });
 
   test("should throw user already exist", async () => {
@@ -38,9 +38,11 @@ describe("user integration test", () => {
       gender: "Male"
     };
 
-    await request(serverFactoryWithUserRoute.app)
-      .post("/users")
-      .send(user);
+    console.log(
+      await request(serverFactoryWithUserRoute.app)
+        .post("/users")
+        .send(user)
+    );
 
     const alreadyCreatedResponse = await request(serverFactoryWithUserRoute.app)
       .post("/users")
