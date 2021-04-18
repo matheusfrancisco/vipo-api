@@ -16,7 +16,7 @@ export interface ISavedUser extends Omit<IUser, "password"> {
 
 export interface IUserRepository {
   save: (user: IUser) => Promise<ISavedUser>;
-  findByEmail: (email: string) => Promise<UserEntity | undefined | null>;
+  findByEmail: (email: string) => Promise<UserEntity | undefined>;
   update: (user: IUserRepositoryUpdatePayload) => Promise<IUser>;
   updateResetPasswordToken: (id: number, token?: string) => Promise<void>;
   updateUserProfile: (userProfile: any) => Promise<any>;

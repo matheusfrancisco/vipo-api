@@ -17,7 +17,7 @@ export class ChangePasswordController {
     if (!password || !newPassword || !email)
       return response.status(400).json(buildErrorMessage("Parameters missing"));
 
-    const existingUser = await this.findUseCase.execute(email);
+    const existingUser = await this.findUseCase.execute({ email });
 
     if (!existingUser) throw new ServiceError("User does not exist", 404);
 

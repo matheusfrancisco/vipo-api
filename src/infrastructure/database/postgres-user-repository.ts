@@ -41,16 +41,12 @@ export class PostgresUserRepository implements IUserRepository {
     };
   }
 
-  public async findByEmail(
-    email: string
-  ): Promise<UserEntity | undefined | null> {
-    const userRepository = await getRepository(UserEntity).findOne({
-      email
+  public async findByEmail(email: string): Promise<UserEntity | undefined> {
+    return getRepository(UserEntity).findOne({
+      where: {
+        email
+      }
     });
-    if (!userRepository) {
-      return null;
-    }
-    return userRepository;
   }
 
   public async updateResetPasswordToken(
