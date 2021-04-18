@@ -10,6 +10,7 @@ import { UserAnswer } from "@infrastructure/database/entity/user-answer";
 import { UserProfile } from "@infrastructure/database/entity/user-profile";
 import { IUserProfile } from "@domain/user/user-profile";
 import { RepositoryError } from "@errors/repository-error";
+import { IUserAnswer } from "@domain/user/user-answer";
 
 export class PostgresUserRepository implements IUserRepository {
   public async save({
@@ -121,7 +122,7 @@ export class PostgresUserRepository implements IUserRepository {
     howMuch,
     recommendations,
     like
-  }: UserAnswer): Promise<void> {
+  }: IUserAnswer & { user: IUser }): Promise<void> {
     const entity = {
       user,
       numberOfPeople,

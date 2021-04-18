@@ -1,3 +1,4 @@
+import { IUserAnswer } from "@domain/user/user-answer";
 import { IUserProfile } from "@domain/user/user-profile";
 import { UserEntity } from "@infrastructure/database/entity/user-entity";
 import { IUser } from "./user";
@@ -20,6 +21,6 @@ export interface IUserRepository {
   update: (user: IUserRepositoryUpdatePayload) => Promise<IUser>;
   updateResetPasswordToken: (id: number, token?: string) => Promise<void>;
   updateUserProfile: (userProfile: any) => Promise<any>;
-  insertAnswer: (userAnswer: any) => Promise<void>;
+  insertAnswer: (userAnswer: IUserAnswer & { user: IUser }) => Promise<void>;
   findUserProfile: (user: number) => Promise<IUserProfile | undefined>;
 }

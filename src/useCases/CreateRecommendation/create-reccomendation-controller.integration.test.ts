@@ -38,7 +38,6 @@ describe("Integration test: Recommendation profile", () => {
       .post("/users/recommendation")
       .set({ authorization: `Bearer ${loginResponse.body.token}` })
       .send({
-        email: user.email,
         howMuch: "R$10 - R$100",
         numberOfPeople: 4,
         like: ["party", "food", "rock"]
