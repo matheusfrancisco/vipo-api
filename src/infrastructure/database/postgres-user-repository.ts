@@ -9,6 +9,7 @@ import { UserEntity } from "@infrastructure/database/entity/user-entity";
 import { UserAnswer } from "@infrastructure/database/entity/user-answer";
 import { UserProfile } from "@infrastructure/database/entity/user-profile";
 import { IUserProfile } from "@domain/user/user-profile";
+import { RepositoryError } from "@errors/repository-error";
 
 export class PostgresUserRepository implements IUserRepository {
   public async save({
@@ -102,16 +103,20 @@ export class PostgresUserRepository implements IUserRepository {
     userId,
     ...updateFields
   }: IUserRepositoryUpdatePayload): Promise<IUser> {
-    const usersRepository = getRepository(UserEntity);
+    try {
+      const usersRepository = getRepository(UserEntity);
 
-    const user = await usersRepository.findOneOrFail(userId);
+      const user = await usersRepository.findOneOrFail(userId);
 
-    const updatedUser = await usersRepository.save({
-      ...user,
-      ...updateFields
-    });
+      const updatedUser = await usersRepository.save({
+        ...user,
+        ...updateFields
+      });
 
-    return updatedUser;
+      return updatedUser;
+    } catch (error) {
+      throw new RepositoryError(error.message, error.name, error.stack);
+    }
   }
 
   public async insertAnswer({
