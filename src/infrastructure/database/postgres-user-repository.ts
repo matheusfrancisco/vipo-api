@@ -134,9 +134,9 @@ export class PostgresUserRepository implements IUserRepository {
       like
     };
     try {
-      const t = await getRepository(UserAnswer).save(entity);
-    } catch (err) {
-      console.log(err);
+      await getRepository(UserAnswer).save(entity);
+    } catch (error) {
+      console.error(error.message, error.name, error.stack);
     }
   }
 
