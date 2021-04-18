@@ -38,17 +38,15 @@ describe("user integration test", () => {
       gender: "Male"
     };
 
-    console.log(
-      await request(serverFactoryWithUserRoute.app)
-        .post("/users")
-        .send(user)
-    );
-
-    const alreadyCreatedResponse = await request(serverFactoryWithUserRoute.app)
+    await request(serverFactoryWithUserRoute.app)
       .post("/users")
       .send(user);
 
-    expect(alreadyCreatedResponse.body.message).toEqual("User already exists.");
+    expect(
+      request(serverFactoryWithUserRoute.app)
+        .post("/users")
+        .send(user)
+    ).rejects.toThrow(new Error("User already exists."));
   });
 
   afterEach(async () => {
