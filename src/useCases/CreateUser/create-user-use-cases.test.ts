@@ -3,7 +3,7 @@ import { Gender } from "@domain/user/user";
 import MockHashProvider from "@providers/HashProvider/mocks/MockHashProvider";
 import { CreateUserUseCase } from "./create-use-case";
 
-xdescribe("CreateUserUseCase", () => {
+describe("CreateUserUseCase", () => {
   it("should save user with userRepository", async () => {
     const repository = new MockUserRepository();
     const hashProvider = new MockHashProvider();
