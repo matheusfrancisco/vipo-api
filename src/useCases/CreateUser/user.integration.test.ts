@@ -3,18 +3,22 @@ import { CreateDatabaseConnection } from "@infrastructure/database/connection";
 import { routerFactory } from "@infrastructure/routes";
 import { server } from "../../../index";
 
+const getServer = async () => {
+  const userRoutes = await routerFactory();
+  const serverFactoryWithUserRoute = await server(userRoutes);
+
+  return serverFactoryWithUserRoute.app;
+};
+
 describe("user integration test", () => {
-  let serverFactoryWithUserRoute: { app: Express.Application };
-
-  beforeEach(async () => {
-    const userRoutes = await routerFactory();
-    serverFactoryWithUserRoute = await server(userRoutes);
-
+  beforeAll(async () => {
     jest.setTimeout(60000);
   });
 
   test("should register a user", async () => {
-    const response = await request(serverFactoryWithUserRoute.app)
+    const app = await getServer();
+
+    const response = await request(app)
       .post("/users")
       .send({
         name: "matheus",
@@ -29,6 +33,8 @@ describe("user integration test", () => {
   });
 
   test("should throw user already exist", async () => {
+    const app = await getServer();
+
     const user = {
       name: "mt",
       email: "xicoooooodo2@hotmail.com",
@@ -38,12 +44,12 @@ describe("user integration test", () => {
       gender: "Male"
     };
 
-    await request(serverFactoryWithUserRoute.app)
+    await request(app)
       .post("/users")
       .send(user);
 
     expect(
-      request(serverFactoryWithUserRoute.app)
+      request(app)
         .post("/users")
         .send(user)
     ).rejects.toThrow(new Error("User already exists."));
