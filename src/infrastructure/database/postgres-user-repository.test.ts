@@ -1,4 +1,4 @@
-import { getRepository, Repository } from "typeorm";
+import { getRepository } from "typeorm";
 import { CreateDatabaseConnection } from "@infrastructure/database/connection";
 import { UserEntity } from "@infrastructure/database/entity/user-entity";
 import { IUserRepository } from "@domain/user/user-repository";
@@ -6,16 +6,13 @@ import User, { Gender } from "@domain/user/user";
 import { PostgresUserRepository } from "./postgres-user-repository";
 
 describe("User Repository", () => {
-  let repository: Repository<UserEntity>;
   let userRepository: IUserRepository;
 
   beforeEach(async () => {
     await CreateDatabaseConnection.createConnection();
-    repository = await getRepository(UserEntity);
 
     userRepository = new PostgresUserRepository();
 
-    repository.delete({});
     jest.setTimeout(60000);
   });
 
@@ -28,10 +25,13 @@ describe("User Repository", () => {
       gender: Gender.Male,
       birthDate: new Date("09/09/1994")
     });
+
     await userRepository.save(user.toRepository());
-    const foundUser = await repository.findOne({
+
+    const foundUser = await getRepository(UserEntity).findOne({
       email: "matheus2@hotmaaxil.com"
     });
+
     expect(foundUser).toMatchObject({
       password: "123123",
       email: "matheus2@hotmaaxil.com",
