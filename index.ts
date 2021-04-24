@@ -8,7 +8,7 @@ export const server = async (
 ): Promise<{ app: express.Express }> => {
   await import("express-async-errors");
 
-  const app = await express();
+  const app = express();
 
   app.use(express.json());
   app.use(router);

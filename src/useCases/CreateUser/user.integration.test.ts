@@ -48,11 +48,11 @@ describe("user integration test", () => {
       .post("/users")
       .send(user);
 
-    expect(
+    await expect(
       request(app)
         .post("/users")
         .send(user)
-    ).rejects.toThrow(new Error("User already exists."));
+    ).rejects.toThrow(new Error("User already exists"));
   });
 
   afterEach(async () => {
