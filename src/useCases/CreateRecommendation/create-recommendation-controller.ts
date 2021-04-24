@@ -14,15 +14,11 @@ export class CreateRecommendationController {
     request: Request,
     response: Response
   ): Promise<Response | undefined> {
-    if (
-      !request.body.email ||
-      !request.body.numberOfPeople ||
-      !request.body.howMuch ||
-      !request.body.like
-    )
-      throw new ServiceError("Parameters missing");
+    const { email } = request.user;
+    const { numberOfPeople, howMuch, like } = request.body;
 
-    const { email, numberOfPeople, howMuch, like } = request.body;
+    if (!email || !numberOfPeople || !howMuch || !like)
+      throw new ServiceError("Parameters missing");
 
     const recommendations = await this.createRecommendationUseCase.execute({
       userEmail: email,

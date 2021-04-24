@@ -4,13 +4,14 @@ import {
   Column,
   CreateDateColumn,
   BeforeInsert,
-  ManyToOne,
+  ManyToOne
 } from "typeorm";
 
 import { UserEntity } from "./user-entity";
+
 interface Recommendation {
-  name: string,
-  description: string,
+  name: string;
+  description: string;
 }
 
 @Entity()
@@ -20,7 +21,7 @@ export class UserAnswer {
 
   @ManyToOne(
     () => UserEntity,
-    (user) => user.answers
+    user => user.answers
   )
   user!: UserEntity;
 
@@ -30,16 +31,14 @@ export class UserAnswer {
   @Column({ nullable: false })
   howMuch!: string;
 
-  @Column("simple-array",
-    { nullable: false }
-  )
+  @Column("simple-array", { nullable: false })
   like!: string[];
 
   @Column({
-    type: 'jsonb',
+    type: "jsonb",
     array: false,
     default: () => "'[]'",
-    nullable: false,
+    nullable: false
   })
   recommendations!: Array<Recommendation>;
 
@@ -47,7 +46,7 @@ export class UserAnswer {
   createdAt!: Date;
 
   @BeforeInsert()
-  updateDateCreation() {
+  updateDateCreation(): void {
     this.createdAt = new Date();
   }
 }

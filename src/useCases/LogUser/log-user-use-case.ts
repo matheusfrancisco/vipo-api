@@ -1,5 +1,4 @@
 import { IUser } from "@domain/user/user";
-import { IUserAnswer } from "@domain/user/user-answer";
 import { IUserRepository } from "@domain/user/user-repository";
 import IHashProvider from "@providers/HashProvider/models/IHashProvider";
 import ITokenProvider from "@providers/TokenProvider/models/ITokenProvider";
@@ -31,7 +30,7 @@ export class LogUserUseCase {
 
     if (!user) throw new ServiceError("User does not exist");
 
-    const match = await this.hashProvider.hashesMatch(password, user.password);
+    const match = await this.hashProvider.hashesMatch(user.password, password);
 
     if (!match) throw new ServiceError("Passwords don't match");
 

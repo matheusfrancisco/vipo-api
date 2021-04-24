@@ -1,6 +1,7 @@
+import { IUserAnswer } from "@domain/user/user-answer";
 import { IUserProfile } from "@domain/user/user-profile";
+import { UserEntity } from "@infrastructure/database/entity/user-entity";
 import { IUser } from "./user";
-import { UserEntity } from "../../infrastructure/entity/user-entity";
 
 export interface IUserRepositoryUpdatePayload {
   userId: number;
@@ -16,10 +17,10 @@ export interface ISavedUser extends Omit<IUser, "password"> {
 
 export interface IUserRepository {
   save: (user: IUser) => Promise<ISavedUser>;
-  findByEmail: (email: string) => Promise<UserEntity | undefined | null>;
+  findByEmail: (email: string) => Promise<UserEntity | undefined>;
   update: (user: IUserRepositoryUpdatePayload) => Promise<IUser>;
   updateResetPasswordToken: (id: number, token?: string) => Promise<void>;
   updateUserProfile: (userProfile: any) => Promise<any>;
-  insertAnswer: (userAnswer: any) => Promise<void>;
+  insertAnswer: (userAnswer: IUserAnswer & { user: IUser }) => Promise<void>;
   findUserProfile: (user: number) => Promise<IUserProfile | undefined>;
 }

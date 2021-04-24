@@ -45,8 +45,6 @@ export class CreateRecommendationUseCase {
       user
     });
 
-    console.log(recommendations);
-
     return recommendations;
   }
 }

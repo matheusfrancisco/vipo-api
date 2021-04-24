@@ -1,20 +1,24 @@
 import request from "supertest";
+import { CreateDatabaseConnection } from "@infrastructure/database/connection";
+import { routerFactory } from "@infrastructure/routes";
 import { server } from "../../../index";
-import { routerFactory } from "../../../routes";
-import { CreateDatabaseConnection } from "../../infrastructure/connection";
+
+const getServer = async () => {
+  const userRoutes = await routerFactory();
+  const serverFactoryWithUserRoute = await server(userRoutes);
+
+  return serverFactoryWithUserRoute.app;
+};
 
 describe("user integration test", () => {
-  let serverFactoryWithUserRoute: { app: Express.Application };
-
-  beforeEach(async () => {
-    const userRoutes = await routerFactory();
-    serverFactoryWithUserRoute = await server(userRoutes);
-
+  beforeAll(async () => {
     jest.setTimeout(60000);
   });
 
   test("should register a user", async () => {
-    const res = await request(serverFactoryWithUserRoute.app)
+    const app = await getServer();
+
+    const response = await request(app)
       .post("/users")
       .send({
         name: "matheus",
@@ -25,10 +29,12 @@ describe("user integration test", () => {
         gender: "Male"
       });
 
-    expect(res.status).toEqual(201);
+    expect(response.status).toEqual(201);
   });
 
   test("should throw user already exist", async () => {
+    const app = await getServer();
+
     const user = {
       name: "mt",
       email: "xicoooooodo2@hotmail.com",
@@ -38,15 +44,13 @@ describe("user integration test", () => {
       gender: "Male"
     };
 
-    await request(serverFactoryWithUserRoute.app)
+    await request(app)
       .post("/users")
       .send(user);
 
-    const alreadyCreatedResponse = await request(serverFactoryWithUserRoute.app)
-      .post("/users")
-      .send(user);
+    expect(Promise.reject(request(app).post("/users").send(user)))
+      .rejects.toThrow('User already exists.');
 
-    expect(alreadyCreatedResponse.body.message).toEqual("User already exists.");
   });
 
   afterEach(async () => {

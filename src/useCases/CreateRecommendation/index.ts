@@ -1,5 +1,4 @@
-import { Connection } from "typeorm";
-import { PostgresUserRepository } from "../../infrastructure/postgres-user-repository";
+import { PostgresUserRepository } from "@infrastructure/database/postgres-user-repository";
 import { CreateRecommendationController } from "./create-recommendation-controller";
 import { CreateRecommendationUseCase } from "./create-recommendation-use-case";
 
@@ -7,9 +6,9 @@ interface IBuildResult {
   createRecommendationController: CreateRecommendationController;
 }
 
-export class createRecommendationUseCaseFactory {
-  public static build(connection: Connection): IBuildResult {
-    const userRepository = new PostgresUserRepository(connection);
+export class CreateRecommendationUseCaseFactory {
+  public static build(): IBuildResult {
+    const userRepository = new PostgresUserRepository();
 
     const createRecommendationUseCase = new CreateRecommendationUseCase(
       userRepository

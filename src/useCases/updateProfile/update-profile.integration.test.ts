@@ -1,10 +1,10 @@
 import request from "supertest";
+import { CreateDatabaseConnection } from "@infrastructure/database/connection";
+import { routerFactory } from "@infrastructure/routes";
 import { server } from "../../../index";
-import { routerFactory } from "../../../routes";
-import { CreateDatabaseConnection } from "../../infrastructure/connection";
 
 describe("update profile integration test", () => {
-  let serverFactoryWithUserRoute: any;
+  let serverFactoryWithUserRoute: { app: Express.Application };
 
   beforeEach(async () => {
     const userRoutes = await routerFactory();
@@ -20,7 +20,6 @@ describe("update profile integration test", () => {
       lastName: "Xico",
       birthDate: "09/09/1994",
       gender: "Male"
-
     };
 
     const register = await request(serverFactoryWithUserRoute.app)
@@ -39,7 +38,7 @@ describe("update profile integration test", () => {
     expect(login.status).toBe(200);
 
     const update = await request(serverFactoryWithUserRoute.app)
-      .patch("/profile")
+      .patch("/profiles")
       .set({ authorization: `Bearer ${login.body.token}` })
       .send({
         profileInformations: {

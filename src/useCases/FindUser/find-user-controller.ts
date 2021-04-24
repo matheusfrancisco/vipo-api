@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ServiceError } from "@errors/service-error";
-import { UserEntity } from "src/infrastructure/entity/user-entity";
+import { UserEntity } from "@infrastructure/database/entity/user-entity";
 import { FindUserUseCase } from "./find-user-use-case";
 
 export class FindUserController {
@@ -10,12 +10,11 @@ export class FindUserController {
     request: Request,
     response: Response
   ): Promise<UserEntity | undefined | Response> {
-    const { name, email } = request.body;
+    const { email } = request.body;
 
-    if (!name || !email) throw new ServiceError("Parameters missing");
+    if (!email) throw new ServiceError("Parameters missing");
 
     const user = await this.findUserUseCase.execute({
-      name,
       email
     });
 

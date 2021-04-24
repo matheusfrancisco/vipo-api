@@ -3,10 +3,11 @@ import { ServiceError } from "@errors/service-error";
 
 const handleInternalServerError: ErrorRequestHandler = async (
   error,
-  request,
-  response
+  _request,
+  response,
+  _next
 ) => {
-  console.error(error.message);
+  console.error(error);
 
   const serviceError = new ServiceError("Internal server error", 500);
 

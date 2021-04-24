@@ -1,5 +1,10 @@
-import { Gender } from "@infrastructure/entity/user-entity";
 import Email from "./email";
+
+export enum Gender {
+  Male = "male",
+  Female = "female",
+  Neuter = "neuter"
+}
 
 export interface IUser {
   name: string;

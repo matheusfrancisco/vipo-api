@@ -9,13 +9,19 @@ export class UpdateUserUseCase {
     userId,
     name,
     lastName
-  }: IUpdateUserDTO): Promise<IUser> {
+  }: IUpdateUserDTO): Promise<Omit<IUser, "password">> {
     const updatedUser = await this.usersRepository.update({
       userId,
       name,
       lastName
     });
 
-    return updatedUser;
+    return {
+      name: updatedUser.name,
+      lastName: updatedUser.lastName,
+      email: updatedUser.email,
+      birthDate: updatedUser.birthDate,
+      gender: updatedUser.gender
+    };
   }
 }

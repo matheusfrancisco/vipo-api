@@ -1,18 +1,18 @@
-import { Connection, getRepository } from "typeorm";
+import { getRepository } from "typeorm";
 import {
   IUserRepositoryUpdatePayload,
   IUserRepository,
   ISavedUser
 } from "@domain/user/user-repository";
 import { IUser } from "@domain/user/user";
-import { UserEntity } from "@infrastructure/entity/user-entity";
-import { UserAnswer } from "@infrastructure/entity/user-answer";
-import { UserProfile } from "@infrastructure/entity/user-profile";
+import { UserEntity } from "@infrastructure/database/entity/user-entity";
+import { UserAnswer } from "@infrastructure/database/entity/user-answer";
+import { UserProfile } from "@infrastructure/database/entity/user-profile";
 import { IUserProfile } from "@domain/user/user-profile";
+import { RepositoryError } from "@errors/repository-error";
+import { IUserAnswer } from "@domain/user/user-answer";
 
 export class PostgresUserRepository implements IUserRepository {
-  constructor(public connection: Connection) {}
-
   public async save({
     name,
     email,
@@ -42,16 +42,12 @@ export class PostgresUserRepository implements IUserRepository {
     };
   }
 
-  public async findByEmail(
-    email: string
-  ): Promise<UserEntity | undefined | null> {
-    const userRepository = await getRepository(UserEntity).findOne({
-      email
+  public async findByEmail(email: string): Promise<UserEntity | undefined> {
+    return getRepository(UserEntity).findOne({
+      where: {
+        email
+      }
     });
-    if (!userRepository) {
-      return null;
-    }
-    return userRepository;
   }
 
   public async updateResetPasswordToken(
@@ -104,16 +100,20 @@ export class PostgresUserRepository implements IUserRepository {
     userId,
     ...updateFields
   }: IUserRepositoryUpdatePayload): Promise<IUser> {
-    const usersRepository = getRepository(UserEntity);
+    try {
+      const usersRepository = getRepository(UserEntity);
 
-    const user = await usersRepository.findOneOrFail(userId);
+      const user = await usersRepository.findOneOrFail(userId);
 
-    const updatedUser = await usersRepository.save({
-      ...user,
-      ...updateFields
-    });
+      const updatedUser = await usersRepository.save({
+        ...user,
+        ...updateFields
+      });
 
-    return updatedUser;
+      return updatedUser;
+    } catch (error) {
+      throw new RepositoryError(error.message, error.name, error.stack);
+    }
   }
 
   public async insertAnswer({
@@ -122,7 +122,7 @@ export class PostgresUserRepository implements IUserRepository {
     howMuch,
     recommendations,
     like
-  }: UserAnswer): Promise<void> {
+  }: IUserAnswer & { user: IUser }): Promise<void> {
     const entity = {
       user,
       numberOfPeople,
@@ -131,9 +131,9 @@ export class PostgresUserRepository implements IUserRepository {
       like
     };
     try {
-      const t = await getRepository(UserAnswer).save(entity);
-    } catch (err) {
-      console.log(err);
+      await getRepository(UserAnswer).save(entity);
+    } catch (error) {
+      console.error(error.message, error.name, error.stack);
     }
   }
 

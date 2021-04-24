@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserEntity } from "src/infrastructure/entity/user-entity";
+import { UserEntity } from "@infrastructure/database/entity/user-entity";
 import { ServiceError } from "@errors/service-error";
 import { UpdateUserProfileUseCase } from "./update-user-profile-use-case";
 import { FindUserUseCase } from "../FindUser/find-user-use-case";
@@ -16,6 +16,15 @@ export class UpdateUserProfileController {
   ): Promise<UserEntity | undefined | Response<any>> {
     const { email } = request.user;
     const { profileInformations } = request.body;
+
+    if (!profileInformations) throw new ServiceError("Parameters missing!");
+
+    if (
+      !profileInformations.musicals ||
+      !profileInformations.drinks ||
+      !profileInformations.foods
+    )
+      throw new ServiceError("Profile informations missing!");
 
     const user = await this.findUserUseCase.execute({
       email

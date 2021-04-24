@@ -1,7 +1,7 @@
 import request from "supertest";
+import { CreateDatabaseConnection } from "@infrastructure/database/connection";
+import { routerFactory } from "@infrastructure/routes";
 import { server } from "../../../index";
-import { routerFactory } from "../../../routes";
-import { CreateDatabaseConnection } from "../../infrastructure/connection";
 
 describe("profile user integration test", () => {
   let serverFactoryWithUserRoute: { app: Express.Application };
@@ -37,7 +37,7 @@ describe("profile user integration test", () => {
       });
 
     const profileUserInfo = await request(serverFactoryWithUserRoute.app)
-      .get("/profile")
+      .get("/profiles")
       .set({ authorization: `Bearer ${login.body.token}` });
 
     expect(profileUserInfo.body).toEqual({
