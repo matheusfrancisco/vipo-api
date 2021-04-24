@@ -1,22 +1,19 @@
 import { getRepository } from "typeorm";
 import { CreateDatabaseConnection } from "@infrastructure/database/connection";
 import { UserEntity } from "@infrastructure/database/entity/user-entity";
-import { IUserRepository } from "@domain/user/user-repository";
 import User, { Gender } from "@domain/user/user";
 import { PostgresUserRepository } from "./postgres-user-repository";
 
 describe("User Repository", () => {
-  let userRepository: IUserRepository;
-
   beforeEach(async () => {
     await CreateDatabaseConnection.createConnection();
-
-    userRepository = new PostgresUserRepository();
 
     jest.setTimeout(60000);
   });
 
   test("Should save a user", async () => {
+    const userRepository = new PostgresUserRepository();
+
     const user = new User({
       name: "Matheus",
       email: "matheus2@hotmaaxil.com",

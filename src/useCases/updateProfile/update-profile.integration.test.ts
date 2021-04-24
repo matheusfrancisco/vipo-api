@@ -4,7 +4,7 @@ import { routerFactory } from "@infrastructure/routes";
 import { server } from "../../../index";
 
 describe("update profile integration test", () => {
-  let serverFactoryWithUserRoute: any;
+  let serverFactoryWithUserRoute: { app: Express.Application };
 
   beforeEach(async () => {
     const userRoutes = await routerFactory();
