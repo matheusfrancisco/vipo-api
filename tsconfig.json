@@ -18,10 +18,7 @@
       "@providers/*": ["./src/providers/*"],
       "@useCases/*": ["./src/useCases/*"]
     },
-    "typeRoots": [
-      "./node_modules/@types",
-      "./src/@types"
-    ],
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
     "skipLibCheck": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
