@@ -26,11 +26,4 @@ describe("health check", () => {
     );
     expect(rd.body).toEqual({ check: "database on" });
   });
-
-  afterEach(async () => {
-    await CreateDatabaseConnection.cleanAll();
-    await CreateDatabaseConnection.endConnection();
-    jest.clearAllMocks();
-    jest.resetAllMocks();
-  });
 });
