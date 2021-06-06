@@ -20,14 +20,14 @@ export class CreateDatabaseConnection {
 
   public static async cleanAll(): Promise<void> {
     try {
-      const connection = await getConnection();
+      const connection = getConnection();
 
       if (!connection) throw new Error("There are no active connections");
 
-      const entities = await connection.entityMetadatas;
+      const entities = connection.entityMetadatas;
 
-      await entities.forEach(async entity => {
-        const repository = await getRepository(entity.name);
+      entities.forEach(async entity => {
+        const repository = getRepository(entity.name);
         await repository.query(`DELETE FROM ${entity.tableName};`);
       });
     } catch (error) {
@@ -36,7 +36,7 @@ export class CreateDatabaseConnection {
   }
 
   public static async endConnection(): Promise<void> {
-    const connection = await getConnection();
+    const connection = getConnection();
 
     await connection.close();
   }

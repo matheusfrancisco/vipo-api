@@ -7,3 +7,5 @@ declare namespace Express {
     };
   }
 }
+
+declare module "express-async-errors";

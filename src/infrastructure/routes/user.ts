@@ -46,4 +46,6 @@ userRoutes.post("/recommendation", ensureAuthenticated, (request, response) => {
   return createRecommendationController.handle(request, response);
 });
 
+//#TODO create route to save liked recommendationId and disliked recommendationIds
+
 export default userRoutes;
