@@ -99,30 +99,28 @@ describe("Create new password use case", () => {
     ).rejects.toThrow();
   });
 
-  test(
-    "should throw when the user from the email is not the user from the token", , async () => {
-      const { tokenProvider, useCase } = getUseCase();
+  test("should throw when the user from the email is not the user from the token", async () => {
+    const { tokenProvider, useCase } = getUseCase();
 
-      // Setup
-      const user = {
-        id: 5,
-        email: "email@email.com"
-      };
+    // Setup
+    const user = {
+      id: 5,
+      email: "email@email.com"
+    };
 
-      const token = await tokenProvider.generateToken();
+    const token = await tokenProvider.generateToken();
 
-      tokenProvider.decodeToken = jest.fn(async token => ({
-        userId: 10,
-        email: 'wrong@email.com'
-      }));
+    tokenProvider.decodeToken = jest.fn(async token => ({
+      userId: 10,
+      email: "wrong@email.com"
+    }));
 
-      // Testing
-      await expect(
-        useCase.execute({
-          token,
-          password: "new-pass"
-        })
-      ).rejects.toThrow();
-    }
-  );
+    // Testing
+    await expect(
+      useCase.execute({
+        token,
+        password: "new-pass"
+      })
+    ).rejects.toThrow();
+  });
 });
