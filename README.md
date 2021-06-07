@@ -41,3 +41,15 @@ You need up database to run all tests
 ```bash
 npm run test
 ```
+
+## Run in prod
+
+```bash
+sudo npm i -g pm2
+# install nvm and use 10.14.1
+# then use the same node version to sudo
+sudo ln -s "$NVM_DIR/versions/node/$(nvm version)/bin/node" "/usr/local/bin/node"
+sudo ln -s "$NVM_DIR/versions/node/$(nvm version)/bin/npm" "/usr/local/bin/npm"
+npm i
+npm run start
+```

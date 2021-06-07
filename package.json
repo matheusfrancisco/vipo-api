@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "format": "prettier --write \"**/*.*(js|ts|json|yml|yaml|md)\"",
-    "dev": "tsnd -r tsconfig-paths/register --transpile-only --respawn --inspect --ignore-watch node_modules --no-notify start.ts",
+    "dev": "tsnd -r tsconfig-paths/register --transpile-only --respawn --inspect --ignore-watch node_modules --no-notify src/start.ts",
     "test": "export TZ='America/SaoPaulo' && NODE_ENV=test jest --forceExit --maxWorkers=4 --testTimeout=60000 --detectOpenHandles",
-    "start": "nodemon --inspect",
+    "start": "pm2 start src/start.ts --watch",
+    "stop": "pm2 stop src/start.ts --watch",
+    "build": "tsc -p .",
+    "start-prod": "npm run  build && pm2 start pm2.yml",
     "migrations": "NODE_ENV=prod ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:run  ",
     "generate": "NODE_ENV=prod ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:generate -n  ",
     "create-migration": "NODE_ENV=prod ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:create -n"
@@ -16,7 +19,6 @@
     "@types/bcrypt": "^3.0.0",
     "@types/express": "^4.17.2",
     "@types/jsonwebtoken": "^8.5.0",
-    "@types/supertest": "^2.0.10",
     "address-validator": "^0.2.3",
     "axios": "^0.20.0",
     "bcrypt": "^5.0.0",
@@ -26,7 +28,6 @@
     "faker": "^5.4.0",
     "google-auth-library": "^7.0.2",
     "jsonwebtoken": "^8.5.1",
-    "mocha": "^6.2.2",
     "nodemon": "^2.0.2",
     "pg": "^8.0.3",
     "pg-god": "^1.0.11",
@@ -39,6 +40,8 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/supertest": "^2.0.10",
+    "mocha": "^6.2.2",
     "@types/chai": "^4.2.6",
     "@types/chai-as-promised": "^7.1.2",
     "@types/faker": "^5.1.7",

@@ -1,0 +1,2 @@
+apps:
+  - script: ./build/start.js
