@@ -5,9 +5,11 @@
     "target": "es6",
     "strict": true,
     "noImplicitAny": true,
+    "declaration": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "build",
+    "rootDir": ".",
+    "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
       "@config/*": ["./src/config/*"],
@@ -23,7 +25,11 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*",
+    "src",
+    "src/**/*.ts",
+    "@types/**/*.d.ts",],
   "exclude": [
     "src/**/*.test.ts",
     "src/providers/HashProvider/mocks/**/*",
