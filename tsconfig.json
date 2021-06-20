@@ -29,7 +29,8 @@
     "src/**/*",
     "src",
     "src/**/*.ts",
-    "@types/**/*.d.ts",],
+    "@types/**/*.d.ts"
+  ],
   "exclude": [
     "src/**/*.test.ts",
     "src/providers/HashProvider/mocks/**/*",
