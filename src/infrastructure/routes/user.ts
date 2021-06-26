@@ -6,6 +6,7 @@ import { CreateNewPasswordUseCaseFactory } from "@useCases/CreateNewPassword";
 import { ResetPasswordUseCaseFactory } from "@useCases/ResetPassword";
 import { UpdateUserUseCaseFactory } from "@useCases/UpdateUser";
 import { CreateRecommendationUseCaseFactory } from "@useCases/CreateRecommendation";
+import { ReceiveFeedbackUseCaseFactory } from "@useCases/ReceiveFeedback";
 
 const userRoutes = Router();
 
@@ -17,6 +18,7 @@ const { updateUserController } = UpdateUserUseCaseFactory.build();
 const {
   createRecommendationController
 } = CreateRecommendationUseCaseFactory.build();
+const { receiveFeedbackController } = ReceiveFeedbackUseCaseFactory.build();
 
 userRoutes.post("/", (request, response) => {
   return createUserController.handle(request, response);
@@ -46,6 +48,14 @@ userRoutes.post("/recommendation", ensureAuthenticated, (request, response) => {
   return createRecommendationController.handle(request, response);
 });
 
-//#TODO create route to save liked recommendationId and disliked recommendationIds
+userRoutes.post(
+  "/feedback/:venueId",
+  ensureAuthenticated,
+  async (request, response) => {
+    return receiveFeedbackController.handle(request, response);
+  }
+);
+
+// #TODO create route to save liked recommendationId and disliked recommendationIds
 
 export default userRoutes;

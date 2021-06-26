@@ -9,23 +9,19 @@ import {
   UpdateDateColumn
 } from "typeorm";
 
-@Entity("user-feedback")
+@Entity()
 export class UserFeedback {
-  @Column({
-    name: "user_id"
-  })
+  @PrimaryColumn({ name: "user_id" })
   userId!: number;
 
   @ManyToOne(
     () => UserEntity,
-    user => user.id,
-    { primary: true }
+    user => user.id
   )
   @JoinColumn({ name: "user_id" })
   user!: UserEntity;
 
-  @PrimaryColumn()
-  @Column()
+  @PrimaryColumn({ name: "venue_id" })
   venueId!: number;
 
   @Column()

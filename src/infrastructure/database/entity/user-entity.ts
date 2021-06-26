@@ -1,4 +1,5 @@
 import { Gender } from "@domain/user/user";
+import { UserFeedback } from "@infrastructure/database/entity/user-feedback";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -49,6 +50,12 @@ export class UserEntity {
     answer => answer.user
   )
   answers!: UserAnswer[];
+
+  @OneToMany(
+    () => UserFeedback,
+    feedback => feedback.user
+  )
+  feedbacks!: UserFeedback[];
 
   @Column()
   password!: string;
