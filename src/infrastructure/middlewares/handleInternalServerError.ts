@@ -7,7 +7,6 @@ const handleInternalServerError: ErrorRequestHandler = async (
   response,
   _next
 ) => {
-  console.error(error);
 
   const serviceError = new ServiceError("Internal server error", 500);
 
