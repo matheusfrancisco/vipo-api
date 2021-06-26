@@ -5,6 +5,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  PrimaryColumn,
   UpdateDateColumn
 } from "typeorm";
 
@@ -15,10 +16,15 @@ export class UserFeedback {
   })
   userId!: number;
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(
+    () => UserEntity,
+    user => user.id,
+    { primary: true }
+  )
   @JoinColumn({ name: "user_id" })
   user!: UserEntity;
 
+  @PrimaryColumn()
   @Column()
   venueId!: number;
 

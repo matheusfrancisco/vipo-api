@@ -24,5 +24,7 @@ export interface IUserRepository {
   updateUserProfile: (userProfile: any) => Promise<any>;
   insertAnswer: (userAnswer: IUserAnswer & { user: IUser }) => Promise<void>;
   findUserProfile: (user: number) => Promise<IUserProfile | undefined>;
-  receiveFeedback: (userFeedback: IUserFeedback) => Promise<void>;
+  receiveFeedback: (
+    userFeedback: Omit<IUserFeedback, "createdAt" | "updatedAt">
+  ) => Promise<void>;
 }

@@ -165,7 +165,7 @@ export class PostgresUserRepository implements IUserRepository {
     bestRatedItem,
     leastRatedItem,
     comments
-  }: IUserFeedback): Promise<void> {
+  }: Omit<IUserFeedback, "createdAt" | "updatedAt">): Promise<void> {
     const usersRepository = getRepository(UserEntity);
     const userFeedbackRepository = getRepository(UserFeedback);
 
