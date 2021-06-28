@@ -21,8 +21,8 @@ export class UserFeedback {
   @JoinColumn({ name: "user_id" })
   user!: UserEntity;
 
-  @PrimaryColumn({ name: "venue_id" })
-  venueId!: number;
+  @PrimaryColumn({ name: "establishment_id" })
+  establishmentId!: number;
 
   @Column()
   rating!: number;

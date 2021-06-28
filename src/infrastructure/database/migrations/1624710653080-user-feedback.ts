@@ -7,7 +7,7 @@ export class userFeedback1624710653080 implements MigrationInterface {
         name: "user_feedback",
         columns: [
           { name: "user_id", type: "integer", isPrimary: true },
-          { name: "venue_id", type: "integer", isPrimary: true },
+          { name: "establishment_id", type: "integer", isPrimary: true },
           { name: "rating", type: "integer" },
           { name: "best_rated_item", type: "varchar" },
           { name: "least_rated_item", type: "varchar" },
@@ -35,8 +35,8 @@ export class userFeedback1624710653080 implements MigrationInterface {
         ],
         uniques: [
           {
-            name: "UserVenueFeedback",
-            columnNames: ["user_id", "venue_id"]
+            name: "UserEstablishmentFeedback",
+            columnNames: ["user_id", "establishment_id"]
           }
         ]
       })

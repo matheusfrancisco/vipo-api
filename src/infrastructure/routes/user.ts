@@ -49,7 +49,7 @@ userRoutes.post("/recommendation", ensureAuthenticated, (request, response) => {
 });
 
 userRoutes.post(
-  "/feedback/:venueId",
+  "/feedback/:establishmentId",
   ensureAuthenticated,
   async (request, response) => {
     return receiveFeedbackController.handle(request, response);

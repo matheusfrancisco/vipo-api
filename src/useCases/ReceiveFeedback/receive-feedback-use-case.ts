@@ -6,7 +6,7 @@ export class ReceiveFeedbackUseCase {
 
   public async execute({
     userId,
-    venueId,
+    establishmentId,
     rating,
     bestRatedItem,
     leastRatedItem,
@@ -14,7 +14,7 @@ export class ReceiveFeedbackUseCase {
   }: IReceiveFeedbackDTO): Promise<void> {
     await this.userRepository.receiveFeedback({
       userId,
-      venueId,
+      establishmentId,
       rating,
       bestRatedItem,
       leastRatedItem,

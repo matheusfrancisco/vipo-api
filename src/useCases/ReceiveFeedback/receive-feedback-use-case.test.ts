@@ -5,7 +5,7 @@ import faker from "faker";
 
 const getFakeFeedback = (): IReceiveFeedbackDTO => ({
   userId: faker.random.number(200),
-  venueId: faker.random.number(200),
+  establishmentId: faker.random.number(200),
   bestRatedItem: faker.music.genre(),
   leastRatedItem: faker.music.genre(),
   rating: faker.random.number(5),

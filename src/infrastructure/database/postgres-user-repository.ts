@@ -160,7 +160,7 @@ export class PostgresUserRepository implements IUserRepository {
 
   public async receiveFeedback({
     userId,
-    venueId,
+    establishmentId,
     rating,
     bestRatedItem,
     leastRatedItem,
@@ -174,7 +174,7 @@ export class PostgresUserRepository implements IUserRepository {
 
       await userFeedbackRepository.save({
         userId,
-        venueId,
+        establishmentId,
         rating,
         bestRatedItem,
         leastRatedItem,

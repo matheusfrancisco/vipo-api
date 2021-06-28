@@ -1,6 +1,6 @@
 export interface IUserFeedback {
   userId: number;
-  venueId: number;
+  establishmentId: number;
   rating: number;
   bestRatedItem: string;
   leastRatedItem: string;
