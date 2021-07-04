@@ -1,5 +1,5 @@
 import { PostgresUserRepository } from "@infrastructure/database/postgres-user-repository";
-import ProfilesRepositoryFactory from "@infrastructure/database/factories/ProfilesRepositoryFactory";
+import ProfilesRepositoryFactory from "@infrastructure/database/factories/profiles-repository-factory";
 import { UpdateUserProfileUseCase } from "./update-user-profile-use-case";
 import { UpdateUserProfileController } from "./update-user-profile-controller";
 import { FindUserUseCase } from "../FindUser/find-user-use-case";

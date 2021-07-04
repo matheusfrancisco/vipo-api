@@ -1,4 +1,4 @@
-import MockProfilesRepository from "@domain/profile/mocks/MockProfilesRepository";
+import MockProfilesRepository from "@domain/profile/mocks/mock-profiles-repository";
 import MockUserRepository from "@domain/user/mocks/mock-user-repository";
 import { ProfileUserUseCase } from "@useCases/GetProfileUser/profile-user-use-case";
 

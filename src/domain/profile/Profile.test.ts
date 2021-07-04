@@ -1,4 +1,4 @@
-import MockProfile from "@domain/profile/mocks/MockProfile";
+import MockProfile from "@domain/profile/mocks/mock-profile";
 import Profile from "@domain/profile/Profile";
 
 describe("Profile", () => {

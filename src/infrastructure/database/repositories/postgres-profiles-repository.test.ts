@@ -1,4 +1,4 @@
-import MockProfile from "@domain/profile/mocks/MockProfile";
+import MockProfile from "@domain/profile/mocks/mock-profile";
 import { CreateDatabaseConnection } from "@infrastructure/database/connection";
 import PostgresProfilesRepository from "@infrastructure/database/repositories/postgres-profiles-repository";
 
