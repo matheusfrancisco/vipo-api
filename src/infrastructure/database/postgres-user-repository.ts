@@ -9,8 +9,6 @@ import { UserEntity } from "@infrastructure/database/entity/user-entity";
 import { UserAnswer } from "@infrastructure/database/entity/user-answer";
 import { RepositoryError } from "@errors/repository-error";
 import { IUserAnswer } from "@domain/user/user-answer";
-import { IUserFeedback } from "@domain/user/user-feedback";
-import { UserFeedback } from "@infrastructure/database/entity/user-feedback";
 
 export class PostgresUserRepository implements IUserRepository {
   public async save({
@@ -102,33 +100,6 @@ export class PostgresUserRepository implements IUserRepository {
       await getRepository(UserAnswer).save(entity);
     } catch (error) {
       console.error(error.message, error.name, error.stack);
-    }
-  }
-
-  public async receiveFeedback({
-    userId,
-    establishmentId,
-    rating,
-    bestRatedItem,
-    leastRatedItem,
-    comments
-  }: Omit<IUserFeedback, "createdAt" | "updatedAt">): Promise<void> {
-    const usersRepository = getRepository(UserEntity);
-    const userFeedbackRepository = getRepository(UserFeedback);
-
-    try {
-      await usersRepository.findOneOrFail(userId);
-
-      await userFeedbackRepository.save({
-        userId,
-        establishmentId,
-        rating,
-        bestRatedItem,
-        leastRatedItem,
-        comments
-      });
-    } catch (error) {
-      throw new RepositoryError(error.message, error.name, error.stack);
     }
   }
 }

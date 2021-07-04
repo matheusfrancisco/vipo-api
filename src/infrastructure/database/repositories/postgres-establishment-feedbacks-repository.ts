@@ -1,11 +1,11 @@
 import EstablishmentFeedback from "@domain/establishment-feedback/establishment-feedback";
 import IEstablishmentFeedback from "@domain/establishment-feedback/IEstablishmentFeedback";
-import IEstablishmentRepositoriesFeedback from "@domain/establishment-feedback/IEstablishmentFeedbacksRepository";
+import IEstablishmentFeedbacksRepository from "@domain/establishment-feedback/IEstablishmentFeedbacksRepository";
 import { UserFeedback } from "@infrastructure/database/entity/user-feedback";
 import { getRepository } from "typeorm";
 
 export default class PostgresEstablishmentFeedbacksRepository
-  implements IEstablishmentRepositoriesFeedback {
+  implements IEstablishmentFeedbacksRepository {
   private repository = getRepository(UserFeedback);
 
   public async create({

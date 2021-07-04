@@ -11,6 +11,4 @@ export default class MockUserRepository implements IUserRepository {
   public updateResetPasswordToken = jest.fn();
 
   public insertAnswer = jest.fn();
-
-  public receiveFeedback = jest.fn();
 }
