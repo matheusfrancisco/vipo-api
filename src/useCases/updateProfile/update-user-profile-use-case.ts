@@ -1,5 +1,5 @@
 import IProfilesRepository from "@domain/profile/IProfilesRepository";
-import Profile from "@domain/profile/Profile";
+import Profile from "@domain/profile/profile";
 import IUpdateUserProfileDTO from "./update-user-profile-dto";
 
 export interface UserResource {

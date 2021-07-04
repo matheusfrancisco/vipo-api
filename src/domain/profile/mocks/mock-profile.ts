@@ -1,4 +1,4 @@
-import Profile from "@domain/profile/Profile";
+import Profile from "@domain/profile/profile";
 import faker from "faker";
 
 const MAX_RANDOM_NUMBER = 50;
