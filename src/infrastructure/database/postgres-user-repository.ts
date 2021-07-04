@@ -7,12 +7,10 @@ import {
 import { IUser } from "@domain/user/user";
 import { UserEntity } from "@infrastructure/database/entity/user-entity";
 import { UserAnswer } from "@infrastructure/database/entity/user-answer";
-import { UserProfile } from "@infrastructure/database/entity/user-profile";
 import { RepositoryError } from "@errors/repository-error";
 import { IUserAnswer } from "@domain/user/user-answer";
 import { IUserFeedback } from "@domain/user/user-feedback";
 import { UserFeedback } from "@infrastructure/database/entity/user-feedback";
-import IProfile from "@domain/profile/IProfile";
 
 export class PostgresUserRepository implements IUserRepository {
   public async save({
@@ -66,38 +64,6 @@ export class PostgresUserRepository implements IUserRepository {
     });
   }
 
-  public async updateUserProfile({
-    musicals,
-    user,
-    foods,
-    drinks
-  }: IProfile): Promise<UserProfile | void> {
-    const userProfileRepository = getRepository(UserProfile);
-    const entity = { user, musicals, foods, drinks };
-
-    const userProfile = await userProfileRepository.findOne({
-      where: {
-        user: entity.user
-      }
-    });
-
-    // #TODO for instance i don't read about
-    // partial updating using typeorm but I think has a better away to do this.
-    if (userProfile) {
-      await userProfileRepository.update(userProfile.id, entity);
-    } else {
-      await userProfileRepository.save(entity);
-    }
-
-    const findUserProfile = await userProfileRepository.findOne({
-      where: {
-        user: entity.user
-      }
-    });
-
-    return findUserProfile;
-  }
-
   public async update({
     userId,
     ...updateFields
@@ -137,23 +103,6 @@ export class PostgresUserRepository implements IUserRepository {
     } catch (error) {
       console.error(error.message, error.name, error.stack);
     }
-  }
-
-  public async findUserProfile(user: number): Promise<IProfile | undefined> {
-    const userProfileRepository = getRepository(UserProfile);
-
-    const userProfile = await userProfileRepository.findOne({
-      where: { user }
-    });
-
-    if (!userProfile) return undefined;
-
-    return {
-      user,
-      drinks: userProfile.drinks,
-      foods: userProfile.foods,
-      musicals: userProfile.musicals
-    };
   }
 
   public async receiveFeedback({

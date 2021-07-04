@@ -1,10 +1,12 @@
+import MockProfilesRepository from "@domain/profile/mocks/MockProfilesRepository";
 import MockUserRepository from "@domain/user/mocks/mock-user-repository";
 import { ProfileUserUseCase } from "@useCases/GetProfileUser/profile-user-use-case";
 
 describe("Profile User Use Case", () => {
   it("should return undefined when no user exists", async () => {
     const usersRepository = new MockUserRepository();
-    const useCase = new ProfileUserUseCase(usersRepository);
+    const profilesRepository = new MockProfilesRepository();
+    const useCase = new ProfileUserUseCase(usersRepository, profilesRepository);
 
     const email = "my_random_mail@email.com";
 
@@ -29,10 +31,11 @@ describe("Profile User Use Case", () => {
     };
 
     const usersRepository = new MockUserRepository();
+    const profilesRepository = new MockProfilesRepository();
     usersRepository.findByEmail = jest.fn(() => user);
-    usersRepository.findUserProfile = jest.fn(() => profile);
+    profilesRepository.findByUser = jest.fn(() => profile);
 
-    const useCase = new ProfileUserUseCase(usersRepository);
+    const useCase = new ProfileUserUseCase(usersRepository, profilesRepository);
 
     const result = await useCase.execute({ email: user.email });
 

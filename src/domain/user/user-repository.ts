@@ -21,9 +21,7 @@ export interface IUserRepository {
   findByEmail: (email: string) => Promise<UserEntity | undefined>;
   update: (user: IUserRepositoryUpdatePayload) => Promise<IUser>;
   updateResetPasswordToken: (id: number, token?: string) => Promise<void>;
-  updateUserProfile: (userProfile: any) => Promise<any>;
   insertAnswer: (userAnswer: IUserAnswer & { user: IUser }) => Promise<void>;
-  findUserProfile: (user: number) => Promise<IProfile | undefined>;
   receiveFeedback: (
     userFeedback: Omit<IUserFeedback, "createdAt" | "updatedAt">
   ) => Promise<void>;

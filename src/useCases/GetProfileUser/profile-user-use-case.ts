@@ -1,4 +1,5 @@
 import IProfile from "@domain/profile/IProfile";
+import IProfilesRepository from "@domain/profile/IProfilesRepository";
 import { IUser } from "@domain/user/user";
 import { IUserRepository } from "@domain/user/user-repository";
 
@@ -16,7 +17,10 @@ interface IUserWithProfile {
 }
 
 export class ProfileUserUseCase {
-  constructor(private userRepository: IUserRepository) {}
+  constructor(
+    private userRepository: IUserRepository,
+    private profilesRepository: IProfilesRepository
+  ) {}
 
   public async execute({
     email
@@ -25,7 +29,7 @@ export class ProfileUserUseCase {
 
     if (!user) return undefined;
 
-    const userProfile = await this.userRepository.findUserProfile(user.id);
+    const profile = await this.profilesRepository.findByUser(user.id);
 
     // I'm creating a new return object so there are no connections from the other layers, meaning whatever happens to the data structures on the repository
     // the controller can always expect the same return value
@@ -37,9 +41,9 @@ export class ProfileUserUseCase {
       birthDate: user.birthDate,
       gender: user.gender,
       profileInformations: {
-        drinks: userProfile ? userProfile.drinks : [],
-        foods: userProfile ? userProfile.foods : [],
-        musicals: userProfile ? userProfile.musicals : []
+        drinks: profile ? profile.drinks : [],
+        foods: profile ? profile.foods : [],
+        musicals: profile ? profile.musicals : []
       }
     };
   }
