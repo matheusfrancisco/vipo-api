@@ -1,6 +1,8 @@
 import { IEntityId } from "@domain/global";
 
 export default class Profile {
+  public id?: IEntityId;
+
   public user: IEntityId;
 
   public drinks: string[];
@@ -9,7 +11,8 @@ export default class Profile {
 
   public musicals: string[];
 
-  constructor({ user, drinks, foods, musicals }: Profile) {
+  constructor({ id, user, drinks, foods, musicals }: Profile) {
+    this.id = id;
     this.user = user;
     this.drinks = drinks;
     this.foods = foods;
