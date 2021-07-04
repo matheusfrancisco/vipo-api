@@ -1,5 +1,5 @@
+import IProfile from "@domain/profile/IProfile";
 import { IUser } from "@domain/user/user";
-import { IUserProfile } from "@domain/user/user-profile";
 import { IUserRepository } from "@domain/user/user-repository";
 
 interface IProfileUser {
@@ -12,7 +12,7 @@ interface IUserWithProfile {
   email: IUser["email"];
   birthDate: IUser["birthDate"];
   gender: IUser["gender"];
-  profileInformations: Omit<IUserProfile, "user">;
+  profileInformations: Omit<IProfile, "user">;
 }
 
 export class ProfileUserUseCase {

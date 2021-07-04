@@ -1,6 +1,6 @@
+import IProfile from "@domain/profile/IProfile";
 import { IUserAnswer } from "@domain/user/user-answer";
 import { IUserFeedback } from "@domain/user/user-feedback";
-import { IUserProfile } from "@domain/user/user-profile";
 import { UserEntity } from "@infrastructure/database/entity/user-entity";
 import { IUser } from "./user";
 
@@ -23,7 +23,7 @@ export interface IUserRepository {
   updateResetPasswordToken: (id: number, token?: string) => Promise<void>;
   updateUserProfile: (userProfile: any) => Promise<any>;
   insertAnswer: (userAnswer: IUserAnswer & { user: IUser }) => Promise<void>;
-  findUserProfile: (user: number) => Promise<IUserProfile | undefined>;
+  findUserProfile: (user: number) => Promise<IProfile | undefined>;
   receiveFeedback: (
     userFeedback: Omit<IUserFeedback, "createdAt" | "updatedAt">
   ) => Promise<void>;

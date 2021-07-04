@@ -8,11 +8,11 @@ import { IUser } from "@domain/user/user";
 import { UserEntity } from "@infrastructure/database/entity/user-entity";
 import { UserAnswer } from "@infrastructure/database/entity/user-answer";
 import { UserProfile } from "@infrastructure/database/entity/user-profile";
-import { IUserProfile } from "@domain/user/user-profile";
 import { RepositoryError } from "@errors/repository-error";
 import { IUserAnswer } from "@domain/user/user-answer";
 import { IUserFeedback } from "@domain/user/user-feedback";
 import { UserFeedback } from "@infrastructure/database/entity/user-feedback";
+import IProfile from "@domain/profile/IProfile";
 
 export class PostgresUserRepository implements IUserRepository {
   public async save({
@@ -71,7 +71,7 @@ export class PostgresUserRepository implements IUserRepository {
     user,
     foods,
     drinks
-  }: IUserProfile): Promise<UserProfile | void> {
+  }: IProfile): Promise<UserProfile | void> {
     const userProfileRepository = getRepository(UserProfile);
     const entity = { user, musicals, foods, drinks };
 
@@ -139,9 +139,7 @@ export class PostgresUserRepository implements IUserRepository {
     }
   }
 
-  public async findUserProfile(
-    user: number
-  ): Promise<IUserProfile | undefined> {
+  public async findUserProfile(user: number): Promise<IProfile | undefined> {
     const userProfileRepository = getRepository(UserProfile);
 
     const userProfile = await userProfileRepository.findOne({
