@@ -11,6 +11,8 @@ import { UserProfile } from "@infrastructure/database/entity/user-profile";
 import { IUserProfile } from "@domain/user/user-profile";
 import { RepositoryError } from "@errors/repository-error";
 import { IUserAnswer } from "@domain/user/user-answer";
+import { IUserFeedback } from "@domain/user/user-feedback";
+import { UserFeedback } from "@infrastructure/database/entity/user-feedback";
 
 export class PostgresUserRepository implements IUserRepository {
   public async save({
@@ -69,7 +71,7 @@ export class PostgresUserRepository implements IUserRepository {
     user,
     foods,
     drinks
-  }: any): Promise<any> {
+  }: IUserProfile): Promise<UserProfile | void> {
     const userProfileRepository = getRepository(UserProfile);
     const entity = { user, musicals, foods, drinks };
 
@@ -154,5 +156,32 @@ export class PostgresUserRepository implements IUserRepository {
       foods: userProfile.foods,
       musicals: userProfile.musicals
     };
+  }
+
+  public async receiveFeedback({
+    userId,
+    establishmentId,
+    rating,
+    bestRatedItem,
+    leastRatedItem,
+    comments
+  }: Omit<IUserFeedback, "createdAt" | "updatedAt">): Promise<void> {
+    const usersRepository = getRepository(UserEntity);
+    const userFeedbackRepository = getRepository(UserFeedback);
+
+    try {
+      await usersRepository.findOneOrFail(userId);
+
+      await userFeedbackRepository.save({
+        userId,
+        establishmentId,
+        rating,
+        bestRatedItem,
+        leastRatedItem,
+        comments
+      });
+    } catch (error) {
+      throw new RepositoryError(error.message, error.name, error.stack);
+    }
   }
 }

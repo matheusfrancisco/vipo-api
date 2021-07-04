@@ -15,4 +15,6 @@ export default class MockUserRepository implements IUserRepository {
   public insertAnswer = jest.fn();
 
   public findUserProfile = jest.fn();
+
+  public receiveFeedback = jest.fn();
 }
