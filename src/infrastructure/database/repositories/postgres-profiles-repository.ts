@@ -14,7 +14,7 @@ export default class PostgresProfilesRepository implements IProfilesRepository {
     });
   }
 
-  public async createOrUpdateOne({
+  public async save({
     id,
     user,
     drinks,
