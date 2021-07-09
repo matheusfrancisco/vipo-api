@@ -8,6 +8,7 @@ const {
   DB_PROD_USER,
   DB_PROD_PASS,
   GOOGLE_CLIENT_ID,
+  MIGRATION,
   NODE_ENV
 } = process.env;
 
@@ -26,5 +27,6 @@ export default {
   DB_PROD_USER,
   DB_PROD_PASS,
   GOOGLE_CLIENT_ID,
+  MIGRATION: Boolean(MIGRATION),
   NODE_ENV
 };

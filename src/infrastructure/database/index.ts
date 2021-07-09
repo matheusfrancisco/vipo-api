@@ -11,7 +11,6 @@ const prodOrDevConfig: PostgresConnectionOptions = {
 const testConfig: PostgresConnectionOptions = {
   type: "postgres",
   database: "postgres",
-  synchronize: true,
   logging: false
 };
 
@@ -21,6 +20,7 @@ const databaseConfig: ConnectionOptions = {
   ...dbConfigToUse,
   port: envs.DB_PROD_PORT,
   host: envs.DB_PROD_HOST,
+  synchronize: envs.MIGRATION || true,
   username: envs.DB_PROD_USER,
   password: envs.DB_PROD_PASS,
   entities: ["src/infrastructure/database/entity/*.ts"],
