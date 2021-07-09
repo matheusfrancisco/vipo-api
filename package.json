@@ -9,6 +9,7 @@
     "test": "export TZ='America/SaoPaulo' && NODE_ENV=test jest --forceExit --maxWorkers=4 --testTimeout=60000 --detectOpenHandles",
     "start": "nodemon --inspect",
     "migrations": "NODE_ENV=prod ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:run  ",
+    "migrations-test": "NODE_ENV=test ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:run  ",
     "generate": "NODE_ENV=prod ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:generate -n  ",
     "create-migration": "NODE_ENV=prod ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:create -n"
   },
