@@ -1,0 +1,22 @@
+name: "run migration in test"
+on:
+  push:
+    branches:
+      - master
+#So this CI is to we run your migrations
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          npm install
+      - env:
+          DB_PROD_HOST: ${{ secrets.BD_AWS_HOST }}
+          DB_PROD_PORT: 5432
+          DB_PROD_USER: ${{ secrets.DB_PROD_USER }}
+          DB_PROD_PASS: ${{ secrets.DB_PROD_PASS }}
+          MIGRATAION: false
+          GOOGLE_CLIENT_ID: wrong_id
+        run: |
+          npm run migrations
