@@ -1,4 +1,4 @@
-name: "run migration in test"
+name: "run migration prod"
 on:
   push:
     branches:
