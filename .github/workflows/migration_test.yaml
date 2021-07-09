@@ -33,5 +33,6 @@ jobs:
           DB_PROD_USER: postgres
           DB_PROD_PASS: postgres
           MIGRATAION: false
+          GOOGLE_CLIENT_ID: wrong_id
         run: |
           npm run migrations-test
