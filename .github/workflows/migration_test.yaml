@@ -1,6 +1,6 @@
 name: "run migration in test"
 on:
-  pull-request:
+  pull_request:
   push:
     branches:
       - master
