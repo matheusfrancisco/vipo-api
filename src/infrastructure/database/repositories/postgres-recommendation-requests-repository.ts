@@ -1,6 +1,7 @@
 import IRecommendationRequest from "@domain/recommendation-request/IRecommendationRequest";
 import IRecommendationRequestsRepository from "@domain/recommendation-request/IRecommendationRequestsRepository";
 import RecommendationRequest from "@domain/recommendation-request/recommendation-request";
+import { RepositoryError } from "@errors/repository-error";
 import { UserAnswer } from "@infrastructure/database/entity/user-answer";
 import { getRepository } from "typeorm";
 
@@ -14,13 +15,17 @@ export default class PostgresRecommendationRequestsRepository
     howMuch,
     numberOfPeople
   }: RecommendationRequest): Promise<IRecommendationRequest> {
-    const request = this.repository.create({
-      userId,
-      like,
-      howMuch,
-      numberOfPeople
-    });
+    try {
+      const request = this.repository.create({
+        userId,
+        like,
+        howMuch,
+        numberOfPeople
+      });
 
-    return this.repository.save(request);
+      return this.repository.save(request);
+    } catch (error) {
+      throw new RepositoryError(error.message, error.name, error.stack);
+    }
   }
 }

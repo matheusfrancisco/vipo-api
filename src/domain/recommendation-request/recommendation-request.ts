@@ -1,5 +1,5 @@
 export default class RecommendationRequest {
-  public userId: string;
+  public userId: number;
 
   public numberOfPeople: number;
 

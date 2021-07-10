@@ -6,9 +6,7 @@ import {
 } from "@domain/user/user-repository";
 import { IUser } from "@domain/user/user";
 import { UserEntity } from "@infrastructure/database/entity/user-entity";
-import { UserAnswer } from "@infrastructure/database/entity/user-answer";
 import { RepositoryError } from "@errors/repository-error";
-import { IUserAnswer } from "@domain/user/user-answer";
 
 export class PostgresUserRepository implements IUserRepository {
   public async save({
@@ -79,27 +77,6 @@ export class PostgresUserRepository implements IUserRepository {
       return updatedUser;
     } catch (error) {
       throw new RepositoryError(error.message, error.name, error.stack);
-    }
-  }
-
-  public async insertAnswer({
-    user,
-    numberOfPeople,
-    howMuch,
-    recommendations,
-    like
-  }: IUserAnswer & { user: IUser }): Promise<void> {
-    const entity = {
-      user,
-      numberOfPeople,
-      howMuch,
-      recommendations,
-      like
-    };
-    try {
-      await getRepository(UserAnswer).save(entity);
-    } catch (error) {
-      console.error(error.message, error.name, error.stack);
     }
   }
 }

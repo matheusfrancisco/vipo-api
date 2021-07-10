@@ -1,4 +1,3 @@
-import { IUserAnswer } from "@domain/user/user-answer";
 import { UserEntity } from "@infrastructure/database/entity/user-entity";
 import { IUser } from "./user";
 
@@ -19,5 +18,4 @@ export interface IUserRepository {
   findByEmail: (email: string) => Promise<UserEntity | undefined>;
   update: (user: IUserRepositoryUpdatePayload) => Promise<IUser>;
   updateResetPasswordToken: (id: number, token?: string) => Promise<void>;
-  insertAnswer: (userAnswer: IUserAnswer & { user: IUser }) => Promise<void>;
 }
