@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["ESNext"],
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "removeComments": true,
-    "outDir": "lib",
+
     "module": "commonjs",
     "esModuleInterop": true,
     "target": "es6",
@@ -15,6 +11,8 @@
     "skipLibCheck": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "outDir": "./lib",
+    "baseUrl": ".",
     "paths": {
       "@config/*": ["./src/config/*"],
       "@domain/*": ["./src/domain/*"],

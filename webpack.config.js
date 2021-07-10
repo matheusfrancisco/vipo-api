@@ -4,28 +4,23 @@ const nodeExternals = require('webpack-node-externals');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
-  context: __dirname,
-  mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
-  entry: slsw.lib.entries,
-  devtool: slsw.lib.webpack.isLocal ? 'eval-cheap-module-source-map' : 'source-map',
+
+
   resolve: {
     extensions: ['.mjs', '.json', '.ts'],
     symlinks: false,
     cacheWithContext: false,
     plugins: [
       new TsconfigPathsPlugin({
-        configFile: './tsconfig.paths.json',
+        configFile: './tsconfig.json',
       }),
     ],
   },
-  output: {
-    libraryTarget: 'commonjs',
-    path: path.join(__dirname, '.webpack'),
-    filename: '[name].js',
-  },
+
   optimization: {
     concatenateModules: false,
   },
+
   target: 'node',
   externals: [nodeExternals()],
   module: {
