@@ -7,7 +7,7 @@
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "build",
+    "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
       "@config/*": ["./src/config/*"],
@@ -23,5 +23,15 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": [
+    "bin",
+    "coverage",
+    "node_modules",
+    "dist",
+    ".build",
+    ".serverless",
+    "_optimize",
+    "_warmup"
+  ]
 }
