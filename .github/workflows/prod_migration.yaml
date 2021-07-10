@@ -16,7 +16,7 @@ jobs:
           DB_PROD_PORT: 5432
           DB_PROD_USER: ${{ secrets.DB_PROD_USER }}
           DB_PROD_PASS: ${{ secrets.DB_PROD_PASS }}
-          MIGRATAION: false
+          MIGRATION: false
           GOOGLE_CLIENT_ID: wrong_id
         run: |
           npm run migrations
