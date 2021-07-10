@@ -1,5 +1,14 @@
 import { IEntityId } from "@domain/global";
 
+export interface IEstablishmentFeedbackArgs {
+  userId: IEntityId;
+  establishmentId: IEntityId;
+  rating: number;
+  bestRatedItem: string;
+  leastRatedItem: string;
+  comments?: string;
+}
+
 export default class EstablishmentFeedback {
   public userId: IEntityId;
 
@@ -20,7 +29,7 @@ export default class EstablishmentFeedback {
     bestRatedItem,
     leastRatedItem,
     comments
-  }: EstablishmentFeedback) {
+  }: IEstablishmentFeedbackArgs) {
     this.userId = userId;
     this.establishmentId = establishmentId;
     this.rating = rating;

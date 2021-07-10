@@ -1,7 +1,7 @@
 import MockRecommendationRequest from "@domain/recommendation-request/mock/mock-recommendation-request";
 import RecommendationRequest from "@domain/recommendation-request/recommendation-request";
 
-describe("Profile", () => {
+describe("Recommendation request", () => {
   it("should instantiate the object correctly", () => {
     const request = new RecommendationRequest(new MockRecommendationRequest());
 
