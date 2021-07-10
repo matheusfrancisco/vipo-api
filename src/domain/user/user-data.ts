@@ -5,8 +5,8 @@ const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))
 
 export interface IUserDataArgs {
   name: string;
-  lastname: string;
-  birthdate: Date;
+  lastName: string;
+  birthDate: Date;
   gender: Gender;
   email: string;
   password: string;
@@ -16,9 +16,9 @@ export interface IUserDataArgs {
 export default class UserData {
   public name: string;
 
-  public lastname: string;
+  public lastName: string;
 
-  public birthdate: Date;
+  public birthDate: Date;
 
   public gender: Gender;
 
@@ -32,8 +32,8 @@ export default class UserData {
     email,
     password,
     name,
-    lastname,
-    birthdate,
+    lastName,
+    birthDate,
     gender,
     resetPasswordToken
   }: IUserDataArgs) {
@@ -41,8 +41,8 @@ export default class UserData {
     this.password = password;
     this.resetPasswordToken = resetPasswordToken;
     this.name = name;
-    this.lastname = lastname;
-    this.birthdate = birthdate;
+    this.lastName = lastName;
+    this.birthDate = birthDate;
     this.gender = gender;
   }
 

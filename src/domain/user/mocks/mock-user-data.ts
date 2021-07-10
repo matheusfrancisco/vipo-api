@@ -5,9 +5,9 @@ import faker from "faker";
 export default class MockUserData implements IUserDataArgs {
   public name: string;
 
-  public lastname: string;
+  public lastName: string;
 
-  public birthdate: Date;
+  public birthDate: Date;
 
   public gender: Gender;
 
@@ -20,18 +20,18 @@ export default class MockUserData implements IUserDataArgs {
   constructor({
     password,
     name,
-    lastname,
-    birthdate,
+    lastName,
+    birthDate,
     gender,
     resetPasswordToken,
     email
   }: Partial<IUserDataArgs> = {}) {
     this.name = name || faker.name.firstName();
-    this.lastname = lastname || faker.name.lastName();
+    this.lastName = lastName || faker.name.lastName();
     this.email = email || faker.internet.email();
     this.password = password || faker.internet.password();
     this.gender = gender || faker.helpers.randomize(Object.values(Gender));
-    this.birthdate = birthdate || faker.date.past();
+    this.birthDate = birthDate || faker.date.past();
     this.resetPasswordToken = resetPasswordToken;
   }
 }
