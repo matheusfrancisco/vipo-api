@@ -1,5 +1,5 @@
+import IUser from "@domain/user/IUser";
 import { UserEntity } from "@infrastructure/database/entity/user-entity";
-import { IUser } from "./user";
 
 export interface IUserRepositoryUpdatePayload {
   userId: number;

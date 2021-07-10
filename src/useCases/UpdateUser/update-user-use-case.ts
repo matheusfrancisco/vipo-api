@@ -1,4 +1,4 @@
-import { IUser } from "@domain/user/user";
+import IUser from "@domain/user/IUser";
 import { IUserRepository } from "@domain/user/user-repository";
 import IUpdateUserDTO from "@useCases/UpdateUser/update-user-dto";
 

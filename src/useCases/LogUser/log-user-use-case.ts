@@ -1,9 +1,9 @@
-import { IUser } from "@domain/user/user";
 import { IUserRepository } from "@domain/user/user-repository";
 import IHashProvider from "@providers/HashProvider/models/IHashProvider";
 import ITokenProvider from "@providers/TokenProvider/models/ITokenProvider";
 import ILogUserDTO from "@useCases/LogUser/log-user-dto";
 import { ServiceError } from "@errors/service-error";
+import IUser from "@domain/user/IUser";
 
 interface IExecute {
   token: string;

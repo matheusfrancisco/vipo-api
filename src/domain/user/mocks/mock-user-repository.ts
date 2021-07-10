@@ -1,4 +1,4 @@
-import { IUser } from "@domain/user/user";
+import IUser from "@domain/user/IUser";
 import { IUserRepository } from "@domain/user/user-repository";
 
 export default class MockUserRepository implements IUserRepository {

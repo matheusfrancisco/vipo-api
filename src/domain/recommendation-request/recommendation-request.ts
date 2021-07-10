@@ -1,5 +1,7 @@
+import { IEntityId } from "@domain/global";
+
 export default class RecommendationRequest {
-  public userId: number;
+  public userId: IEntityId;
 
   public numberOfPeople: number;
 

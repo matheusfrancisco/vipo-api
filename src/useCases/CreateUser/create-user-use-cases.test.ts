@@ -1,5 +1,5 @@
+import { Gender } from "@domain/user/IUser";
 import MockUserRepository from "@domain/user/mocks/mock-user-repository";
-import { Gender } from "@domain/user/user";
 import MockHashProvider from "@providers/HashProvider/mocks/MockHashProvider";
 import { CreateUserUseCase } from "./create-use-case";
 

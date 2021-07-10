@@ -1,6 +1,6 @@
 import IProfile from "@domain/profile/IProfile";
 import IProfilesRepository from "@domain/profile/IProfilesRepository";
-import { IUser } from "@domain/user/user";
+import IUser from "@domain/user/IUser";
 import { IUserRepository } from "@domain/user/user-repository";
 
 interface IProfileUser {

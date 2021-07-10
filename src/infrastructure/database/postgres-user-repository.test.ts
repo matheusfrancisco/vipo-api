@@ -1,7 +1,8 @@
 import { getRepository } from "typeorm";
 import { CreateDatabaseConnection } from "@infrastructure/database/connection";
 import { UserEntity } from "@infrastructure/database/entity/user-entity";
-import User, { Gender } from "@domain/user/user";
+import User from "@domain/user/user";
+import { Gender } from "@domain/user/IUser";
 import { PostgresUserRepository } from "./postgres-user-repository";
 
 describe("User Repository", () => {

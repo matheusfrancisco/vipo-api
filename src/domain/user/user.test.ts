@@ -1,28 +1,24 @@
-import User, { Gender } from "./user";
+import MockUserData from "@domain/user/mocks/mock-user-data";
+import UserData from "./user-data";
 
-describe("User", () => {
-  const name = "Xico";
-  const email = "matheusfrancisco@hotmail.com";
-  const password = "123123";
-  const gender = "Male";
-  const lastName = "Ma";
-  const birthDate = new Date("09/09/1994");
-  const user = new User({
-    name,
-    email,
-    password,
-    gender: Gender[gender],
-    birthDate,
-    lastName
+describe("UserData", () => {
+  it("should create the user correctly", () => {
+    const fakeUser = new MockUserData();
+
+    const userData = new UserData(fakeUser);
+
+    expect(userData).toBeDefined();
+    expect(userData.name).toBe(fakeUser.name);
+    expect(userData.lastname).toBe(fakeUser.lastname);
+    expect(userData.email).toBe(fakeUser.email);
+    expect(userData.birthdate).toBe(fakeUser.birthdate);
+    expect(userData.password).toBe(fakeUser.password);
+    expect(userData.gender).toBe(fakeUser.gender);
   });
 
-  // #TODO write test to guardian and validate inputs (gender, bday, .. )
-  it("has a build class", () => {
-    expect(user.email.value).toEqual(email);
-    expect(user.gender).toEqual("male");
-  });
+  it("should throw if the email is invalid", () => {
+    const fakeUser = new MockUserData({ email: "invalid email" });
 
-  it("has a pass", () => {
-    expect(user.password).toEqual(password);
+    expect(() => new UserData(fakeUser)).toThrow();
   });
 });

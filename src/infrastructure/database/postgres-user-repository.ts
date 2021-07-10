@@ -4,9 +4,9 @@ import {
   IUserRepository,
   ISavedUser
 } from "@domain/user/user-repository";
-import { IUser } from "@domain/user/user";
 import { UserEntity } from "@infrastructure/database/entity/user-entity";
 import { RepositoryError } from "@errors/repository-error";
+import IUser from "@domain/user/IUser";
 
 export class PostgresUserRepository implements IUserRepository {
   public async save({

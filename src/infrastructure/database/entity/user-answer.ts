@@ -15,7 +15,7 @@ export class UserAnswer {
   id!: number;
 
   @Column()
-  userId!: string;
+  userId!: number;
 
   @ManyToOne(
     () => UserEntity,

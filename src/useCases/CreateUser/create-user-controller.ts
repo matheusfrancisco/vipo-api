@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ServiceError } from "@errors/service-error";
-import { Gender } from "@domain/user/user";
+import { Gender } from "@domain/user/IUser";
 import { CreateUserUseCase } from "./create-use-case";
 
 const validGenders = ["Male", "Female", "Neuter"];

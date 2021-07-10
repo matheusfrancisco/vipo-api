@@ -1,5 +1,5 @@
+import IUser, { Gender } from "@domain/user/IUser";
 import MockUserRepository from "@domain/user/mocks/mock-user-repository";
-import { Gender, IUser } from "@domain/user/user";
 import MockGoogleProvider from "@providers/GoogleProvider/mocks/MockGoogleProvider";
 import MockTokenProvider from "@providers/TokenProvider/mocks/MockTokenProvider";
 import { SignWithGoogleUseCase } from "@useCases/SignWithGoogleUseCase/sign-with-google-use-case";

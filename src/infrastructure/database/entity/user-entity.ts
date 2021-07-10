@@ -1,4 +1,4 @@
-import { Gender } from "@domain/user/user";
+import { Gender } from "@domain/user/IUser";
 import { UserFeedback } from "@infrastructure/database/entity/user-feedback";
 import {
   Entity,

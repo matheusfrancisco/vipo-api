@@ -1,6 +1,7 @@
 import IHashProvider from "@providers/HashProvider/models/IHashProvider";
 import { ServiceError } from "@errors/service-error";
-import User, { IUser } from "../../domain/user/user";
+import IUser from "@domain/user/IUser";
+import User from "../../domain/user/user";
 import { IUserRepository } from "../../domain/user/user-repository";
 
 type UserResource = Omit<IUser, "password">;
