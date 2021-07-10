@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start:serverless": "serverless offline start --config serverless.offline.yml --httpPort 3000 --lambdaPort 3100 --stage local --watch",
     "format": "prettier --write \"**/*.*(js|ts|json|yml|yaml|md)\"",
     "dev": "tsnd -r tsconfig-paths/register --transpile-only --respawn --inspect --ignore-watch node_modules --no-notify ./src/start.ts",
     "test": "export TZ='America/SaoPaulo' && NODE_ENV=test jest --forceExit --maxWorkers=4 --testTimeout=60000 --detectOpenHandles",
@@ -37,6 +38,7 @@
     "pg": "^8.0.3",
     "pg-god": "^1.0.11",
     "reflect-metadata": "^0.1.13",
+    "serverless-plugin-typescript": "^1.1.9",
     "supertest": "^4.0.2",
     "ts-node": "^8.5.4",
     "tsc": "^1.20150623.0",

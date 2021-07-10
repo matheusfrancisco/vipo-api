@@ -1,0 +1,42 @@
+service: serverless-express-typescript
+frameworkVersion: "2"
+
+plugins:
+  - serverless-secrets-plugin
+  - serverless-plugin-typescript
+  - serverless-offline
+
+package:
+  individually: true
+  exclude:
+    - test/**
+    - secrets.yml
+    - secrets.prod.yml
+
+
+custom:
+  secrets: ${file(secrets.${opt:stage, self:provider.stage}.yml)}
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: us-east-1
+  stage: prod
+  timeout: 20
+  environment:
+    GOOGLE_CLIENT_ID: "mock-id"
+    DB_PROD_HOST: ${self:custom.secrets.BD_AWS_HOST}
+    DB_PROD_PORT: 5432
+    DB_PROD_USER: ${self:custom.secrets.DB_PROD_USER}
+    DB_PROD_PASS: ${self:custom.secrets.DB_PROD_PASS}
+    MIGRATAION: false
+
+functions:
+  serverless-api:
+    handler: src/serverless.handler
+    memorySize: 512
+    timeout: 50
+    events:
+      - http:
+          path: /{proxy+}
+          method: ANY
