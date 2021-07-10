@@ -9,6 +9,6 @@
       "@migrations/*": ["./src/migrations/*"],
       "@providers/*": ["./src/providers/*"],
       "@useCases/*": ["./src/useCases/*"]
-    },
+    }
   }
 }
