@@ -1,6 +1,6 @@
 {
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
-
     "module": "commonjs",
     "esModuleInterop": true,
     "target": "es6",
@@ -11,7 +11,8 @@
     "skipLibCheck": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "outDir": "./lib",
+
+    "outDir": "lib",
     "baseUrl": ".",
     "paths": {
       "@config/*": ["./src/config/*"],
@@ -24,7 +25,7 @@
     },
     "typeRoots": ["./node_modules/@types", "./src/@types"]
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*.ts", "serverless.ts"],
   "exclude": [
     "bin",
     "coverage",
@@ -34,5 +35,8 @@
     ".serverless",
     "_optimize",
     "_warmup"
-  ]
+  ],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
 }

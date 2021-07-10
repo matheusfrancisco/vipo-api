@@ -3,7 +3,6 @@ frameworkVersion: "2"
 
 plugins:
   - serverless-secrets-plugin
-  - serverless-plugin-typescript
   - serverless-offline
   - serverless-webpack
 
