@@ -1,5 +1,12 @@
 import { IEntityId } from "@domain/global";
 
+export interface IRecommendationRequestArgs {
+  userId: IEntityId;
+  numberOfPeople: number;
+  howMuch: string;
+  like: string[];
+}
+
 export default class RecommendationRequest {
   public userId: IEntityId;
 
@@ -14,7 +21,7 @@ export default class RecommendationRequest {
     numberOfPeople,
     howMuch,
     like
-  }: RecommendationRequest) {
+  }: IRecommendationRequestArgs) {
     this.userId = userId;
     this.numberOfPeople = numberOfPeople;
     this.howMuch = howMuch;
