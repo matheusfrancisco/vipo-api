@@ -27,5 +27,5 @@ export default interface IUser {
   birthDate: Date;
   gender: Gender;
   resetPasswordToken?: string;
-  profile: IProfile;
+  profile: Omit<IProfile, "user">;
 }

@@ -43,6 +43,7 @@ export default class User implements IUser {
     this.gender = gender;
     this.resetPasswordToken = resetPasswordToken;
     this.profile = {
+      id: profile.id,
       drinks: profile.drinks,
       musicals: profile.musicals,
       foods: profile.foods
