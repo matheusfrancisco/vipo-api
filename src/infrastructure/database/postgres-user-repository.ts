@@ -71,9 +71,9 @@ export class PostgresUserRepository implements IUserRepository {
     user,
     foods,
     drinks
-  }: IUserProfile): Promise<UserProfile | void> {
+  }: IUserProfile): Promise<UserProfile | void | any> {
     const userProfileRepository = getRepository(UserProfile);
-    const entity = { user, musicals, foods, drinks };
+    const entity = { user, musicals, foods, drinks } as any;
 
     const userProfile = await userProfileRepository.findOne({
       where: {

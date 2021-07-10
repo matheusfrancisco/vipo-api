@@ -2,7 +2,7 @@ import { ErrorRequestHandler } from "express";
 import { ServiceError } from "@errors/service-error";
 
 const handleInternalServerError: ErrorRequestHandler = async (
-  error,
+  _,
   _request,
   response,
   _next

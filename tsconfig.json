@@ -1,5 +1,11 @@
 {
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
+    "lib": ["ESNext"],
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "removeComments": true,
+    "outDir": "lib",
     "module": "commonjs",
     "esModuleInterop": true,
     "target": "es6",
@@ -7,18 +13,6 @@
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": ".",
-    "paths": {
-      "@config/*": ["./src/config/*"],
-      "@domain/*": ["./src/domain/*"],
-      "@errors/*": ["./src/errors/*"],
-      "@infrastructure/*": ["./src/infrastructure/*"],
-      "@migrations/*": ["./src/migrations/*"],
-      "@providers/*": ["./src/providers/*"],
-      "@useCases/*": ["./src/useCases/*"]
-    },
-    "typeRoots": ["./node_modules/@types", "./src/@types"],
     "skipLibCheck": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true

@@ -6,11 +6,16 @@ plugins:
   - serverless-plugin-typescript
   - serverless-offline
   - serverless-secrets-plugin
+  - serverless-webpack
+
 
 
 package: ${file(./serverless.yml):package}
 
 custom:
+  webpack:
+    webpackConfig: './webpack.config.js'
+    includeModules: true
   secrets: ${file(./secrets.yml):${self:provider.stage}}
 
 provider:

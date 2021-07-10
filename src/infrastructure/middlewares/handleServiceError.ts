@@ -3,7 +3,7 @@ import { ServiceError } from "@errors/service-error";
 
 const handleServiceError: ErrorRequestHandler = async (
   error,
-  request,
+  _,
   response,
   next
 ) => {

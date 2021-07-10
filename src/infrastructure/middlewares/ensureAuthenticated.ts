@@ -8,7 +8,7 @@ interface ITokenPayload {
   email: string;
 }
 
-const ensureAuthenticated: RequestHandler = async (request, _, next) => {
+const ensureAuthenticated: RequestHandler  = async (request, _, next) => {
   const { authorization } = request.headers;
 
   if (!authorization) throw new ServiceError("Headers missing.");
@@ -28,6 +28,7 @@ const ensureAuthenticated: RequestHandler = async (request, _, next) => {
 
   if (!userExists) throw new ServiceError("Unauthorized", 403);
 
+  //#TODO I think here had an typing error
   request.user = userPayload;
 
   return next();
