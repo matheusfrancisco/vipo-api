@@ -5,7 +5,6 @@ import envs from "@config/environment";
 const prodOrDevConfig: PostgresConnectionOptions = {
   type: "postgres",
   database: "vipo",
-  synchronize: false,
   logging: true
 };
 const testConfig: PostgresConnectionOptions = {
@@ -13,14 +12,13 @@ const testConfig: PostgresConnectionOptions = {
   database: "postgres",
   logging: false
 };
-
 const dbConfigToUse = envs.NODE_ENV === "test" ? testConfig : prodOrDevConfig;
 
 const databaseConfig: ConnectionOptions = {
   ...dbConfigToUse,
   port: envs.DB_PROD_PORT,
   host: envs.DB_PROD_HOST,
-  synchronize: envs.MIGRATION || true,
+  synchronize: envs.MIGRATION,
   username: envs.DB_PROD_USER,
   password: envs.DB_PROD_PASS,
   entities: ["src/infrastructure/database/entity/*.ts"],

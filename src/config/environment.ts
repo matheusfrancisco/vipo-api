@@ -17,6 +17,7 @@ if (
   !DB_PROD_PORT ||
   !DB_PROD_USER ||
   !DB_PROD_PASS ||
+  !MIGRATION||
   !GOOGLE_CLIENT_ID
 )
   throw new Error("Missing environment variables!");
