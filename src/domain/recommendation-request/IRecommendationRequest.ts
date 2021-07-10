@@ -1,7 +1,7 @@
-import IUser from "@domain/user/IUser";
+import { IUserData } from "@domain/user/IUser";
 
 export default interface IRecommendationRequest {
-  user: IUser;
+  user: IUserData;
   numberOfPeople: number;
   howMuch: string;
   like: string[];
