@@ -1,9 +1,9 @@
 import { IEntityId } from "@domain/global";
-import IUser from "@domain/user/IUser";
+import { IUserData } from "@domain/user/IUser";
 
 export default interface IEstablishmentFeedback {
   userId: IEntityId;
-  user: IUser;
+  user: IUserData;
   establishmentId: IEntityId;
   rating: number;
   bestRatedItem: string;
