@@ -14,7 +14,11 @@ xdescribe("Postgres Profiles Repository", () => {
 
     const newProfile = new MockProfile();
 
-    const profile = await repository.createOrUpdateOne(newProfile);
+    const profile = await repository.save(newProfile);
+
+    expect(profile.foods).toEqual(newProfile.foods);
+    expect(profile.musicals).toEqual(newProfile.musicals);
+    expect(profile.drinks).toEqual(newProfile.drinks);
   });
 
   afterEach(async () => {
