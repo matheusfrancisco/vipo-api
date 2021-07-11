@@ -1,7 +1,7 @@
-import { IUserRepository } from "@domain/user/user-repository";
 import IHashProvider from "@providers/HashProvider/models/IHashProvider";
 import { ServiceError } from "@errors/service-error";
-import IUser from "@domain/user/IUser";
+import { IUserData } from "@domain/user/IUser";
+import IUserRepository from "@domain/user/IUserRepository";
 import IChangePasswordDTO from "./change-password-dto";
 
 export class ChangePasswordUseCase {
@@ -15,7 +15,7 @@ export class ChangePasswordUseCase {
     dbPasswordHash,
     password,
     newPassword
-  }: IChangePasswordDTO): Promise<Omit<IUser, "password">> {
+  }: IChangePasswordDTO): Promise<IUserData> {
     const passwordsMatch = await this.hashProvider.hashesMatch(
       dbPasswordHash,
       password
@@ -30,12 +30,6 @@ export class ChangePasswordUseCase {
       password: newPasswordHash
     });
 
-    return {
-      name: user.name,
-      lastName: user.lastName,
-      email: user.email,
-      gender: user.gender,
-      birthDate: user.birthDate
-    };
+    return user;
   }
 }

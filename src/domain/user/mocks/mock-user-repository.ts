@@ -43,7 +43,7 @@ export default class MockUserRepository implements IUserRepository {
     password
   }: IUserRepositoryUpdatePayload): Promise<IUserData> {
     const userIndex = this.users.findIndex(user => user.id === userId);
-    if (!userIndex) throw new Error("User does not exist");
+    if (userIndex < 0) throw new Error("User does not exist");
 
     const user = this.users[userIndex];
     if (name) user.name = name;
