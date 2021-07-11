@@ -1,21 +1,13 @@
-import { IUserRepository } from "@domain/user/user-repository";
 import IHashProvider from "@providers/HashProvider/models/IHashProvider";
 import ITokenProvider from "@providers/TokenProvider/models/ITokenProvider";
 import ILogUserDTO from "@useCases/LogUser/log-user-dto";
 import { ServiceError } from "@errors/service-error";
-import IUser from "@domain/user/IUser";
+import { IUserData } from "@domain/user/IUser";
+import IUserRepository from "@domain/user/IUserRepository";
 
 interface IExecute {
   token: string;
-  user: {
-    id: number;
-    name: IUser["name"];
-    lastName: IUser["lastName"];
-    email: IUser["email"];
-    gender: IUser["gender"];
-    birthDate: IUser["birthDate"];
-    createdAt: Date;
-  };
+  user: IUserData;
 }
 
 export class LogUserUseCase {
@@ -43,15 +35,7 @@ export class LogUserUseCase {
 
     return {
       token,
-      user: {
-        id: user.id,
-        name: user.name,
-        lastName: user.lastName,
-        email: user.email,
-        gender: user.gender,
-        birthDate: user.birthDate,
-        createdAt: user.createdAt
-      }
+      user
     };
   }
 }

@@ -1,5 +1,6 @@
-import IUser, { Gender } from "@domain/user/IUser";
+import MockUserData from "@domain/user/mocks/mock-user-data";
 import MockUserRepository from "@domain/user/mocks/mock-user-repository";
+import UserData from "@domain/user/user-data";
 import MockHashProvider from "@providers/HashProvider/mocks/MockHashProvider";
 import MockTokenProvider from "@providers/TokenProvider/mocks/MockTokenProvider";
 import { LogUserUseCase } from "@useCases/LogUser/log-user-use-case";
@@ -18,16 +19,8 @@ describe("Log User Use Case", () => {
   test("it should login a user correctly", async () => {
     const { repository, useCase } = getUseCase();
 
-    const user: IUser = {
-      name: "Marco",
-      lastName: "Polo",
-      email: "marco_polo@gmail.com",
-      password: "asd123",
-      gender: Gender.Male,
-      birthDate: new Date()
-    };
-
-    repository.findByEmail = jest.fn(async () => user);
+    const user = new UserData(new MockUserData());
+    await repository.save(user);
 
     const result = await useCase.execute({
       email: user.email,
@@ -54,16 +47,8 @@ describe("Log User Use Case", () => {
   test("it should throw when trying to log with an invalid password", async () => {
     const { repository, hashProvider, useCase } = getUseCase();
 
-    const user: IUser = {
-      name: "Marco",
-      lastName: "Polo",
-      email: "marco_polo@gmail.com",
-      password: "asd123",
-      gender: Gender.Male,
-      birthDate: new Date()
-    };
-
-    repository.findByEmail = jest.fn(async () => user);
+    const user = new UserData(new MockUserData());
+    await repository.save(user);
 
     await expect(
       useCase.execute({ email: user.email, password: "invalid-password" })
