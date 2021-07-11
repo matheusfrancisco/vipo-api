@@ -8,13 +8,13 @@ export class ReceiveFeedbackController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { rating, bestRatedItem, leastRatedItem, comments } = request.body;
     const { establishmentId } = request.params;
-    const { id } = request.user;
+    const { email } = request.user;
 
     if (!rating || !bestRatedItem || !leastRatedItem || !establishmentId)
       throw new ServiceError("Parameters missing");
 
     const result = await this.receiveFeedbackUseCAse.execute({
-      userId: Number(id),
+      email,
       establishmentId: Number(establishmentId),
       rating,
       bestRatedItem,

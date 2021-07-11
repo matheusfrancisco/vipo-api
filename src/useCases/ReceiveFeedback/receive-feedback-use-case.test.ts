@@ -1,36 +1,50 @@
+import EstablishmentFeedback from "@domain/establishment-feedback/establishment-feedback";
+import MockEstablishmentFeedback from "@domain/establishment-feedback/mocks/mock-establishment-feedback";
+import MockEstablishmentFeedbacksRepository from "@domain/establishment-feedback/mocks/mock-establishment-feedbacks-repository";
+import MockUserData from "@domain/user/mocks/mock-user-data";
 import MockUserRepository from "@domain/user/mocks/mock-user-repository";
-import IReceiveFeedbackDTO from "@useCases/ReceiveFeedback/receive-feedback-dto";
+import UserData from "@domain/user/user-data";
 import { ReceiveFeedbackUseCase } from "@useCases/ReceiveFeedback/receive-feedback-use-case";
-import faker from "faker";
 
-const getFakeFeedback = (): IReceiveFeedbackDTO => ({
-  userId: faker.random.number(200),
-  establishmentId: faker.random.number(200),
-  bestRatedItem: faker.music.genre(),
-  leastRatedItem: faker.music.genre(),
-  rating: faker.random.number(5),
-  comments: faker.random.words()
-});
+const getUseCase = () => {
+  const usersRepository = new MockUserRepository();
+  const feedbackRepository = new MockEstablishmentFeedbacksRepository();
+
+  const useCase = new ReceiveFeedbackUseCase(
+    usersRepository,
+    feedbackRepository
+  );
+
+  return { usersRepository, feedbackRepository, useCase };
+};
 
 describe("Profile User Use Case", () => {
   it("should throw if the user doesnt exist", async () => {
-    const usersRepository = new MockUserRepository();
-    usersRepository.receiveFeedback = jest.fn(() =>
-      Promise.reject(new Error("User does not exist"))
-    );
-    const useCase = new ReceiveFeedbackUseCase(usersRepository);
+    const { useCase } = getUseCase();
 
-    const feedback = getFakeFeedback();
+    const feedback = new EstablishmentFeedback(new MockEstablishmentFeedback());
 
-    await expect(useCase.execute(feedback)).rejects.toThrow();
+    await expect(
+      useCase.execute({
+        ...feedback,
+        email: "random@email.com"
+      })
+    ).rejects.toThrow();
   });
 
   it("should register the feedback correctly", async () => {
-    const usersRepository = new MockUserRepository();
-    const useCase = new ReceiveFeedbackUseCase(usersRepository);
+    const { useCase, usersRepository } = getUseCase();
 
-    const feedback = getFakeFeedback();
+    const user = new UserData(new MockUserData());
+    await usersRepository.save(user);
 
-    await expect(useCase.execute(feedback)).resolves.not.toBeDefined();
+    const feedback = new EstablishmentFeedback(new MockEstablishmentFeedback());
+
+    await expect(
+      useCase.execute({
+        ...feedback,
+        email: user.email
+      })
+    ).resolves.not.toBeDefined();
   });
 });
