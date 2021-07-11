@@ -1,6 +1,6 @@
 import MockUserRepository from "@domain/user/mocks/mock-user-repository";
 import MockHashProvider from "@providers/HashProvider/mocks/MockHashProvider";
-import { CreateUserUseCase } from "@useCases/CreateUser/create-use-case";
+import { CreateUserUseCase } from "@useCases/CreateUser/create-user-use-case";
 import { CreateUserController } from "@useCases/CreateUser/create-user-controller";
 import faker from "faker";
 import { Request, Response } from "express";

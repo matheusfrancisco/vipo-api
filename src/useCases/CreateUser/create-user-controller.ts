@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ServiceError } from "@errors/service-error";
 import { Gender } from "@domain/user/IUser";
-import { CreateUserUseCase } from "./create-use-case";
+import { CreateUserUseCase } from "./create-user-use-case";
 
 const validGenders = ["Male", "Female", "Neuter"];
 
