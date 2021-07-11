@@ -2,7 +2,7 @@ import { ServiceError } from "@errors/service-error";
 import IRecommendationRequestsRepository from "@domain/recommendation-request/IRecommendationRequestsRepository";
 import RecommendationRequest from "@domain/recommendation-request/recommendation-request";
 import ICreateRecommendationDTO from "@useCases/CreateRecommendation/create-recommendation-dto";
-import { IUserRepository } from "../../domain/user/user-repository";
+import IUserRepository from "@domain/user/IUserRepository";
 
 interface IRecommendation {
   name: string;
@@ -26,6 +26,7 @@ export class CreateRecommendationUseCase {
     if (!user) {
       throw new ServiceError("User does not exist.");
     }
+
     const request = new RecommendationRequest({
       userId: user.id,
       numberOfPeople,

@@ -1,6 +1,8 @@
 import request from "supertest";
 import { CreateDatabaseConnection } from "@infrastructure/database/connection";
 import { routerFactory } from "@infrastructure/routes";
+import MockUserData from "@domain/user/mocks/mock-user-data";
+import MockRecommendationRequest from "@domain/recommendation-request/mock/mock-recommendation-request";
 import { server } from "../../../index";
 
 describe("Integration test: Recommendation profile", () => {
@@ -8,18 +10,18 @@ describe("Integration test: Recommendation profile", () => {
     const userRoutes = await routerFactory();
     const serverFactoryWithUserRoute = await server(userRoutes);
 
-    const user = {
-      name: "mt",
-      email: "xicoooooo1@hotmail.com",
-      password: "123123",
-      lastName: "Fran",
-      birthDate: "09/09/1994",
-      gender: "Male"
-    };
+    const user = new MockUserData();
 
     await request(serverFactoryWithUserRoute.app)
       .post("/users")
-      .send(user);
+      .send({
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        lastName: user.lastName,
+        birthDate: user.birthDate,
+        gender: user.gender
+      });
 
     const loginResponse = await request(serverFactoryWithUserRoute.app)
       .post("/signin")
@@ -28,13 +30,15 @@ describe("Integration test: Recommendation profile", () => {
         password: user.password
       });
 
+    const recommendationRequest = new MockRecommendationRequest();
+
     const recommendationResponse = await request(serverFactoryWithUserRoute.app)
       .post("/users/recommendation")
       .set({ authorization: `Bearer ${loginResponse.body.token}` })
       .send({
-        howMuch: "R$10 - R$100",
-        numberOfPeople: 4,
-        like: ["party", "food", "rock"]
+        howMuch: recommendationRequest.howMuch,
+        numberOfPeople: recommendationRequest.numberOfPeople,
+        like: recommendationRequest.like
       });
 
     const recommendations = [
