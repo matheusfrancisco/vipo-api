@@ -1,5 +1,6 @@
-import IUser, { Gender } from "@domain/user/IUser";
+import MockUserData from "@domain/user/mocks/mock-user-data";
 import MockUserRepository from "@domain/user/mocks/mock-user-repository";
+import UserData from "@domain/user/user-data";
 import MockGoogleProvider from "@providers/GoogleProvider/mocks/MockGoogleProvider";
 import MockTokenProvider from "@providers/TokenProvider/mocks/MockTokenProvider";
 import { SignWithGoogleUseCase } from "@useCases/SignWithGoogleUseCase/sign-with-google-use-case";
@@ -20,18 +21,15 @@ const getUseCase = () => {
 
 describe("Sign with google use case", () => {
   test("should create a new user and login", async () => {
-    const { useCase, repository } = getUseCase();
+    const { useCase, googleProvider } = getUseCase();
 
-    const user: IUser = {
-      name: "Marco",
-      lastName: "Polo",
-      email: "marco_polo@gmail.com",
-      password: "asd123",
-      gender: Gender.Male,
-      birthDate: new Date()
-    };
-
-    repository.save = jest.fn(async () => user);
+    const user = new UserData(new MockUserData());
+    googleProvider.getUserLoginData = jest.fn(async () => ({
+      email: user.email,
+      name: user.name,
+      lastName: user.lastName,
+      id: "random-id"
+    }));
 
     const result = await useCase.execute("random-token");
 
@@ -42,22 +40,20 @@ describe("Sign with google use case", () => {
     expect(result.user).toHaveProperty("email");
     expect(result.user).toHaveProperty("gender");
     expect(result.user).not.toHaveProperty("password");
-    expect(repository.save).toHaveBeenCalled();
   });
 
   test("should login with an existing user", async () => {
-    const { useCase, repository } = getUseCase();
+    const { useCase, repository, googleProvider } = getUseCase();
 
-    const user: IUser = {
-      name: "Marco",
-      lastName: "Polo",
-      email: "marco_polo@gmail.com",
-      password: "asd123",
-      gender: Gender.Male,
-      birthDate: new Date()
-    };
+    const user = new UserData(new MockUserData());
+    await repository.save(user);
 
-    repository.findByEmail = jest.fn(async () => user);
+    googleProvider.getUserLoginData = jest.fn(async () => ({
+      email: user.email,
+      name: user.name,
+      lastName: user.lastName,
+      id: "random-id"
+    }));
 
     const result = await useCase.execute("random-token");
 

@@ -1,6 +1,6 @@
-import IUser, { Gender } from "@domain/user/IUser";
-import User from "@domain/user/user";
-import { ISavedUser, IUserRepository } from "@domain/user/user-repository";
+import { Gender, IUserData } from "@domain/user/IUser";
+import IUserRepository from "@domain/user/IUserRepository";
+import UserData from "@domain/user/user-data";
 import IGoogleProvider, {
   IGoogleUserPayload
 } from "@providers/GoogleProvider/models/IGoogleProvider";
@@ -10,15 +10,7 @@ const DEFAULT_BIRTHDATE = "01/01/1966";
 
 interface IExecute {
   token: string;
-  user: {
-    id: number;
-    name: IUser["name"];
-    lastName: IUser["lastName"];
-    email: IUser["email"];
-    gender: IUser["gender"];
-    birthDate: IUser["birthDate"];
-    createdAt: Date;
-  };
+  user: IUserData;
 }
 
 interface ICreateUserDTO {
@@ -56,15 +48,7 @@ export class SignWithGoogleUseCase {
 
     return {
       token,
-      user: {
-        id: user.id,
-        name: user.name,
-        lastName: user.lastName,
-        email: user.email,
-        gender: user.gender,
-        birthDate: user.birthDate,
-        createdAt: user.createdAt
-      }
+      user
     };
   }
 
@@ -88,15 +72,7 @@ export class SignWithGoogleUseCase {
 
     return {
       token,
-      user: {
-        id: user.id,
-        name: user.name,
-        lastName: user.lastName,
-        email: user.email,
-        gender: user.gender,
-        birthDate: user.birthDate,
-        createdAt: user.createdAt
-      }
+      user
     };
   }
 
@@ -105,8 +81,8 @@ export class SignWithGoogleUseCase {
     name,
     lastName,
     password
-  }: ICreateUserDTO): Promise<ISavedUser> {
-    const newUser = new User({
+  }: ICreateUserDTO): Promise<IUserData> {
+    const newUser = new UserData({
       email,
       password,
       name,
@@ -115,9 +91,7 @@ export class SignWithGoogleUseCase {
       gender: Gender.Neuter
     });
 
-    const user = await this.usersRepository.save(newUser.toRepository());
-
-    return user;
+    return this.usersRepository.save(newUser);
   }
 
   private async getToken({ id, email }: ITokenPayload): Promise<string> {
