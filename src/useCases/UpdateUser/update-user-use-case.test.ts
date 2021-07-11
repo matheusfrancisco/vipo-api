@@ -1,21 +1,29 @@
+import MockUserData from "@domain/user/mocks/mock-user-data";
 import MockUserRepository from "@domain/user/mocks/mock-user-repository";
-import IUpdateUserDTO from "./update-user-dto";
+import UserData from "@domain/user/user-data";
 import { UpdateUserUseCase } from "./update-user-use-case";
 
 describe("UpdateUserUseCase", () => {
   it("should update the user via the users repository", async () => {
-    const fakeRepository = new MockUserRepository();
+    const repository = new MockUserRepository();
 
-    const updateUser = new UpdateUserUseCase(fakeRepository);
+    const useCase = new UpdateUserUseCase(repository);
 
-    const values: IUpdateUserDTO = {
-      userId: 5000,
-      name: "Kratos",
-      lastName: "Zeusson"
-    };
+    const mockUser = new UserData(new MockUserData());
+    const originalUser = await repository.save(mockUser);
 
-    await updateUser.execute(values);
+    const newMockUser = new MockUserData();
 
-    expect(fakeRepository.update).toHaveBeenCalledWith(values);
+    const updatedUser = await useCase.execute({
+      userId: originalUser.id,
+      name: newMockUser.name,
+      lastName: newMockUser.lastName
+    });
+
+    expect(updatedUser).toEqual({
+      ...originalUser,
+      name: newMockUser.name,
+      lastName: newMockUser.lastName
+    });
   });
 });

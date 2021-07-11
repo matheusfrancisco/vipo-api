@@ -8,7 +8,7 @@ export class UpdateUserController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.user;
     const { name, lastName } = request.body;
-    //#TODO add field address
+    // #TODO add field address
 
     if (!name || !lastName || !id) throw new ServiceError("Parameters missing");
 
