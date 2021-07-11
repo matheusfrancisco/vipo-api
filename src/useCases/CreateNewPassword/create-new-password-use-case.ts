@@ -1,8 +1,8 @@
-import { IUserRepository } from "@domain/user/user-repository";
 import IHashProvider from "@providers/HashProvider/models/IHashProvider";
 import ITokenProvider from "@providers/TokenProvider/models/ITokenProvider";
 import ICreateNewPasswordDTO from "@useCases/CreateNewPassword/create-new-password-dto";
 import { ServiceError } from "@errors/service-error";
+import IUserRepository from "@domain/user/IUserRepository";
 
 interface ITokenPayload {
   userId: number;
@@ -22,8 +22,7 @@ export class CreateNewPasswordUseCase {
   }: ICreateNewPasswordDTO): Promise<void> {
     const decoded = await this.tokenProvider.decodeToken<ITokenPayload>(token);
 
-    if (!decoded.userId || !decoded.email)
-      throw new ServiceError("Invalid token provided");
+    this.checkIfDecodedValueIsValid(decoded);
 
     const user = await this.usersRepository.findByEmail(decoded.email);
 
@@ -38,5 +37,10 @@ export class CreateNewPasswordUseCase {
       userId: user.id,
       password: newHashedPassword
     });
+  }
+
+  private checkIfDecodedValueIsValid(decoded: ITokenPayload): void {
+    if (!decoded.userId || !decoded.email)
+      throw new ServiceError("Invalid token provided");
   }
 }
