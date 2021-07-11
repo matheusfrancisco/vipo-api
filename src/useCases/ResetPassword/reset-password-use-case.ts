@@ -1,8 +1,8 @@
-import { IUserRepository } from "@domain/user/user-repository";
 import IMailProvider from "@providers/MailProvider/models/IMailProvider";
 import ITokenProvider from "@providers/TokenProvider/models/ITokenProvider";
 import IResetPasswordDTO from "@useCases/ResetPassword/reset-password-dto";
 import { ServiceError } from "@errors/service-error";
+import IUserRepository from "@domain/user/IUserRepository";
 
 const TOKEN_EXPIRE_TIME = "30m";
 
