@@ -1,20 +1,12 @@
-import { createServer, proxy } from "aws-serverless-express";
-import { Context, APIGatewayProxyEvent } from "aws-lambda";
+import  serverless from "serverless-http";
 import { createHttpApp } from "./index";
-import { Server } from "http";
 
-let httpApp;
-let httpServer: Server;
+module.exports.handler = function(
+  evt: AWSLambda.APIGatewayProxyEvent | AWSLambda.APIGatewayProxyEventV2,
+  ctx:  AWSLambda.Context,
+  callback: any) {
+  createHttpApp()
+  .then(app => serverless(app))
+  .then(proxy => proxy(evt, ctx)).catch(err => console.log(err))
+}
 
-(async () => {
-  try {
-    httpApp = await createHttpApp();
-    httpServer = createServer(httpApp);
-  } catch (e) {
-    console.log("error build your app");
-    // Deal with the fact the chain failed
-  }
-})();
-
-export const handler = (event: APIGatewayProxyEvent, context: Context) =>
-  proxy(httpServer, event, context, "PROMISE").promise;

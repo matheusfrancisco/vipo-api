@@ -11,7 +11,6 @@
     "skipLibCheck": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-
     "outDir": "lib",
     "baseUrl": ".",
     "paths": {
@@ -35,8 +34,6 @@
     ".serverless",
     "_optimize",
     "_warmup"
-  ],
-  "ts-node": {
-    "require": ["tsconfig-paths/register"]
-  }
+  ]
+
 }

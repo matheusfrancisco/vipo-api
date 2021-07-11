@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": ">=13.0.0"
+  },
   "scripts": {
     "start:serverless": "serverless offline  --stage local",
     "format": "prettier --write \"**/*.*(js|ts|json|yml|yaml|md)\"",
@@ -15,18 +18,16 @@
     "create-migration": "NODE_ENV=prod ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:create -n"
   },
   "dependencies": {
-    "@types/aws-lambda": "^8.10.68",
-    "@types/aws-serverless-express": "^3.3.3",
+    "@babel/plugin-syntax-top-level-await": "^7.14.5",
     "@types/bcrypt": "^3.0.0",
     "@types/express": "^4.17.2",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/supertest": "^2.0.10",
     "address-validator": "^0.2.3",
-    "aws-lambda": "^1.0.6",
     "aws-sdk": "^2.820.0",
-    "aws-serverless-express": "^3.4.0",
     "axios": "^0.20.0",
     "bcrypt": "^5.0.0",
+    "chrome-aws-lambda": "^9.1.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
@@ -38,18 +39,17 @@
     "pg": "^8.0.3",
     "pg-god": "^1.0.11",
     "reflect-metadata": "^0.1.13",
+    "serverless-http": "^2.7.0",
     "serverless-plugin-typescript": "^1.1.9",
     "serverless-secrets-plugin": "^0.1.0",
+    "source-map-support": "^0.5.19",
     "supertest": "^4.0.2",
     "ts-node": "^8.5.4",
     "tsc": "^1.20150623.0",
     "typeorm": "^0.2.28",
-    "uuid": "^8.3.2",
-    "chrome-aws-lambda": "^9.1.0",
-    "source-map-support": "^0.5.19"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.64",
     "@types/aws-sdk": "^2.7.0",
     "fork-ts-checker-webpack-plugin": "^6.0.0",
     "json-schema-to-ts": "^1.4.1",
@@ -92,7 +92,7 @@
     "webpack": "^5.4.0",
     "webpack-node-externals": "^2.5.2",
     "@serverless/typescript": "^2.23.0"
-    },
+  },
   "author": "",
   "license": "ISC"
 }

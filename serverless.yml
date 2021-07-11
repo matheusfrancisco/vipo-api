@@ -36,11 +36,12 @@ provider:
     MIGRATAION: false
 
 functions:
-  serverless-api:
+  api:
     handler: src/serverless.handler
-    memorySize: 512
-    timeout: 50
     events:
+      - http:
+          path: /
+          method: ANY
       - http:
           path: /{proxy+}
           method: ANY

@@ -1,12 +1,12 @@
-import handleInternalServerError from "./infrastructure/middlewares/handleInternalServerError";
-import handleServiceError from "./infrastructure/middlewares/handleServiceError";
-import { routerFactory } from "./infrastructure/routes";
-import express, { Router, Express } from "express";
+import handleInternalServerError from "@infrastructure/middlewares/handleInternalServerError";
+import handleServiceError from "@infrastructure/middlewares/handleServiceError";
+import { routerFactory } from "@infrastructure/routes";
+import express from "express";
+import { Router, Express } from "express";
 
 export const server = async (
   router: Router
 ): Promise<{ app: Express }> => {
-  await import("express-async-errors");
 
   const app = express();
 
@@ -29,7 +29,7 @@ export const startServer = async (): Promise<void> => {
 };
 
 
-export const createHttpApp = async (): Promise<Express> => {
+export const createHttpApp = async (): Promise<express.Express> => {
   const router = await routerFactory();
   const { app } = await server(router);
 

@@ -33,6 +33,9 @@ module.exports = {
   optimization: {
     concatenateModules: false,
   },
+  experiments: {
+    topLevelAwait: true
+  },
   target: 'node',
   externals: [nodeExternals()],
   module: {
