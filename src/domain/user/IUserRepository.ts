@@ -12,5 +12,5 @@ export default interface IUserRepository {
   save: (user: UserData) => Promise<IUserData>;
   findByEmail: (email: string) => Promise<IUserData | undefined>;
   update: (user: IUserRepositoryUpdatePayload) => Promise<IUserData>;
-  updateResetPasswordToken: (id: number, token?: string) => Promise<void>;
+  updateResetPasswordToken: (id: number, token?: string) => Promise<IUserData>;
 }

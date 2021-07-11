@@ -58,7 +58,7 @@ export default class MockUserRepository implements IUserRepository {
   public async updateResetPasswordToken(
     id: number,
     token?: string
-  ): Promise<void> {
+  ): Promise<IUserData> {
     const userIndex = this.users.findIndex(user => user.id === id);
     if (!userIndex) throw new Error("User does not exist");
 
@@ -66,5 +66,7 @@ export default class MockUserRepository implements IUserRepository {
     user.resetPasswordToken = token;
 
     this.users[userIndex] = user;
+
+    return user;
   }
 }
