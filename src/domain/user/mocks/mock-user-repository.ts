@@ -60,7 +60,7 @@ export default class MockUserRepository implements IUserRepository {
     token?: string
   ): Promise<IUserData> {
     const userIndex = this.users.findIndex(user => user.id === id);
-    if (!userIndex) throw new Error("User does not exist");
+    if (userIndex < 0) throw new Error("User does not exist");
 
     const user = this.users[userIndex];
     user.resetPasswordToken = token;

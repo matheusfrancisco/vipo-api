@@ -33,7 +33,7 @@ export default class MockProfilesRepository implements IProfilesRepository {
 
     const foundIndex = this.profiles.findIndex(profile => profile.id === id);
 
-    if (!foundIndex) {
+    if (foundIndex < 0) {
       this.profiles.push(newProfile);
 
       return newProfile;
