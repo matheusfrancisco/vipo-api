@@ -1,7 +1,7 @@
 import makeTokenProvider from "@providers/TokenProvider";
 import { RequestHandler } from "express";
 import { ServiceError } from "@errors/service-error";
-import { PostgresUserRepository } from "@infrastructure/database/postgres-user-repository";
+import UsersRepositoryFactory from "@infrastructure/database/factories/users-repository-factory";
 
 interface ITokenPayload {
   id: string;
@@ -18,8 +18,7 @@ const ensureAuthenticated: RequestHandler = async (request, _, next) => {
   if (prefix !== "Bearer" || !token || token === "undefined")
     throw new ServiceError("Bad jwt token sent");
 
-  const usersRepository = new PostgresUserRepository();
-
+  const usersRepository = UsersRepositoryFactory.make();
   const tokenProvider = makeTokenProvider();
 
   const userPayload = await tokenProvider.decodeToken<ITokenPayload>(token);
