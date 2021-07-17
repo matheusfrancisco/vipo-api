@@ -33,6 +33,8 @@ export class LogUserUseCase {
 
     const token = await this.tokenProvider.generateToken(tokenPayload);
 
+    Reflect.deleteProperty(user, "password");
+
     return {
       token,
       user

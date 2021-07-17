@@ -34,12 +34,10 @@ describe("Create new password use case", () => {
     }));
 
     // Testing
-    await useCase.execute({
+    const updatedUser = await useCase.execute({
       token,
       password: "new-pass"
     });
-
-    const updatedUser = await repository.findByEmail(user.email);
 
     // Assert
     expect(tokenProvider.decodeToken).toHaveBeenCalled();

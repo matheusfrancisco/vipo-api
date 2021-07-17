@@ -3,6 +3,7 @@ import { CreateDatabaseConnection } from "@infrastructure/database/connection";
 import { routerFactory } from "@infrastructure/routes";
 import MockUserData from "@domain/user/mocks/mock-user-data";
 import MockRecommendationRequest from "@domain/recommendation-request/mock/mock-recommendation-request";
+import { Gender } from "@domain/user/IUser";
 import { server } from "../../../index";
 
 describe("Integration test: Recommendation profile", () => {
@@ -11,6 +12,11 @@ describe("Integration test: Recommendation profile", () => {
     const serverFactoryWithUserRoute = await server(userRoutes);
 
     const user = new MockUserData();
+    const [firstChart, ...rest] = user.gender;
+    user.gender = (firstChart.toUpperCase() + rest.join("")) as Gender;
+    // The random gender is built already
+    // from the enum value. But here, we should receive the Gender key, which is
+    // capitalized. So here I'm capitalizing the gender on the fly
 
     await request(serverFactoryWithUserRoute.app)
       .post("/users")

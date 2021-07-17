@@ -46,6 +46,8 @@ export class SignWithGoogleUseCase {
       email: user.email
     });
 
+    Reflect.deleteProperty(user, "password");
+
     return {
       token,
       user
@@ -69,6 +71,8 @@ export class SignWithGoogleUseCase {
       id: user.id,
       email
     });
+
+    Reflect.deleteProperty(user, "password");
 
     return {
       token,

@@ -3,6 +3,7 @@ import ITokenProvider from "@providers/TokenProvider/models/ITokenProvider";
 import ICreateNewPasswordDTO from "@useCases/CreateNewPassword/create-new-password-dto";
 import { ServiceError } from "@errors/service-error";
 import IUserRepository from "@domain/user/IUserRepository";
+import { IUserData } from "@domain/user/IUser";
 
 interface ITokenPayload {
   userId: number;
@@ -19,7 +20,7 @@ export class CreateNewPasswordUseCase {
   public async execute({
     password,
     token
-  }: ICreateNewPasswordDTO): Promise<void> {
+  }: ICreateNewPasswordDTO): Promise<IUserData> {
     const decoded = await this.tokenProvider.decodeToken<ITokenPayload>(token);
 
     this.checkIfDecodedValueIsValid(decoded);
@@ -33,7 +34,7 @@ export class CreateNewPasswordUseCase {
 
     const newHashedPassword = await this.hashProvider.generateHash(password);
 
-    await this.usersRepository.update({
+    return this.usersRepository.update({
       userId: user.id,
       password: newHashedPassword
     });

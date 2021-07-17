@@ -1,6 +1,9 @@
 import request from "supertest";
 import { CreateDatabaseConnection } from "@infrastructure/database/connection";
 import { routerFactory } from "@infrastructure/routes";
+import MockUserData from "@domain/user/mocks/mock-user-data";
+import { capitalize } from "lodash";
+import { Gender } from "@domain/user/IUser";
 import { server } from "../../../index";
 
 describe("profile user integration test", () => {
@@ -14,14 +17,8 @@ describe("profile user integration test", () => {
   });
 
   test("should register a user and get all profile informations", async () => {
-    const user = {
-      name: "mt",
-      email: "xicoooooodo11@hotmail.com",
-      password: "123123",
-      lastName: "Xico",
-      birthDate: "09/09/1994",
-      gender: "Male"
-    };
+    const user = new MockUserData();
+    user.gender = capitalize(user.gender) as Gender;
 
     const register = await request(serverFactoryWithUserRoute.app)
       .post("/users")
@@ -42,11 +39,11 @@ describe("profile user integration test", () => {
 
     expect(profileUserInfo.body).toEqual({
       user: {
-        name: "mt",
-        lastName: "Xico",
-        birthDate: "1994-09-09T00:00:00.000Z",
-        gender: "male",
-        email: "xicoooooodo11@hotmail.com",
+        name: user.name,
+        lastName: user.lastName,
+        birthDate: user.birthDate,
+        gender: user.gender,
+        email: user.email,
         profile: {
           musicals: [],
           foods: [],

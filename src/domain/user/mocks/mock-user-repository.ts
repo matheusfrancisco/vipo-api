@@ -67,6 +67,8 @@ export default class MockUserRepository implements IUserRepository {
 
     this.users[userIndex] = user;
 
+    Reflect.deleteProperty(user, "password");
+
     return user;
   }
 }

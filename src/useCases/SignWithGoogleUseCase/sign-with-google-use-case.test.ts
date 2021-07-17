@@ -64,7 +64,6 @@ describe("Sign with google use case", () => {
     expect(result.user).toHaveProperty("email");
     expect(result.user).toHaveProperty("gender");
     expect(result.user).not.toHaveProperty("password");
-    expect(repository.findByEmail).toHaveBeenCalled();
   });
 
   test("should throw when providing an invalid google token", async () => {

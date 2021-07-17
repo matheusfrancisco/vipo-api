@@ -1,5 +1,4 @@
 import request from "supertest";
-import { CreateDatabaseConnection } from "@infrastructure/database/connection";
 import { routerFactory } from "@infrastructure/routes";
 import { server } from "../../../index";
 

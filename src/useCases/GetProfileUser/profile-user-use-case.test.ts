@@ -39,7 +39,12 @@ describe("Profile User Use Case", () => {
 
     expect(result).toEqual<IUser>({
       ...user,
-      profile
+      profile: {
+        id: profile.id,
+        drinks: profile.drinks,
+        foods: profile.foods,
+        musicals: profile.musicals
+      }
     });
   });
 });
