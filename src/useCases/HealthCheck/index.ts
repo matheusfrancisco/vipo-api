@@ -7,8 +7,8 @@ interface IBuildResult {
   healthCheckController: HealthCheck;
 }
 
-export class healthcheckUseCaseFactory {
-  public static async build(): Promise<IBuildResult> {
+export class HealthCheckUseCaseFactory {
+  public static build(): IBuildResult {
     const queryManager = getManager();
     const livenessController = new Liveness();
     const healthCheckController = new HealthCheck(queryManager);

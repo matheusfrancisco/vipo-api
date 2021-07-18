@@ -38,6 +38,8 @@ describe("Integration test: Recommendation profile", () => {
 
     const recommendationRequest = new MockRecommendationRequest();
 
+    console.log(recommendationRequest);
+
     const recommendationResponse = await request(serverFactoryWithUserRoute.app)
       .post("/users/recommendation")
       .set({ authorization: `Bearer ${loginResponse.body.token}` })

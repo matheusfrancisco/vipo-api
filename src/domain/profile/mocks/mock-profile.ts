@@ -17,7 +17,7 @@ export default class MockProfile implements IProfileArgs {
   musicals: string[];
 
   constructor({ user, drinks, foods, musicals }: Partial<IProfileArgs> = {}) {
-    this.user = user || faker.random.number(MAX_RANDOM_NUMBER);
+    this.user = user || faker.datatype.number(MAX_RANDOM_NUMBER);
     this.drinks = drinks || this.generateRandomArray();
     this.foods = foods || this.generateRandomArray();
     this.musicals = musicals || this.generateRandomArray();

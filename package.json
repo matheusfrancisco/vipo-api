@@ -27,7 +27,6 @@
     "google-auth-library": "^7.0.2",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
-    "mocha": "^6.2.2",
     "nodemon": "^2.0.2",
     "pg": "^8.0.3",
     "pg-god": "^1.0.11",
@@ -64,8 +63,6 @@
     "husky": "^4.2.3",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
-    "sinon": "^7.5.0",
-    "sinon-chai": "^3.3.0",
     "ts-jest": "^24.3.0",
     "ts-node-dev": "^1.1.6",
     "tsconfig-paths": "^3.9.0"

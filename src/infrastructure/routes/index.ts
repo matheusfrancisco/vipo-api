@@ -9,10 +9,8 @@ export const routerFactory = async (): Promise<Router> => {
   const profileRoutes = (await import("@infrastructure/routes/profile"))
     .default;
   const signinRoutes = (await import("@infrastructure/routes/signin")).default;
-  const buildHealthCheck = (await import("@infrastructure/routes/healthcheck"))
+  const healthcheckRoutes = (await import("@infrastructure/routes/healthcheck"))
     .default;
-
-  const healthcheckRoutes = await buildHealthCheck();
 
   router.use("/users", userRoutes);
 

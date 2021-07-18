@@ -27,10 +27,10 @@ export default class MockEstablishmentFeedback
     leastRatedItem,
     comments
   }: Partial<IEstablishmentFeedbackArgs> = {}) {
-    this.userId = userId || faker.random.number(MAX_RANDOM_NUMBER);
+    this.userId = userId || faker.datatype.number(MAX_RANDOM_NUMBER);
     this.establishmentId =
-      establishmentId || faker.random.number(MAX_RANDOM_NUMBER);
-    this.rating = rating || faker.random.number(MAX_RATING);
+      establishmentId || faker.datatype.number(MAX_RANDOM_NUMBER);
+    this.rating = rating || faker.datatype.number(MAX_RATING);
     this.bestRatedItem = bestRatedItem || faker.random.word();
     this.leastRatedItem = leastRatedItem || faker.random.word();
     this.comments = comments;

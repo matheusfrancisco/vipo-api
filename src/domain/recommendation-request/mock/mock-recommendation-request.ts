@@ -21,10 +21,10 @@ export default class MockRecommendationRequest
     howMuch,
     like
   }: Partial<IRecommendationRequestArgs> = {}) {
-    this.userId = userId || faker.random.number(MAX_RANDOM_NUMBER);
+    this.userId = userId || faker.datatype.number(MAX_RANDOM_NUMBER);
     this.numberOfPeople =
-      numberOfPeople || faker.random.number(MAX_RANDOM_NUMBER);
-    this.howMuch = howMuch || String(faker.random.float(MAX_RANDOM_NUMBER));
+      numberOfPeople || faker.datatype.number(MAX_RANDOM_NUMBER);
+    this.howMuch = howMuch || String(faker.datatype.float(MAX_RANDOM_NUMBER));
     this.like = like || this.generateRandomArray();
   }
 
