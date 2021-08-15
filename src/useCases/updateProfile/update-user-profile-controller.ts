@@ -3,7 +3,12 @@ import { UserEntity } from "@infrastructure/database/entity/user-entity";
 import { ServiceError } from "@errors/service-error";
 import { UpdateUserProfileUseCase } from "./update-user-profile-use-case";
 import { FindUserUseCase } from "../FindUser/find-user-use-case";
-
+interface RequestExtended extends Request{
+  user: {
+    id: string;
+    email: string;
+  };
+}
 export class UpdateUserProfileController {
   constructor(
     private updateUserProfileUseCase: UpdateUserProfileUseCase,
@@ -11,7 +16,7 @@ export class UpdateUserProfileController {
   ) {}
 
   async handle(
-    request: Request,
+    request: RequestExtended,
     response: Response
   ): Promise<UserEntity | undefined | Response<any>> {
     const { email } = request.user;

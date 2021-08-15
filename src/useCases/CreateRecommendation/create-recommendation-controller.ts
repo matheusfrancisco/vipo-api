@@ -5,13 +5,20 @@ import {
   ICreateRec
 } from "./create-recommendation-use-case";
 
+interface RequestExtended extends Request{
+  user: {
+    id: string;
+    email: string;
+  };
+}
+
 export class CreateRecommendationController {
   constructor(
     private createRecommendationUseCase: CreateRecommendationUseCase
   ) {}
 
   async handle(
-    request: Request,
+    request: RequestExtended,
     response: Response
   ): Promise<Response | undefined> {
     const { email } = request.user;
