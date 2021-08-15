@@ -6,15 +6,13 @@
     "sourceMap": true,
     "module": "commonjs",
     "esModuleInterop": true,
-    "target": "es2018",
+    "target": "es2017",
     "isolatedModules": true,
     "strictPropertyInitialization": false,
-    "lib": [
-      "es2018"
-    ],
     "outDir": "./dist",
     "allowJs": true,
     "declaration": true,
+    "rootDir": ".",
     "baseUrl": ".",
     "paths": {
       "@config/*": ["./src/config/*"],
@@ -27,8 +25,10 @@
     },
     "typeRoots": ["./node_modules/@types", "./src/@types"],
     "skipLibCheck": true,
+    "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": true
   },
   "include": ["src/**/*"]
 }

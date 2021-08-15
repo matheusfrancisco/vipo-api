@@ -3,9 +3,7 @@ module.exports = {
     ['@babel/preset-env', { targets: { node: 'current' } }],
     '@babel/preset-typescript',
   ],
-  ignore: [
-    '**/*.test.ts'
-  ],
+
   plugins: [
     ["module-resolver",
       {
@@ -17,12 +15,11 @@ module.exports = {
           "@migrations": ["./src/migrations"],
           "@providers": ["./src/providers"],
           "@useCases": ["./src/useCases"]
-        },
-      },
+        }
+      }
     ],
     'babel-plugin-transform-typescript-metadata',
     ['@babel/plugin-proposal-decorators', { legacy: true }],
     ['@babel/plugin-proposal-class-properties', { loose: true }],
-
-  ]
-}
+  ],
+};
