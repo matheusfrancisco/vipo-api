@@ -8,13 +8,13 @@ module.exports = {
     ["module-resolver",
       {
         "alias": {
-          "@config": ["./src/config"],
-          "@domain": ["./src/domain"],
-          "@errors": ["./src/errors"],
-          "@infrastructure": ["./src/infrastructure"],
-          "@migrations": ["./src/migrations"],
-          "@providers": ["./src/providers"],
-          "@useCases": ["./src/useCases"]
+          "@config": "./src/config",
+          "@domain": "./src/domain",
+          "@errors": "./src/errors",
+          "@infrastructure": "./src/infrastructure",
+          "@migrations": "./src/migrations",
+          "@providers": "./src/providers",
+          "@useCases": "./src/useCases"
         }
       }
     ],
