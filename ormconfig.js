@@ -35,5 +35,5 @@ const databaseConfig = {
     connectionLimit: 5
   }
 };
-
+console.log(databaseConfig)
 module.exports = databaseConfig;
