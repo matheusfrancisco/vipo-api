@@ -22,7 +22,7 @@ describe("user integration test", () => {
       .post("/users")
       .send({
         name: "matheus",
-        email: "xicooooo2odo1@hotmail.com",
+        email: "xicooooo2odo11111@hotmail.com",
         password: "1231233",
         lastName: "Xico",
         birthDate: "09/09/1994",
