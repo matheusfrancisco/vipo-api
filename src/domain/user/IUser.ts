@@ -18,7 +18,7 @@ export interface IUserData {
   resetPasswordToken?: string;
 }
 
-export default interface IUser {
+export interface IUser {
   id: IEntityId;
   name: string;
   email: string;

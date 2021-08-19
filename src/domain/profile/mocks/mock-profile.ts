@@ -1,5 +1,5 @@
 import { IEntityId } from "@domain/global";
-import { IProfileArgs } from "@domain/profile/profile";
+import { IProfileArgs } from "@domain/profile";
 import faker from "faker";
 
 const MAX_RANDOM_NUMBER = 50;

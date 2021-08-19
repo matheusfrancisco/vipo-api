@@ -1,5 +1,5 @@
 import MockProfile from "@domain/profile/mocks/mock-profile";
-import Profile from "@domain/profile/profile";
+import Profile from "@domain/profile";
 import MockUserData from "@domain/user/mocks/mock-user-data";
 import User from "@domain/user/user";
 import faker from "faker";

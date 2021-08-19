@@ -1,7 +1,7 @@
 import { IEntityId } from "@domain/global";
 import IProfile from "@domain/profile/IProfile";
 import IProfilesRepository from "@domain/profile/IProfilesRepository";
-import Profile from "@domain/profile/profile";
+import Profile from "@domain/profile";
 import { RepositoryError } from "@errors/repository-error";
 import { UserProfile } from "@infrastructure/database/entity/user-profile";
 import { getRepository } from "typeorm";

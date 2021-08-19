@@ -1,7 +1,7 @@
 import { IEntityId } from "@domain/global";
 import IProfile from "@domain/profile/IProfile";
 import IProfilesRepository from "@domain/profile/IProfilesRepository";
-import Profile from "@domain/profile/profile";
+import Profile from "@domain/profile";
 import MockUserData from "@domain/user/mocks/mock-user-data";
 
 export default class MockProfilesRepository implements IProfilesRepository {

@@ -1,7 +1,7 @@
 import MockProfile from "@domain/profile/mocks/mock-profile";
 import MockProfilesRepository from "@domain/profile/mocks/mock-profiles-repository";
-import Profile from "@domain/profile/profile";
-import IUser from "@domain/user/IUser";
+import Profile from "@domain/profile";
+import { IUser} from "@domain/user/IUser";
 import MockUserData from "@domain/user/mocks/mock-user-data";
 import MockUserRepository from "@domain/user/mocks/mock-user-repository";
 import UserData from "@domain/user/user-data";

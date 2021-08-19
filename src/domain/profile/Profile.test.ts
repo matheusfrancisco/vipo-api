@@ -1,5 +1,5 @@
 import MockProfile from "@domain/profile/mocks/mock-profile";
-import Profile from "@domain/profile/profile";
+import Profile from "@domain/profile";
 
 describe("Profile", () => {
   it("should instantiate the object correctly", () => {

@@ -1,6 +1,6 @@
 import { IEntityId } from "@domain/global";
 import IProfile from "@domain/profile/IProfile";
-import IUser, { Gender, IUserData } from "@domain/user/IUser";
+import { IUser, Gender, IUserData } from "@domain/user/IUser";
 
 export default class User implements IUser {
   public id: IEntityId;
