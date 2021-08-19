@@ -17,10 +17,8 @@ const testConfig = {
   logging: false
 };
 
-const dbConfigToUse = envs.NODE_ENV === "test" ? testConfig : prodOrDevConfig;
-console.log(envs.NODE_ENV);
+const dbConfigToUse = envs.default.NODE_ENV === "test" ? testConfig : prodOrDevConfig;
 
-console.log(dbConfigToUse);
 const databaseConfig = {
   ...dbConfigToUse,
   port: envs.default.DB_PROD_PORT,
@@ -37,5 +35,4 @@ const databaseConfig = {
     connectionLimit: 5
   }
 };
-console.log(databaseConfig);
 module.exports = databaseConfig;
