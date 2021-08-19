@@ -2,13 +2,20 @@ import { Request, Response } from "express";
 import { ServiceError } from "@errors/service-error";
 import { CreateRecommendationUseCase } from "./create-recommendation-use-case";
 
+interface RequestExtended extends Request{
+  user: {
+    id: string;
+    email: string;
+  };
+}
+
 export class CreateRecommendationController {
   constructor(
     private createRecommendationUseCase: CreateRecommendationUseCase
   ) {}
 
   async handle(
-    request: Request,
+    request: RequestExtended,
     response: Response
   ): Promise<Response | undefined> {
     const { email } = request.user;

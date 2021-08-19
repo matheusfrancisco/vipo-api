@@ -4,7 +4,7 @@ import { routerFactory } from "@infrastructure/routes";
 import MockUserData from "@domain/user/mocks/mock-user-data";
 import { capitalize } from "lodash";
 import { Gender } from "@domain/user/IUser";
-import { server } from "../../../index";
+import { server } from "../../index";
 
 describe("profile user integration test", () => {
   let serverFactoryWithUserRoute: { app: Express.Application };

@@ -1,5 +1,5 @@
 import makeTokenProvider from "@providers/TokenProvider";
-import { RequestHandler } from "express";
+import { RequestHandler, Request } from "express";
 import { ServiceError } from "@errors/service-error";
 import UsersRepositoryFactory from "@infrastructure/database/factories/users-repository-factory";
 
@@ -8,7 +8,15 @@ interface ITokenPayload {
   email: string;
 }
 
-const ensureAuthenticated: RequestHandler = async (request, _, next) => {
+interface RequestExtended extends Request{
+  user?: {
+    id: string;
+    email: string;
+  };
+}
+
+
+const ensureAuthenticated: RequestHandler = async (request: RequestExtended, _, next) => {
   const { authorization } = request.headers;
 
   if (!authorization) throw new ServiceError("Headers missing.");

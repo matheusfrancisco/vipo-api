@@ -1,13 +1,18 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "target": "es6",
     "strict": true,
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "build",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es2017",
+    "isolatedModules": true,
+    "strictPropertyInitialization": false,
+    "outDir": "./dist",
+    "allowJs": true,
+    "declaration": true,
+    "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
       "@config/*": ["./src/config/*"],
@@ -20,8 +25,10 @@
     },
     "typeRoots": ["./node_modules/@types", "./src/@types"],
     "skipLibCheck": true,
+    "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": true
   },
   "include": ["src/**/*"]
 }

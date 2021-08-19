@@ -1,6 +1,6 @@
 import request from "supertest";
 import { routerFactory } from "@infrastructure/routes";
-import { server } from "../../../index";
+import { server } from "../../index";
 
 describe("health check", () => {
   let serverFactoryWithUserRoute: { app: Express.Application };

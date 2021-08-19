@@ -1,10 +1,10 @@
-name: "build-test"
+name: "run migration in test"
 on:
   pull_request:
   push:
     branches:
       - master
-
+#So this CI is to we run your migrations
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,11 +12,11 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: postgres
+          POSTGRES_DB: vipo
           POSTGRES_PASSWORD: postgres
           POSTGRES_USER: postgres
         ports:
-          - 5432:5432
+          - 5433:5432
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -29,9 +29,10 @@ jobs:
           npm install
       - env:
           DB_PROD_HOST: localhost
-          DB_PROD_PORT: 5432
+          DB_PROD_PORT: 5433
           DB_PROD_USER: postgres
           DB_PROD_PASS: postgres
+          MIGRATAION: false
           GOOGLE_CLIENT_ID: wrong_id
         run: |
-          npm run test
+          npm run migrations-test

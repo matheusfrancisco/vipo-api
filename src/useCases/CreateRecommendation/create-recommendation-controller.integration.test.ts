@@ -4,7 +4,7 @@ import { routerFactory } from "@infrastructure/routes";
 import MockUserData from "@domain/user/mocks/mock-user-data";
 import MockRecommendationRequest from "@domain/recommendation-request/mock/mock-recommendation-request";
 import { Gender } from "@domain/user/IUser";
-import { server } from "../../../index";
+import { server } from "../../index";
 
 describe("Integration test: Recommendation profile", () => {
   it("should create an recommendation user profile", async () => {
