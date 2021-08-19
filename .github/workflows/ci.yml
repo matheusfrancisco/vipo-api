@@ -16,7 +16,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
           POSTGRES_USER: postgres
         ports:
-          - 5433:5432
+          - 5432:5432
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -29,7 +29,7 @@ jobs:
           npm install
       - env:
           DB_PROD_HOST: localhost
-          DB_PROD_PORT: 5433
+          DB_PROD_PORT: 5432
           DB_PROD_USER: postgres
           DB_PROD_PASS: postgres
           GOOGLE_CLIENT_ID: wrong_id
