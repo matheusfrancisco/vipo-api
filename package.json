@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files  --no-copy-ignored ",
     "format": "prettier --write \"**/*.*(js|ts|json|yml|yaml|md)\"",
     "dev": "NODE_ENV=development tsnd -r tsconfig-paths/register --transpile-only --respawn --inspect --ignore-watch node_modules --no-notify src/start.ts",
     "test": "export TZ='America/SaoPaulo' && NODE_ENV=test jest --forceExit --maxWorkers=4 --testTimeout=60000 --detectOpenHandles",
