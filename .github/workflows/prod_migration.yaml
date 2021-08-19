@@ -19,4 +19,5 @@ jobs:
           MIGRATAION: false
           GOOGLE_CLIENT_ID: wrong_id
         run: |
-          npm run migrations
+          echo "OFF for instance"
+          # npm run migrations
