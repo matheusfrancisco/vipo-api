@@ -18,7 +18,7 @@ const testConfig = {
 };
 
 const dbConfigToUse = envs.NODE_ENV === "test" ? testConfig : prodOrDevConfig;
-
+console.log(dbConfigToUse);
 const databaseConfig = {
   ...dbConfigToUse,
   port: envs.default.DB_PROD_PORT,
