@@ -1,9 +1,9 @@
 import IHashProvider from "@providers/HashProvider/models/IHashProvider";
 import { ServiceError } from "@errors/service-error";
-import User, { IUser } from "../../domain/user/user";
-import { IUserRepository } from "../../domain/user/user-repository";
-
-type UserResource = Omit<IUser, "password">;
+import { IUserData } from "@domain/user/IUser";
+import IUserRepository from "@domain/user/IUserRepository";
+import ICreateUserDTO from "@useCases/CreateUser/create-user-dto";
+import UserData from "@domain/user/user-data";
 
 export class CreateUserUseCase {
   constructor(
@@ -18,7 +18,7 @@ export class CreateUserUseCase {
     lastName,
     birthDate,
     gender
-  }: IUser): Promise<UserResource> {
+  }: ICreateUserDTO): Promise<IUserData> {
     const userAlreadyExists = await this.userRepository.findByEmail(email);
 
     if (userAlreadyExists) {
@@ -26,7 +26,7 @@ export class CreateUserUseCase {
     }
 
     const hashPass = await this.hashProvider.generateHash(password);
-    const user = new User({
+    const user = new UserData({
       name,
       password: hashPass,
       email,
@@ -35,6 +35,6 @@ export class CreateUserUseCase {
       birthDate
     });
 
-    return this.userRepository.save({ ...user.toRepository() });
+    return this.userRepository.save(user);
   }
 }

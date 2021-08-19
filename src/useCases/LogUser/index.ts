@@ -1,4 +1,4 @@
-import { PostgresUserRepository } from "@infrastructure/database/postgres-user-repository";
+import UsersRepositoryFactory from "@infrastructure/database/factories/users-repository-factory";
 import makeHashProvider from "@providers/HashProvider";
 import makeTokenProvider from "@providers/TokenProvider";
 import { LogUserController } from "@useCases/LogUser/log-user-controller";
@@ -10,7 +10,7 @@ interface IBuildResult {
 
 export class LogUserUseCaseFactory {
   public static build(): IBuildResult {
-    const usersRepository = new PostgresUserRepository();
+    const usersRepository = UsersRepositoryFactory.make();
     const hashProvider = makeHashProvider();
     const tokenProvider = makeTokenProvider();
 

@@ -1,4 +1,6 @@
+import MockUserData from "@domain/user/mocks/mock-user-data";
 import MockUserRepository from "@domain/user/mocks/mock-user-repository";
+import UserData from "@domain/user/user-data";
 import MockMailProvider from "@providers/MailProvider/mocks/MockMailProvider";
 import MockTokenProvider from "@providers/TokenProvider/mocks/MockTokenProvider";
 import { ResetPasswordUseCase } from "@useCases/ResetPassword/reset-password-use-case";
@@ -21,14 +23,12 @@ describe("Reset password use case", () => {
   test("should send the email with the token correctly", async () => {
     const { repository, tokenProvider, mailProvider, useCase } = getUseCase();
 
-    const user = { id: 1, email: "email@email.com" };
+    const user = new UserData(new MockUserData());
+    await repository.save(user);
     const redirectURL = "http://www.url.com/target";
-
-    repository.findByEmail = jest.fn(async () => user);
 
     await useCase.execute({ email: user.email, redirectURL });
 
-    expect(repository.findByEmail).toHaveBeenCalled();
     expect(tokenProvider.generateToken).toHaveBeenCalled();
     expect(mailProvider.sendMail).toHaveBeenCalled();
   });

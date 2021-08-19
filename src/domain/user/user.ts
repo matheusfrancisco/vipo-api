@@ -1,85 +1,52 @@
-import Email from "./email";
+import { IEntityId } from "@domain/global";
+import IProfile from "@domain/profile/IProfile";
+import { IUser, Gender, IUserData } from "@domain/user/IUser";
 
-export enum Gender {
-  Male = "male",
-  Female = "female",
-  Neuter = "neuter"
-}
+export default class User implements IUser {
+  public id: IEntityId;
 
-export interface IUser {
-  name: string;
-  email: string;
-  password: string;
-  lastName: string;
-  birthDate: Date;
-  gender: Gender;
-  resetPasswordToken?: string;
-}
+  public name: string;
 
-export default class User {
-  private _name: string;
+  public lastName: string;
 
-  private _lastName: string;
+  public birthDate: Date;
 
-  private _birthDate: Date;
+  public gender: Gender;
 
-  private _gender: Gender;
+  public email: string;
 
-  public readonly email: Email;
+  public password: string;
 
-  public readonly password: string;
+  public resetPasswordToken?: string;
 
-  public readonly resetPasswordToken?: string;
+  public profile: IUser["profile"];
 
-  constructor({
-    email,
-    password,
-    name,
-    lastName,
-    birthDate,
-    gender,
-    resetPasswordToken
-  }: IUser) {
-    this.email = new Email(email);
+  constructor(
+    {
+      id,
+      email,
+      password,
+      name,
+      lastName,
+      birthDate,
+      gender,
+      resetPasswordToken
+    }: IUserData,
+    profile: IProfile
+  ) {
+    this.id = id;
+    this.email = email;
     this.password = password;
+    this.name = name;
+    this.lastName = lastName;
+    this.birthDate = birthDate;
+    this.gender = gender;
     this.resetPasswordToken = resetPasswordToken;
-    this._name = name;
-    this._lastName = lastName;
-    this._birthDate = birthDate;
-    this._gender = gender;
-  }
-
-  get name(): Partial<string> {
-    return this._name;
-  }
-
-  set name(name: Partial<string>) {
-    if (name) {
-      this._name = name;
-    }
-  }
-
-  get gender(): Partial<string> {
-    return this._gender;
-  }
-
-  get birthDate(): Date {
-    return this._birthDate;
-  }
-
-  get lastName(): string {
-    return this._lastName;
-  }
-
-  public toRepository(): IUser {
-    return {
-      name: this._name,
-      email: this.email.value,
-      password: this.password,
-      gender: this._gender,
-      birthDate: this._birthDate,
-      lastName: this._lastName,
-      resetPasswordToken: this.resetPasswordToken
+    this.profile = {
+      id: profile.id,
+      drinks: profile.drinks,
+      musicals: profile.musicals,
+      foods: profile.foods
     };
   }
 }

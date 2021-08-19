@@ -1,20 +1,74 @@
-import { IUser } from "@domain/user/user";
-import { IUserRepository } from "@domain/user/user-repository";
+import { IUserData } from "@domain/user/IUser";
+import IUserRepository, {
+  IUserRepositoryUpdatePayload
+} from "@domain/user/IUserRepository";
+import UserData from "@domain/user/user-data";
 
 export default class MockUserRepository implements IUserRepository {
-  public save = jest.fn();
+  private users: IUserData[] = [];
 
-  public findByEmail = jest.fn();
+  public async save({
+    name,
+    lastName,
+    gender,
+    email,
+    password,
+    birthDate,
+    resetPasswordToken
+  }: UserData): Promise<IUserData> {
+    const newUser: IUserData = {
+      id: this.users.length + 1,
+      name,
+      lastName,
+      gender,
+      email,
+      birthDate,
+      resetPasswordToken,
+      password
+    };
 
-  public update = jest.fn(() => Promise.resolve({} as IUser));
+    this.users.push(newUser);
 
-  public updateResetPasswordToken = jest.fn();
+    return newUser;
+  }
 
-  public updateUserProfile = jest.fn();
+  public async findByEmail(email: string): Promise<IUserData | undefined> {
+    return this.users.find(user => user.email === email);
+  }
 
-  public insertAnswer = jest.fn();
+  public async update({
+    userId,
+    name,
+    lastName,
+    password
+  }: IUserRepositoryUpdatePayload): Promise<IUserData> {
+    const userIndex = this.users.findIndex(user => user.id === userId);
+    if (userIndex < 0) throw new Error("User does not exist");
 
-  public findUserProfile = jest.fn();
+    const user = this.users[userIndex];
+    if (name) user.name = name;
+    if (lastName) user.lastName = lastName;
+    if (password) user.password = password;
 
-  public receiveFeedback = jest.fn();
+    this.users[userIndex] = user;
+
+    return user;
+  }
+
+  public async updateResetPasswordToken(
+    id: number,
+    token?: string
+  ): Promise<IUserData> {
+    const userIndex = this.users.findIndex(user => user.id === id);
+    if (userIndex < 0) throw new Error("User does not exist");
+
+    const user = this.users[userIndex];
+    user.resetPasswordToken = token;
+
+    this.users[userIndex] = user;
+
+    Reflect.deleteProperty(user, "password");
+
+    return user;
+  }
 }

@@ -1,28 +1,35 @@
-import User, { Gender } from "./user";
+import MockProfile from "@domain/profile/mocks/mock-profile";
+import Profile from "@domain/profile";
+import MockUserData from "@domain/user/mocks/mock-user-data";
+import User from "@domain/user/user";
+import faker from "faker";
+import UserData from "./user-data";
 
-describe("User", () => {
-  const name = "Xico";
-  const email = "matheusfrancisco@hotmail.com";
-  const password = "123123";
-  const gender = "Male";
-  const lastName = "Ma";
-  const birthDate = new Date("09/09/1994");
-  const user = new User({
-    name,
-    email,
-    password,
-    gender: Gender[gender],
-    birthDate,
-    lastName
-  });
+describe("UserData", () => {
+  it("should create the user correctly", () => {
+    const fakeUser = new MockUserData();
+    const fakeProfile = new MockProfile();
 
-  // #TODO write test to guardian and validate inputs (gender, bday, .. )
-  it("has a build class", () => {
-    expect(user.email.value).toEqual(email);
-    expect(user.gender).toEqual("male");
-  });
+    const userData = new UserData(fakeUser);
+    const profile = new Profile(fakeProfile);
 
-  it("has a pass", () => {
-    expect(user.password).toEqual(password);
+    const user = new User(
+      { ...userData, id: faker.random.number() },
+      { ...profile, id: faker.random.number(), user: null as any }
+    );
+
+    expect(user).toBeDefined();
+    expect(user).toHaveProperty("name");
+    expect(user).toHaveProperty("lastName");
+    expect(user).toHaveProperty("email");
+    expect(user).toHaveProperty("birthDate");
+    expect(user).toHaveProperty("password");
+    expect(user).toHaveProperty("gender");
+    expect(user).toHaveProperty("resetPasswordToken");
+    expect(user).toHaveProperty("profile");
+    expect(user.profile).toHaveProperty("id");
+    expect(user.profile).toHaveProperty("foods");
+    expect(user.profile).toHaveProperty("drinks");
+    expect(user.profile).toHaveProperty("musicals");
   });
 });

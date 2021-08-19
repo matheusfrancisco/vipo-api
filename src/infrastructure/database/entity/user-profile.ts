@@ -25,8 +25,11 @@ export class UserProfile {
   @Column("simple-array", { nullable: true })
   drinks!: string[];
 
+  @Column()
+  userId!: number;
+
   @OneToOne(() => UserEntity, { onDelete: "CASCADE" })
-  @JoinColumn()
+  @JoinColumn({ name: "userId" })
   user!: UserEntity;
 
   @CreateDateColumn({ name: "created_at", type: "timestamp with time zone" })

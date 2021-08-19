@@ -1,4 +1,4 @@
-import { PostgresUserRepository } from "@infrastructure/database/postgres-user-repository";
+import UsersRepositoryFactory from "@infrastructure/database/factories/users-repository-factory";
 import { FindUserController } from "./find-user-controller";
 import { FindUserUseCase } from "./find-user-use-case";
 
@@ -9,7 +9,7 @@ interface IBuild {
 
 export class FindUseCaseFactory {
   public static build(): IBuild {
-    const userRepository = new PostgresUserRepository();
+    const userRepository = UsersRepositoryFactory.make();
 
     const findUseCases = new FindUserUseCase(userRepository);
 

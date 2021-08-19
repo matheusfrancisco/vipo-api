@@ -1,4 +1,4 @@
-import { PostgresUserRepository } from "@infrastructure/database/postgres-user-repository";
+import UsersRepositoryFactory from "@infrastructure/database/factories/users-repository-factory";
 import makeMailProvider from "@providers/MailProvider";
 import makeTokenProvider from "@providers/TokenProvider";
 import { ResetPasswordController } from "@useCases/ResetPassword/reset-password-controller";
@@ -10,7 +10,7 @@ interface IBuildResult {
 
 export class ResetPasswordUseCaseFactory {
   public static build(): IBuildResult {
-    const usersRepository = new PostgresUserRepository();
+    const usersRepository = UsersRepositoryFactory.make();
     const tokenProvider = makeTokenProvider();
     const mailProvider = makeMailProvider();
 

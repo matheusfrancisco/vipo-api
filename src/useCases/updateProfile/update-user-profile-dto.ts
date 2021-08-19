@@ -1,6 +1,6 @@
-import { IUserProfile } from "src/domain/user/user-profile";
+import IProfile from "@domain/profile/IProfile";
 
-type ITastes = Omit<IUserProfile, "user">;
+type ITastes = Omit<IProfile, "user">;
 
 export default interface IUpdateUserProfileDTO {
   userId: number;

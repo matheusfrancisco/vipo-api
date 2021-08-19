@@ -1,10 +1,23 @@
+import MockProfile from "@domain/profile/mocks/mock-profile";
+import MockProfilesRepository from "@domain/profile/mocks/mock-profiles-repository";
+import Profile from "@domain/profile";
+import { IUser} from "@domain/user/IUser";
+import MockUserData from "@domain/user/mocks/mock-user-data";
 import MockUserRepository from "@domain/user/mocks/mock-user-repository";
+import UserData from "@domain/user/user-data";
 import { ProfileUserUseCase } from "@useCases/GetProfileUser/profile-user-use-case";
+
+const getUseCase = () => {
+  const usersRepository = new MockUserRepository();
+  const profilesRepository = new MockProfilesRepository();
+  const useCase = new ProfileUserUseCase(usersRepository, profilesRepository);
+
+  return { usersRepository, profilesRepository, useCase };
+};
 
 describe("Profile User Use Case", () => {
   it("should return undefined when no user exists", async () => {
-    const usersRepository = new MockUserRepository();
-    const useCase = new ProfileUserUseCase(usersRepository);
+    const { useCase } = getUseCase();
 
     const email = "my_random_mail@email.com";
 
@@ -14,31 +27,24 @@ describe("Profile User Use Case", () => {
   });
 
   it("should return the user and its profile correctly", async () => {
-    const user = {
-      name: "Fake",
-      lastName: "Fakerson",
-      email: "my_random_mail@email.com",
-      birthDate: "15/11/19900",
-      gender: "male"
-    };
+    const { useCase, usersRepository, profilesRepository } = getUseCase();
 
-    const profile = {
-      drinks: [],
-      foods: [],
-      musicals: ["something"]
-    };
+    const mockUser = new UserData(new MockUserData());
+    const user = await usersRepository.save(mockUser);
 
-    const usersRepository = new MockUserRepository();
-    usersRepository.findByEmail = jest.fn(() => user);
-    usersRepository.findUserProfile = jest.fn(() => profile);
-
-    const useCase = new ProfileUserUseCase(usersRepository);
+    const mockProfile = new Profile(new MockProfile({ user: user.id }));
+    const profile = await profilesRepository.save(mockProfile);
 
     const result = await useCase.execute({ email: user.email });
 
-    expect(result).toEqual({
+    expect(result).toEqual<IUser>({
       ...user,
-      profileInformations: profile
+      profile: {
+        id: profile.id,
+        drinks: profile.drinks,
+        foods: profile.foods,
+        musicals: profile.musicals
+      }
     });
   });
 });

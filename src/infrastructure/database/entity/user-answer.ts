@@ -9,15 +9,13 @@ import {
 
 import { UserEntity } from "./user-entity";
 
-interface Recommendation {
-  name: string;
-  description: string;
-}
-
 @Entity()
 export class UserAnswer {
   @PrimaryGeneratedColumn()
   id!: number;
+
+  @Column()
+  userId!: number;
 
   @ManyToOne(
     () => UserEntity,
@@ -33,14 +31,6 @@ export class UserAnswer {
 
   @Column("simple-array", { nullable: false })
   like!: string[];
-
-  @Column({
-    type: "jsonb",
-    array: false,
-    default: () => "'[]'",
-    nullable: false
-  })
-  recommendations!: Array<Recommendation>;
 
   @CreateDateColumn({ name: "created_at", type: "timestamp with time zone" })
   createdAt!: Date;

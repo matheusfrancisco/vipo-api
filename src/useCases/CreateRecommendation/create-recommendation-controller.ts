@@ -1,9 +1,13 @@
 import { Request, Response } from "express";
 import { ServiceError } from "@errors/service-error";
-import {
-  CreateRecommendationUseCase,
-  ICreateRec
-} from "./create-recommendation-use-case";
+import { CreateRecommendationUseCase } from "./create-recommendation-use-case";
+
+interface RequestExtended extends Request{
+  user: {
+    id: string;
+    email: string;
+  };
+}
 
 export class CreateRecommendationController {
   constructor(
@@ -11,7 +15,7 @@ export class CreateRecommendationController {
   ) {}
 
   async handle(
-    request: Request,
+    request: RequestExtended,
     response: Response
   ): Promise<Response | undefined> {
     const { email } = request.user;
@@ -21,11 +25,11 @@ export class CreateRecommendationController {
       throw new ServiceError("Parameters missing");
 
     const recommendations = await this.createRecommendationUseCase.execute({
-      userEmail: email,
+      email,
       numberOfPeople,
       howMuch,
       like
-    } as ICreateRec);
+    });
 
     return response.status(200).json({ recommendations });
   }

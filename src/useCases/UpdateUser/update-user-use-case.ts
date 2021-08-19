@@ -1,5 +1,5 @@
-import { IUser } from "@domain/user/user";
-import { IUserRepository } from "@domain/user/user-repository";
+import { IUserData } from "@domain/user/IUser";
+import IUserRepository from "@domain/user/IUserRepository";
 import IUpdateUserDTO from "@useCases/UpdateUser/update-user-dto";
 
 export class UpdateUserUseCase {
@@ -9,19 +9,13 @@ export class UpdateUserUseCase {
     userId,
     name,
     lastName
-  }: IUpdateUserDTO): Promise<Omit<IUser, "password">> {
+  }: IUpdateUserDTO): Promise<IUserData> {
     const updatedUser = await this.usersRepository.update({
       userId,
       name,
       lastName
     });
 
-    return {
-      name: updatedUser.name,
-      lastName: updatedUser.lastName,
-      email: updatedUser.email,
-      birthDate: updatedUser.birthDate,
-      gender: updatedUser.gender
-    };
+    return updatedUser;
   }
 }

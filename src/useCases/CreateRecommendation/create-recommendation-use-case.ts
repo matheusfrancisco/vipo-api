@@ -1,11 +1,8 @@
 import { ServiceError } from "@errors/service-error";
-import { IUserRepository } from "../../domain/user/user-repository";
-import UserAnswer, { IUserAnswer } from "../../domain/user/user-answer";
-
-interface IEmail {
-  userEmail: string;
-}
-export type ICreateRec = IUserAnswer & IEmail;
+import IRecommendationRequestsRepository from "@domain/recommendation-request/IRecommendationRequestsRepository";
+import RecommendationRequest from "@domain/recommendation-request/recommendation-request";
+import ICreateRecommendationDTO from "@useCases/CreateRecommendation/create-recommendation-dto";
+import IUserRepository from "@domain/user/IUserRepository";
 
 interface IRecommendation {
   name: string;
@@ -13,37 +10,37 @@ interface IRecommendation {
 }
 
 export class CreateRecommendationUseCase {
-  constructor(private userRepository: IUserRepository) {}
+  constructor(
+    private userRepository: IUserRepository,
+    private recommendationRequestsRepository: IRecommendationRequestsRepository
+  ) {}
 
   async execute({
-    userEmail,
+    email,
     numberOfPeople,
     howMuch,
     like
-  }: ICreateRec): Promise<IRecommendation[]> {
-    const user = await this.userRepository.findByEmail(userEmail);
+  }: ICreateRecommendationDTO): Promise<IRecommendation[]> {
+    const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
       throw new ServiceError("User does not exist.");
     }
-    const userRecommendation = new UserAnswer({
+
+    const request = new RecommendationRequest({
       userId: user.id,
       numberOfPeople,
       howMuch,
       like
     });
 
+    await this.recommendationRequestsRepository.save(request);
+
     const recommendations = [
       { name: "Bar do jao", description: "noite boa" },
       { name: "Bar do jao", description: "noite boa" },
       { name: "Bar do jao", description: "noite boa" }
     ];
-    userRecommendation.addRecommendation(recommendations);
-
-    await this.userRepository.insertAnswer({
-      ...userRecommendation.toRepository(),
-      user
-    });
 
     return recommendations;
   }

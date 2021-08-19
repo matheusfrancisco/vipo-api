@@ -1,4 +1,6 @@
+import MockUserData from "@domain/user/mocks/mock-user-data";
 import MockUserRepository from "@domain/user/mocks/mock-user-repository";
+import UserData from "@domain/user/user-data";
 import MockHashProvider from "@providers/HashProvider/mocks/MockHashProvider";
 import MockTokenProvider from "@providers/TokenProvider/mocks/MockTokenProvider";
 import { CreateNewPasswordUseCase } from "@useCases/CreateNewPassword/create-new-password-use-case";
@@ -21,36 +23,34 @@ describe("Create new password use case", () => {
   test("should create the new password correctly", async () => {
     const { repository, tokenProvider, hashProvider, useCase } = getUseCase();
 
-    // Setup
-    const user = {
-      id: 5,
-      email: "email@email.com"
-    };
+    const mockedUser = new UserData(new MockUserData());
+    const user = await repository.save(mockedUser);
 
     const token = await tokenProvider.generateToken();
 
-    tokenProvider.decodeToken = jest.fn(async token => ({
+    tokenProvider.decodeToken = jest.fn(async _ => ({
       userId: user.id,
       email: user.email
     }));
 
-    repository.findByEmail = jest.fn(async () => user);
-
     // Testing
-    await useCase.execute({
+    const updatedUser = await useCase.execute({
       token,
       password: "new-pass"
     });
 
     // Assert
     expect(tokenProvider.decodeToken).toHaveBeenCalled();
-    expect(repository.findByEmail).toHaveBeenCalled();
     expect(hashProvider.generateHash).toHaveBeenCalled();
-    expect(repository.update).toHaveBeenCalled();
+    expect(updatedUser?.password).toBe("new-pass");
   });
 
   test("should throw if decoding the wrong token", async () => {
-    const { useCase } = getUseCase();
+    const { useCase, repository } = getUseCase();
+
+    const mockedUser = new UserData(new MockUserData());
+    await repository.save(mockedUser);
+
     // Testing
     await expect(
       useCase.execute({
@@ -61,7 +61,10 @@ describe("Create new password use case", () => {
   });
 
   test("should throw when trying to decode an invalid token", async () => {
-    const { tokenProvider, useCase } = getUseCase();
+    const { tokenProvider, useCase, repository } = getUseCase();
+
+    const mockedUser = new UserData(new MockUserData());
+    await repository.save(mockedUser);
 
     const token = await tokenProvider.generateToken();
 
@@ -77,17 +80,11 @@ describe("Create new password use case", () => {
   test("should throw when the user does not exist", async () => {
     const { tokenProvider, useCase } = getUseCase();
 
-    // Setup
-    const user = {
-      id: 5,
-      email: "email@email.com"
-    };
-
     const token = await tokenProvider.generateToken();
 
-    tokenProvider.decodeToken = jest.fn(async token => ({
-      userId: user.id,
-      email: user.email
+    tokenProvider.decodeToken = jest.fn(async _ => ({
+      userId: 5,
+      email: "email@email.com"
     }));
 
     // Testing
@@ -99,20 +96,17 @@ describe("Create new password use case", () => {
     ).rejects.toThrow();
   });
 
-  test("should throw when the user from the email is not the user from the token", async () => {
-    const { tokenProvider, useCase } = getUseCase();
+  test("should throw if the user id from the decoded token does not match the found user", async () => {
+    const { tokenProvider, useCase, repository } = getUseCase();
 
-    // Setup
-    const user = {
-      id: 5,
-      email: "email@email.com"
-    };
+    const mockedUser = new UserData(new MockUserData());
+    const user = await repository.save(mockedUser);
 
     const token = await tokenProvider.generateToken();
 
-    tokenProvider.decodeToken = jest.fn(async token => ({
-      userId: 10,
-      email: "wrong@email.com"
+    tokenProvider.decodeToken = jest.fn(async _ => ({
+      userId: user.id + 1,
+      email: user.email
     }));
 
     // Testing

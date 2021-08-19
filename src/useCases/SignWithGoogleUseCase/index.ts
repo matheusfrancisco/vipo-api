@@ -1,4 +1,4 @@
-import { PostgresUserRepository } from "@infrastructure/database/postgres-user-repository";
+import UsersRepositoryFactory from "@infrastructure/database/factories/users-repository-factory";
 import makeGoogleProvider from "@providers/GoogleProvider";
 import makeTokenProvider from "@providers/TokenProvider";
 import { SignWithGoogleController } from "@useCases/SignWithGoogleUseCase/sign-with-google-controller";
@@ -10,7 +10,7 @@ interface IBuildResult {
 
 export class SignWithGoogleUseCaseFactory {
   public static build(): IBuildResult {
-    const usersRepository = new PostgresUserRepository();
+    const usersRepository = UsersRepositoryFactory.make();
     const googleProvider = makeGoogleProvider();
     const tokenProvider = makeTokenProvider();
 

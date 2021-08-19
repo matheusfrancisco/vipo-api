@@ -1,14 +1,16 @@
 import { Router } from "express";
 import { CreateDatabaseConnection } from "@infrastructure/database/connection";
-import userRoutes from "@infrastructure/routes/user";
-import profileRoutes from "@infrastructure/routes/profile";
-import signinRoutes from "@infrastructure/routes/signin";
-import buildHealthCheck from "@infrastructure/routes/healthcheck";
 
 export const routerFactory = async (): Promise<Router> => {
   await CreateDatabaseConnection.createConnection();
-  const healthcheckRoutes = await buildHealthCheck();
   const router = Router();
+
+  const userRoutes = (await import("@infrastructure/routes/user")).default;
+  const profileRoutes = (await import("@infrastructure/routes/profile"))
+    .default;
+  const signinRoutes = (await import("@infrastructure/routes/signin")).default;
+  const healthcheckRoutes = (await import("@infrastructure/routes/healthcheck"))
+    .default;
 
   router.use("/users", userRoutes);
 

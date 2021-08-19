@@ -1,5 +1,5 @@
 export default interface IReceiveFeedbackDTO {
-  userId: number;
+  email: string;
   establishmentId: number;
   rating: number;
   bestRatedItem: string;
