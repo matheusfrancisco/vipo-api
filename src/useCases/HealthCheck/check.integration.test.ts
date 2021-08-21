@@ -2,7 +2,7 @@ import request from "supertest";
 import { routerFactory } from "@infrastructure/routes";
 import { server } from "../../index";
 
-describe("health check", () => {
+xdescribe("health check", () => {
   let serverFactoryWithUserRoute: { app: Express.Application };
 
   beforeEach(async () => {

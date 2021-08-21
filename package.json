@@ -8,7 +8,7 @@
     "format": "prettier --write \"**/*.*(js|ts|json|yml|yaml|md)\"",
     "dev": "NODE_ENV=development tsnd -r tsconfig-paths/register --transpile-only --respawn --inspect --ignore-watch node_modules --no-notify src/start.ts",
     "start": "NODE_ENV=prod node dist/start.js",
-    "test": "export TZ='America/SaoPaulo' && NODE_ENV=test jest",
+    "test": "export TZ='America/SaoPaulo' && NODE_ENV=test jest --verbose --detectOpenHandles --forceExit",
     "migrations": "NODE_ENV=prod ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:run  ",
     "migrations-test": "NODE_ENV=test ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:run  ",
     "generate": "NODE_ENV=prod ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:generate -n  ",

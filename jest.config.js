@@ -3,11 +3,6 @@ const { compilerOptions } = require("./tsconfig.json");
 
 module.exports = {
   testTimeout: 60000,
-
-  moduleFileExtensions: [
-    "ts",
-    "js"
-  ],
   verbose: true,
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: "<rootDir>"

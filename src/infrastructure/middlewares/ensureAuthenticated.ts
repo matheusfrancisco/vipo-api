@@ -8,15 +8,8 @@ interface ITokenPayload {
   email: string;
 }
 
-interface RequestExtended extends Request{
-  user?: {
-    id: string;
-    email: string;
-  };
-}
 
-
-const ensureAuthenticated: RequestHandler = async (request: RequestExtended, _, next) => {
+const ensureAuthenticated: RequestHandler = async (request: Request, _, next) => {
   const { authorization } = request.headers;
 
   if (!authorization) throw new ServiceError("Headers missing.");
