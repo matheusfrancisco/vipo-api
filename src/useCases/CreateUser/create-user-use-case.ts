@@ -4,10 +4,15 @@ import { IUserData } from "@domain/user/IUser";
 import IUserRepository from "@domain/user/IUserRepository";
 import ICreateUserDTO from "@useCases/CreateUser/create-user-dto";
 import UserData from "@domain/user/user-data";
+import IProfilesRepository from "@domain/profile/IProfilesRepository";
+import User from "@domain/user/user";
+import IProfile from "@domain/profile/IProfile";
+import Profile from "@domain/profile";
 
 export class CreateUserUseCase {
   constructor(
     private userRepository: IUserRepository,
+    private profileRepository: IProfilesRepository,
     private hashProvider: IHashProvider
   ) {}
 
@@ -26,6 +31,7 @@ export class CreateUserUseCase {
     }
 
     const hashPass = await this.hashProvider.generateHash(password);
+
     const user = new UserData({
       name,
       password: hashPass,
@@ -34,7 +40,9 @@ export class CreateUserUseCase {
       gender,
       birthDate
     });
-
-    return this.userRepository.save(user);
+    const userCreated = await this.userRepository.save(user);
+    const emptyProfile = new Profile({musicals: [], drinks: [], foods: [], user: userCreated.id})
+    const profile = await this.profileRepository.save(emptyProfile);
+    return new User(userCreated, profile);
   }
 }

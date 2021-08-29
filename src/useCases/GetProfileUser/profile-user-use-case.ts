@@ -18,7 +18,6 @@ export class ProfileUserUseCase {
     if (!profile) return undefined;
 
     const user = new User(userData, profile);
-
     return user;
   }
 }

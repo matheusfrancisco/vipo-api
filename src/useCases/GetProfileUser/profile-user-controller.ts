@@ -16,7 +16,6 @@ export class ProfileUserController {
 
   public async handle(request: RequestExtended, response: Response): Promise<Response> {
     const { email } = request.user;
-
     if (!email) throw new ServiceError("Parameters missing");
 
     const existingUser = await this.findUseCase.execute({ email });
@@ -27,6 +26,6 @@ export class ProfileUserController {
       email
     });
 
-    return response.status(201).json({ user });
+    return response.status(200).json({ user });
   }
 }

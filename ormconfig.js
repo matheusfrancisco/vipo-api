@@ -7,7 +7,7 @@ const prodOrDevConfig = {
   type: "postgres",
   database: "vipo",
   synchronize: false,
-  logging: true
+  logging: false
 };
 
 const testConfig = {
@@ -35,4 +35,5 @@ const databaseConfig = {
     connectionLimit: 5
   }
 };
+
 module.exports = databaseConfig;
