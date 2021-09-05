@@ -21,8 +21,21 @@ jobs:
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrest.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
+          username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
           source: "., !node_modules"
           target: "~/app/vipo-api"
+
+      - name: Update API
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/app/vipo-api
+            npm i
+            npm run migrations
+            pm2 restart vipo_api
