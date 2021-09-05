@@ -11,8 +11,8 @@ export default class PostgresProfilesRepository implements IProfilesRepository {
 
   public async findByUser(id: IEntityId): Promise<IProfile | undefined> {
     try {
-      return this.repository.findOne({
-        where: { user: id }
+      return await this.repository.findOne({
+        where: { userId: id }
       });
     } catch (error) {
       throw new RepositoryError(error.message, error.name, error.stack);

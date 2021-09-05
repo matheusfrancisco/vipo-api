@@ -1,5 +1,6 @@
 import MockUserRepository from "@domain/user/mocks/mock-user-repository";
 import MockHashProvider from "@providers/HashProvider/mocks/MockHashProvider";
+import MockProfilesRepository from "@domain/profile/mocks/mock-profiles-repository";
 import { CreateUserUseCase } from "@useCases/CreateUser/create-user-use-case";
 import { CreateUserController } from "@useCases/CreateUser/create-user-controller";
 import faker from "faker";
@@ -7,7 +8,7 @@ import { Request, Response } from "express";
 
 class MockCreateUserUseCase extends CreateUserUseCase {
   constructor() {
-    super(new MockUserRepository(), new MockHashProvider());
+    super(new MockUserRepository(), new MockProfilesRepository(), new MockHashProvider());
 
     this.execute = jest.fn();
   }
