@@ -23,6 +23,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSHKEYPASSWORD }}
           port: ${{ secrets.PORT }}
           source: "., !node_modules"
           target: "~/app/vipo-api"
@@ -32,6 +33,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
+          passphrase: ${{ secrets.SSHKEYPASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           script: |
