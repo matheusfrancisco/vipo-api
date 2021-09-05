@@ -20,7 +20,7 @@ jobs:
       - name: Copy SSH build to EC2
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrest.SSH_HOST }}
+          host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
