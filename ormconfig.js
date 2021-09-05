@@ -5,9 +5,9 @@ const envs = require(`${base_path}/config/environment`);
 
 const prodOrDevConfig = {
   type: "postgres",
-  database: "vipo",
+  database: "vipo_db",
   synchronize: false,
-  logging: true
+  logging: false
 };
 
 const testConfig = {
@@ -35,4 +35,5 @@ const databaseConfig = {
     connectionLimit: 5
   }
 };
+
 module.exports = databaseConfig;

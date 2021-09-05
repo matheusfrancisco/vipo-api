@@ -2,13 +2,15 @@ import MockUserData from "@domain/user/mocks/mock-user-data";
 import MockUserRepository from "@domain/user/mocks/mock-user-repository";
 import MockHashProvider from "@providers/HashProvider/mocks/MockHashProvider";
 import { CreateUserUseCase } from "./create-user-use-case";
+import MockProfilesRepository from "@domain/profile/mocks/mock-profiles-repository";
 
 describe("CreateUserUseCase", () => {
   it("should save user with userRepository", async () => {
     const repository = new MockUserRepository();
+    const repositoryProfile = new MockProfilesRepository();
     const hashProvider = new MockHashProvider();
 
-    const useCase = new CreateUserUseCase(repository, hashProvider);
+    const useCase = new CreateUserUseCase(repository, repositoryProfile, hashProvider);
 
     const user = new MockUserData();
 
