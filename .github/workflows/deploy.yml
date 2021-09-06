@@ -25,7 +25,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
           source: "."
-          target: "~/app/vipo-api"
+          target: "/home/ubuntu/app/vipo-api"
 
       - name: Update API
         uses: appleboy/ssh-action@master
