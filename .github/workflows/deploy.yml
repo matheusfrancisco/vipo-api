@@ -38,7 +38,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/app/vipo-api
-            npm i
-            npm build
+            ls
+            npm install
+            npm run build
             npm run migrations
             pm2 restart vipo_api
