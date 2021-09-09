@@ -24,7 +24,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
-          source: "."
+          source: "., !node_modules"
           target: "/home/ubuntu/app/vipo-api"
 
       - name: Update API
