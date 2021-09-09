@@ -24,8 +24,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
-          source: "., !node_modules"
-          target: "/home/ubuntu/app/vipo-api"
+          source: "Makefile"
+          target: "/home/ubuntu/app/"
 
       - name: Update API
         uses: appleboy/ssh-action@master
