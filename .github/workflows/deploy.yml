@@ -17,6 +17,9 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
+      - name: Remove node_modules
+        run: |
+          rm node_modules -rf
       - name: Copy SSH build to EC2
         uses: garygrossgarten/github-action-scp@release
         with:
@@ -26,7 +29,6 @@ jobs:
           port: ${{ secrets.PORT }}
           local: "."
           remote: "/home/ubuntu/app/vipo-api"
-
       - name: Update API
         uses: appleboy/ssh-action@master
         with:
@@ -37,5 +39,6 @@ jobs:
           script: |
             cd ~/app/vipo-api
             npm i
+            npm build
             npm run migrations
             pm2 restart vipo_api
