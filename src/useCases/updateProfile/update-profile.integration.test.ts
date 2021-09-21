@@ -33,7 +33,8 @@ xdescribe("update profile integration test", () => {
       .send({
         email: user.email,
         password: user.password
-      }).end();
+      })
+      .end();
 
     expect(login.status).toBe(200);
 

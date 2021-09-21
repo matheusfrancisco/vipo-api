@@ -1,6 +1,5 @@
 import { IUserData } from "@domain/user/IUser";
 import UserData from "@domain/user/user-data";
-import Profile from "@domain/profile";
 
 export interface IUserRepositoryUpdatePayload {
   userId: number;

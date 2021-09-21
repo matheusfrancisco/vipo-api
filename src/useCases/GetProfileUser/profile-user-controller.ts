@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { FindUserUseCase } from "@useCases/FindUser/find-user-use-case";
 import { ProfileUserUseCase } from "@useCases/GetProfileUser/profile-user-use-case";
 import { ServiceError } from "@errors/service-error";
-interface RequestExtended extends Request{
+interface RequestExtended extends Request {
   user: {
     id: string;
     email: string;
@@ -14,7 +14,10 @@ export class ProfileUserController {
     private findUseCase: FindUserUseCase
   ) {}
 
-  public async handle(request: RequestExtended, response: Response): Promise<Response> {
+  public async handle(
+    request: RequestExtended,
+    response: Response
+  ): Promise<Response> {
     const { email } = request.user;
     if (!email) throw new ServiceError("Parameters missing");
 

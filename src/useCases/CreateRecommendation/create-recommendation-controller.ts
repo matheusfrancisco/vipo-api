@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { ServiceError } from "@errors/service-error";
 import { CreateRecommendationUseCase } from "./create-recommendation-use-case";
 
-interface RequestExtended extends Request{
+interface RequestExtended extends Request {
   user: {
     id: string;
     email: string;

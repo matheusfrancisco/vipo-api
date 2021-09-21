@@ -8,8 +8,11 @@ interface ITokenPayload {
   email: string;
 }
 
-
-const ensureAuthenticated: RequestHandler = async (request: Request, _, next) => {
+const ensureAuthenticated: RequestHandler = async (
+  request: Request,
+  _,
+  next
+) => {
   const { authorization } = request.headers;
 
   if (!authorization) throw new ServiceError("Headers missing.");

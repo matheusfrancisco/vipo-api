@@ -1,6 +1,11 @@
-
-const base_path = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'  ? './src' : './dist';
-const type_file = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test' ? '*.ts' : '*.js';
+const base_path =
+  process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test"
+    ? "./src"
+    : "./dist";
+const type_file =
+  process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test"
+    ? "*.ts"
+    : "*.js";
 const envs = require(`${base_path}/config/environment`);
 
 const prodOrDevConfig = {
@@ -17,7 +22,8 @@ const testConfig = {
   logging: false
 };
 
-const dbConfigToUse = envs.default.NODE_ENV === "test" ? testConfig : prodOrDevConfig;
+const dbConfigToUse =
+  envs.default.NODE_ENV === "test" ? testConfig : prodOrDevConfig;
 
 const databaseConfig = {
   ...dbConfigToUse,
