@@ -40,4 +40,26 @@ export default class PostgresProfilesRepository implements IProfilesRepository {
       throw new RepositoryError(error.message, error.name, error.stack);
     }
   }
+
+  public async update({
+    id,
+    drinks,
+    foods,
+    musicals
+  }: Profile): Promise<IProfile> {
+    try {
+      const profile = await this.repository.findOneOrFail(id);
+      const updateProfile = this.repository.create({
+        ...profile,
+        ...{
+          drinks,
+          musicals,
+          foods
+        }
+      });
+      return this.repository.save(updateProfile);
+    } catch (error) {
+      throw new RepositoryError(error.message, error.name, error.stack);
+    }
+  }
 }

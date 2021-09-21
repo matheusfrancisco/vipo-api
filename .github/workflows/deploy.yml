@@ -2,7 +2,7 @@ name: Deploy and Migrations
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:

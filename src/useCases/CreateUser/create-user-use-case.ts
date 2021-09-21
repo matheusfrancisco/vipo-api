@@ -41,7 +41,12 @@ export class CreateUserUseCase {
       birthDate
     });
     const userCreated = await this.userRepository.save(user);
-    const emptyProfile = new Profile({musicals: [], drinks: [], foods: [], user: userCreated.id})
+    const emptyProfile = new Profile({
+      musicals: [],
+      drinks: [],
+      foods: [],
+      user: userCreated.id
+    });
     const profile = await this.profileRepository.save(emptyProfile);
     return new User(userCreated, profile);
   }

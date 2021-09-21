@@ -8,7 +8,11 @@ import { Request, Response } from "express";
 
 class MockCreateUserUseCase extends CreateUserUseCase {
   constructor() {
-    super(new MockUserRepository(), new MockProfilesRepository(), new MockHashProvider());
+    super(
+      new MockUserRepository(),
+      new MockProfilesRepository(),
+      new MockHashProvider()
+    );
 
     this.execute = jest.fn();
   }

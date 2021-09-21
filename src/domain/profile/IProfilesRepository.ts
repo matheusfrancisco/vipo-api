@@ -5,4 +5,5 @@ import Profile from "@domain/profile";
 export default interface IProfilesRepository {
   findByUser(id: IEntityId): Promise<IProfile | undefined>;
   save(profile: Profile): Promise<IProfile>;
+  update(profile: Profile): Promise<IProfile>;
 }

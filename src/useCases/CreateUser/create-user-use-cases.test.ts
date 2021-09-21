@@ -10,7 +10,11 @@ describe("CreateUserUseCase", () => {
     const repositoryProfile = new MockProfilesRepository();
     const hashProvider = new MockHashProvider();
 
-    const useCase = new CreateUserUseCase(repository, repositoryProfile, hashProvider);
+    const useCase = new CreateUserUseCase(
+      repository,
+      repositoryProfile,
+      hashProvider
+    );
 
     const user = new MockUserData();
 

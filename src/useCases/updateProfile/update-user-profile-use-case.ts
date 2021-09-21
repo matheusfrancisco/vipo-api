@@ -22,7 +22,7 @@ export class UpdateUserProfileUseCase {
       foods: profileInformations.foods
     });
 
-    const profileUpdate = await this.profilesRepository.save(profile);
+    const profileUpdate = await this.profilesRepository.update(profile);
 
     return profileUpdate;
   }

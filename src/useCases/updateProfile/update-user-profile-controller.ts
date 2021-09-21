@@ -3,7 +3,8 @@ import { UserEntity } from "@infrastructure/database/entity/user-entity";
 import { ServiceError } from "@errors/service-error";
 import { UpdateUserProfileUseCase } from "./update-user-profile-use-case";
 import { FindUserUseCase } from "../FindUser/find-user-use-case";
-interface RequestExtended extends Request{
+
+interface RequestExtended extends Request {
   user: {
     id: string;
     email: string;

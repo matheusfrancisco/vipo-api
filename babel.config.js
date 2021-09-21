@@ -1,16 +1,14 @@
 module.exports = {
   presets: [
-    ['@babel/preset-env', { targets: { node: 'current' } }],
-    '@babel/preset-typescript',
+    ["@babel/preset-env", { targets: { node: "current" } }],
+    "@babel/preset-typescript"
   ],
-  ignore: [
-    "**/*.test.js",
-    "**/*.test.ts"
-  ],
+  ignore: ["**/*.test.js", "**/*.test.ts"],
   plugins: [
-    ["module-resolver",
+    [
+      "module-resolver",
       {
-        "alias": {
+        alias: {
           "@config": "./src/config",
           "@domain": "./src/domain",
           "@errors": "./src/errors",
@@ -21,8 +19,8 @@ module.exports = {
         }
       }
     ],
-    'babel-plugin-transform-typescript-metadata',
-    ['@babel/plugin-proposal-decorators', { legacy: true }],
-    ['@babel/plugin-proposal-class-properties', { loose: true }],
-  ],
+    "babel-plugin-transform-typescript-metadata",
+    ["@babel/plugin-proposal-decorators", { legacy: true }],
+    ["@babel/plugin-proposal-class-properties", { loose: true }]
+  ]
 };
