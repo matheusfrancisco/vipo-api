@@ -29,7 +29,7 @@ const getController = () => {
 const fakeBody = {
   name: faker.name.firstName(),
   lastName: faker.name.lastName(),
-  birthDate: faker.date.past(5),
+  birthDate: faker.date.past(50),
   gender: "Male" as const,
   email: faker.internet.email(),
   password: faker.internet.password()
