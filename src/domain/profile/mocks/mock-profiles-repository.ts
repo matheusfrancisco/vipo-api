@@ -45,4 +45,9 @@ export default class MockProfilesRepository implements IProfilesRepository {
 
     return profile;
   }
+
+  public async update(profile: any): Promise<any> {
+    console.log(profile);
+    throw Error("not implemented mock");
+  }
 }

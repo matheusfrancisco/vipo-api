@@ -1,8 +1,8 @@
 import makeHashProvider from "@providers/HashProvider";
 import UsersRepositoryFactory from "@infrastructure/database/factories/users-repository-factory";
+import ProfilesRepositoryFactory from "@infrastructure/database/factories/profiles-repository-factory";
 import { CreateUserController } from "./create-user-controller";
 import { CreateUserUseCase } from "./create-user-use-case";
-import ProfilesRepositoryFactory from "@infrastructure/database/factories/profiles-repository-factory";
 
 interface IBuildResult {
   createUserController: CreateUserController;
