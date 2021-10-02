@@ -23,6 +23,18 @@ export class CreateUserController {
     )
       throw new ServiceError("Parameters missing.");
 
+    if (Object.keys(request.body.password).length < 8)
+      throw new ServiceError("Short password.");
+
+    const birthDate = new Date(request.body.birthDate);
+    const actualYear = new Date();
+
+    if (actualYear.getFullYear() - birthDate.getFullYear() <= 18)
+      throw new ServiceError("Under age.");
+
+    if (actualYear.getFullYear() - birthDate.getFullYear() >= 100)
+      throw new ServiceError("Over age.");
+
     if (!isGenderValid(request.body.gender))
       throw new ServiceError("Invalid gender.");
 
@@ -34,7 +46,7 @@ export class CreateUserController {
       password: request.body.password,
       lastName: request.body.lastName,
       gender: Gender[gender],
-      birthDate: new Date(request.body.birthDate)
+      birthDate
     });
 
     return response.status(201).send();
