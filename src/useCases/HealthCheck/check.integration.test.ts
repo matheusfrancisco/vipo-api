@@ -1,15 +1,16 @@
 import request from "supertest";
 import { routerFactory } from "@infrastructure/routes";
 import { server } from "../../index";
+import express from "express";
 
-xdescribe("health check", () => {
-  let serverFactoryWithUserRoute: { app: Express.Application };
 
-  beforeEach(async () => {
+describe("health check", () => {
+  let serverFactoryWithUserRoute: { app: express.Express };
+
+  beforeAll(async () => {
     const userRoutes = await routerFactory();
     serverFactoryWithUserRoute = await server(userRoutes);
 
-    jest.setTimeout(60000);
   });
 
   test("should call liveness with success", async () => {
@@ -25,4 +26,6 @@ xdescribe("health check", () => {
     );
     expect(rd.body).toEqual({ check: "database on" });
   });
+
+
 });
