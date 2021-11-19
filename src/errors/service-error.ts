@@ -28,11 +28,12 @@ export class ServiceError extends Error {
   }
 
   public getServerResponse(): IServerResponse {
-    messageErrors.forEach(errorKey => {
-      if (errorKey.key === this.message) console.log(errorKey.message);
-    });
+    const teste = messageErrors.filter(
+      errorKey => errorKey.key === this.message
+    );
+
     return {
-      message: this.message
+      message: teste[0].message
     };
   }
 }
