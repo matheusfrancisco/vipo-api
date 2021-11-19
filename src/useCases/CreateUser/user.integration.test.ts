@@ -56,7 +56,7 @@ xdescribe("user integration test", () => {
           .post("/users")
           .send(user)
       )
-    ).rejects.toThrow("User already exists.");
+    ).rejects.toThrow("user_already_exist");
   });
 
   test("should throw user under age", async () => {
@@ -81,7 +81,7 @@ xdescribe("user integration test", () => {
           .post("/users")
           .send(user)
       )
-    ).rejects.toThrow("User under age.");
+    ).rejects.toThrow("under_age");
   });
 
   test("should throw user password is short", async () => {

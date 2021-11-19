@@ -27,7 +27,7 @@ export class CreateUserUseCase {
     const userAlreadyExists = await this.userRepository.findByEmail(email);
 
     if (userAlreadyExists) {
-      throw new ServiceError("User already exists.");
+      throw new ServiceError("user_already_exist");
     }
 
     const hashPass = await this.hashProvider.generateHash(password);
