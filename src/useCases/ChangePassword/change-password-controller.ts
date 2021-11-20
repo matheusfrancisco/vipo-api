@@ -15,11 +15,11 @@ export class ChangePasswordController {
     const { password, newPassword, email } = request.body;
 
     if (!password || !newPassword || !email)
-      return response.status(400).json(buildErrorMessage("Parameters missing"));
+      return response.status(400).json(buildErrorMessage("parameters_missing"));
 
     const existingUser = await this.findUseCase.execute({ email });
 
-    if (!existingUser) throw new ServiceError("User does not exist", 404);
+    if (!existingUser) throw new ServiceError("user_not_exist");
 
     const user = await this.changePasswordUseCase.execute({
       userId: existingUser.id,

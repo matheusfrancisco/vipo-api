@@ -19,7 +19,7 @@ export class ReceiveFeedbackController {
     const { email } = request.user;
 
     if (!rating || !bestRatedItem || !leastRatedItem || !establishmentId)
-      throw new ServiceError("Parameters missing");
+      throw new ServiceError("parameters_missing");
 
     const result = await this.receiveFeedbackUseCAse.execute({
       email,

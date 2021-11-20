@@ -8,7 +8,7 @@ export class CreateNewPasswordController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { token, password } = request.body;
 
-    if (!token || !password) throw new ServiceError("Parameters missing");
+    if (!token || !password) throw new ServiceError("parameters_missing");
 
     await this.createNewPasswordUseCase.execute({ token, password });
 

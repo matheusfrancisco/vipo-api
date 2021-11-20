@@ -27,10 +27,9 @@ export class CreateNewPasswordUseCase {
 
     const user = await this.usersRepository.findByEmail(decoded.email);
 
-    if (!user) throw new ServiceError("User doest not exist");
+    if (!user) throw new ServiceError("user_not_exist");
 
-    if (decoded.userId !== user.id)
-      throw new ServiceError("Invalid user provided");
+    if (decoded.userId !== user.id) throw new ServiceError("invalid_user");
 
     const newHashedPassword = await this.hashProvider.generateHash(password);
 
@@ -42,6 +41,6 @@ export class CreateNewPasswordUseCase {
 
   private checkIfDecodedValueIsValid(decoded: ITokenPayload): void {
     if (!decoded.userId || !decoded.email)
-      throw new ServiceError("Invalid token provided");
+      throw new ServiceError("invalid_token_provided");
   }
 }

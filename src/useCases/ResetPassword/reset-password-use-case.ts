@@ -19,7 +19,7 @@ export class ResetPasswordUseCase {
   }: IResetPasswordDTO): Promise<void> {
     const user = await this.usersRepository.findByEmail(email);
 
-    if (!user) throw new ServiceError("User does not exist");
+    if (!user) throw new ServiceError("user_not_exist");
 
     const tokenPayload = {
       userId: user.id,

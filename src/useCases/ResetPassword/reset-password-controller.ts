@@ -8,7 +8,7 @@ export class ResetPasswordController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { email, redirectURL } = request.body;
 
-    if (!email || !redirectURL) throw new ServiceError("Parameters missing");
+    if (!email || !redirectURL) throw new ServiceError("parameters_missing");
 
     await this.resetPasswordUseCase.execute({ email, redirectURL });
 

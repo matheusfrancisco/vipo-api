@@ -23,20 +23,20 @@ export class UpdateUserProfileController {
     const { email } = request.user;
     const { profileInformations } = request.body;
 
-    if (!profileInformations) throw new ServiceError("Parameters missing!");
+    if (!profileInformations) throw new ServiceError("parameters_missing");
 
     if (
       !profileInformations.musicals ||
       !profileInformations.drinks ||
       !profileInformations.foods
     )
-      throw new ServiceError("Profile informations missing!");
+      throw new ServiceError("profile_informations_missing");
 
     const user = await this.findUserUseCase.execute({
       email
     });
 
-    if (!user) throw new ServiceError("User not found.", 404);
+    if (!user) throw new ServiceError("user_not_exist");
 
     const userProfile = await this.updateUserProfileUseCase.execute({
       userId: user.id,

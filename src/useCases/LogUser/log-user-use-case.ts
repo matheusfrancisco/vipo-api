@@ -20,11 +20,11 @@ export class LogUserUseCase {
   public async execute({ email, password }: ILogUserDTO): Promise<IExecute> {
     const user = await this.usersRepository.findByEmail(email);
 
-    if (!user) throw new ServiceError("User does not exist");
+    if (!user) throw new ServiceError("user_not_exist");
 
     const match = await this.hashProvider.hashesMatch(user.password, password);
 
-    if (!match) throw new ServiceError("Passwords don't match");
+    if (!match) throw new ServiceError("invalid_password");
 
     const tokenPayload = {
       id: user.id,

@@ -29,7 +29,7 @@ const ensureAuthenticated: RequestHandler = async (
 
   const userExists = await usersRepository.findByEmail(userPayload.email);
 
-  if (!userExists) throw new ServiceError("Unauthorized", 403);
+  if (!userExists) throw new ServiceError("user_already_exist");
 
   request.user = userPayload;
 

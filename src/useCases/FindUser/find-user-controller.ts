@@ -12,7 +12,7 @@ export class FindUserController {
   ): Promise<UserEntity | undefined | Response> {
     const { email } = request.body;
 
-    if (!email) throw new ServiceError("Parameters missing");
+    if (!email) throw new ServiceError("parameters_missing");
 
     const user = await this.findUserUseCase.execute({
       email
