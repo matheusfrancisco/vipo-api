@@ -1,11 +1,11 @@
 const base_path =
   process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test"
     ? "./src"
-    : "./src";
+    : "./dist";
 const type_file =
   process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test"
     ? "*.ts"
-    : "*.ts";
+    : "*.js";
 
 
 const envs = require(`${base_path}/config/environment`);
