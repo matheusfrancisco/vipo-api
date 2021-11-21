@@ -7,6 +7,13 @@ export interface IRecommendationRequestArgs {
   like: string[];
 }
 
+export interface IRecommendationPayload {
+  user: number;
+  numberOfPeople: number;
+  howMuch: string;
+  like: string[];
+}
+
 export default class RecommendationRequest {
   public userId: IEntityId;
 
@@ -26,5 +33,14 @@ export default class RecommendationRequest {
     this.numberOfPeople = numberOfPeople;
     this.howMuch = howMuch;
     this.like = like;
+  }
+
+  public toRecommendationPayload(): IRecommendationPayload {
+    return {
+      user: this.userId,
+      numberOfPeople: this.numberOfPeople,
+      howMuch: this.howMuch,
+      like: this.like
+    };
   }
 }

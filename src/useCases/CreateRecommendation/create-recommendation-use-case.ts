@@ -3,6 +3,7 @@ import IRecommendationRequestsRepository from "@domain/recommendation-request/IR
 import RecommendationRequest from "@domain/recommendation-request/recommendation-request";
 import ICreateRecommendationDTO from "@useCases/CreateRecommendation/create-recommendation-dto";
 import IUserRepository from "@domain/user/IUserRepository";
+import { IRecommendationProvider } from "@providers/RecommendationProvider/models/IRecommendationProvider";
 
 interface IRecommendation {
   name: string;
@@ -12,7 +13,8 @@ interface IRecommendation {
 export class CreateRecommendationUseCase {
   constructor(
     private userRepository: IUserRepository,
-    private recommendationRequestsRepository: IRecommendationRequestsRepository
+    private recommendationRequestsRepository: IRecommendationRequestsRepository,
+    private recommendationProvider: IRecommendationProvider
   ) {}
 
   async execute({
@@ -36,11 +38,9 @@ export class CreateRecommendationUseCase {
 
     await this.recommendationRequestsRepository.save(request);
 
-    const recommendations = [
-      { name: "Bar do jao", description: "noite boa" },
-      { name: "Bar do jao", description: "noite boa" },
-      { name: "Bar do jao", description: "noite boa" }
-    ];
+    const recommendations = this.recommendationProvider.getRecommendations(
+      request.toRecommendationPayload()
+    );
 
     return recommendations;
   }
