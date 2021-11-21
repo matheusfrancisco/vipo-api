@@ -6,6 +6,8 @@ const type_file =
   process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test"
     ? "*.ts"
     : "*.js";
+
+
 const envs = require(`${base_path}/config/environment`);
 
 const prodOrDevConfig = {
@@ -41,5 +43,4 @@ const databaseConfig = {
     connectionLimit: 5
   }
 };
-
 module.exports = databaseConfig;

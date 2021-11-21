@@ -18,7 +18,7 @@ export class UpdateUserController {
     const { name, lastName } = request.body;
     // #TODO add field address
 
-    if (!name || !lastName || !id) throw new ServiceError("Parameters missing");
+    if (!name || !lastName || !id) throw new ServiceError("parameters_missing");
 
     const user = await this.updateUserUseCase.execute({
       userId: Number(id),

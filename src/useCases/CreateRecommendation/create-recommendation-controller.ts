@@ -22,7 +22,7 @@ export class CreateRecommendationController {
     const { numberOfPeople, howMuch, like } = request.body;
 
     if (!email || !numberOfPeople || !howMuch || !like)
-      throw new ServiceError("Parameters missing");
+      throw new ServiceError("parameters_missing");
 
     const recommendations = await this.createRecommendationUseCase.execute({
       email,

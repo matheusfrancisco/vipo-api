@@ -8,7 +8,7 @@ export class SignWithGoogleController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { token } = request.body;
 
-    if (!token) throw new ServiceError("Parameters missing");
+    if (!token) throw new ServiceError("parameters_missing");
 
     const result = await this.signWithGoogleUseCase.execute(token);
 

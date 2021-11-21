@@ -20,7 +20,7 @@ export class ReceiveFeedbackUseCase {
   }: IReceiveFeedbackDTO): Promise<void> {
     const user = await this.userRepository.findByEmail(email);
 
-    if (!user) throw new ServiceError("User does not exist", 404);
+    if (!user) throw new ServiceError("user_not_exist");
 
     const feedback = new EstablishmentFeedback({
       userId: user.id,
