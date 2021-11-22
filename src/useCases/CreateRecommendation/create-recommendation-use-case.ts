@@ -38,10 +38,11 @@ export class CreateRecommendationUseCase {
 
     await this.recommendationRequestsRepository.save(request);
 
-    const recommendations = this.recommendationProvider.getRecommendations(
+    const recommendations = await this.recommendationProvider.getRecommendations(
       request.toRecommendationPayload()
     );
-
+    // #TODO save on database
+    console.log(recommendations);
     return recommendations;
   }
 }
