@@ -8,7 +8,7 @@ export class LogUserController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { email, password } = request.body;
 
-    if (!email || !password) throw new ServiceError("Parameters missing");
+    if (!email || !password) throw new ServiceError("parameters_missing");
 
     const result = await this.logUserUseCase.execute({ email, password });
 

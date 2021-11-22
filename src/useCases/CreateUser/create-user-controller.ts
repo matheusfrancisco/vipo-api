@@ -21,22 +21,22 @@ export class CreateUserController {
       !request.body.email ||
       !request.body.password
     )
-      throw new ServiceError("Parameters missing.");
+      throw new ServiceError("parameters_missing");
 
     if (Object.keys(request.body.password).length < 8)
-      throw new ServiceError("Short password.");
+      throw new ServiceError("short_password");
 
     const birthDate = new Date(request.body.birthDate);
     const actualYear = new Date();
 
     if (actualYear.getFullYear() - birthDate.getFullYear() <= 18)
-      throw new ServiceError("Under age.");
+      throw new ServiceError("under_age");
 
     if (actualYear.getFullYear() - birthDate.getFullYear() >= 100)
-      throw new ServiceError("Over age.");
+      throw new ServiceError("over_age");
 
     if (!isGenderValid(request.body.gender))
-      throw new ServiceError("Invalid gender.");
+      throw new ServiceError("invalid_gender");
 
     const gender = request.body.gender as "Male" | "Female" | "Neuter";
 

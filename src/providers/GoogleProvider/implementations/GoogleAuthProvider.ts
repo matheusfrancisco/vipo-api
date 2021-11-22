@@ -17,7 +17,7 @@ export default class GoogleAuthProvider implements IGoogleProvider {
     const payload = ticket.getPayload();
 
     if (!payload || !payload.email)
-      throw new ServiceError("Error authenticating with Google");
+      throw new ServiceError("google_autentication_error");
 
     return {
       email: payload.email,

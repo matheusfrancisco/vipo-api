@@ -26,7 +26,7 @@ export class CreateRecommendationUseCase {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
-      throw new ServiceError("User does not exist.");
+      throw new ServiceError("user_not_exist");
     }
 
     const request = new RecommendationRequest({

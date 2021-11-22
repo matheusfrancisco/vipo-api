@@ -19,7 +19,7 @@ export class ProfileUserController {
     response: Response
   ): Promise<Response> {
     const { email } = request.user;
-    if (!email) throw new ServiceError("Parameters missing");
+    if (!email) throw new ServiceError("parameters_missing");
 
     const existingUser = await this.findUseCase.execute({ email });
 
