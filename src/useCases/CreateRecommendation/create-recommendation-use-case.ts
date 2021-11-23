@@ -3,16 +3,19 @@ import IRecommendationRequestsRepository from "@domain/recommendation-request/IR
 import RecommendationRequest from "@domain/recommendation-request/recommendation-request";
 import ICreateRecommendationDTO from "@useCases/CreateRecommendation/create-recommendation-dto";
 import IUserRepository from "@domain/user/IUserRepository";
+import { IRecommendationProvider } from "@providers/RecommendationProvider/models/IRecommendationProvider";
+import { toRepository } from "@infrastructure/adapters/recommendations";
 import {
-  IRecommedationData,
-  IRecommendationProvider
-} from "@providers/RecommendationProvider/models/IRecommendationProvider";
+  IRecommendationRepository,
+  IUserRecommendationData
+} from "@domain/recommendation/recommendation";
 
 export class CreateRecommendationUseCase {
   constructor(
     private userRepository: IUserRepository,
     private recommendationRequestsRepository: IRecommendationRequestsRepository,
-    private recommendationProvider: IRecommendationProvider
+    private recommendationProvider: IRecommendationProvider,
+    private recommendationRepository: IRecommendationRepository
   ) {}
 
   async execute({
@@ -20,7 +23,7 @@ export class CreateRecommendationUseCase {
     numberOfPeople,
     howMuch,
     like
-  }: ICreateRecommendationDTO): Promise<IRecommedationData[]> {
+  }: ICreateRecommendationDTO): Promise<IUserRecommendationData> {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
@@ -34,13 +37,20 @@ export class CreateRecommendationUseCase {
       like
     });
 
-    await this.recommendationRequestsRepository.save(request);
+    const userAnswerRequested = await this.recommendationRequestsRepository.save(
+      request
+    );
 
     const recommendations = await this.recommendationProvider.getRecommendations(
       request.toRecommendationPayload()
     );
-    // #TODO save on database
-    console.log(recommendations);
-    return recommendations;
+    const userRecommendation = await this.recommendationRepository.save({
+      userId: user.id,
+      userAnswer: userAnswerRequested.id,
+      recommendations: toRepository(recommendations)
+    });
+
+    console.log(userRecommendation);
+    return userRecommendation;
   }
 }

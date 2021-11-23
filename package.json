@@ -11,7 +11,7 @@
     "test": "export TZ='America/SaoPaulo' && NODE_ENV=test jest --verbose --detectOpenHandles --forceExit",
     "migrations": "NODE_ENV=prod ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:run  ",
     "migrations-test": "NODE_ENV=test ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:run  ",
-    "generate": "NODE_ENV=prod ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:generate -n  ",
+    "generate": "NODE_ENV=development ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:generate -n  ",
     "create-migration": "NODE_ENV=prod ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:create -n"
   },
   "dependencies": {
