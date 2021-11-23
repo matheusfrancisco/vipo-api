@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ServiceError } from "@errors/service-error";
+import { externalizeRecommendations } from "@infrastructure/adapters/recommendations";
 import { CreateRecommendationUseCase } from "./create-recommendation-use-case";
 
 interface RequestExtended extends Request {
@@ -31,6 +32,8 @@ export class CreateRecommendationController {
       like
     });
 
-    return response.status(200).json({ recommendations });
+    return response
+      .status(200)
+      .json({ recommendations: externalizeRecommendations(recommendations) });
   }
 }

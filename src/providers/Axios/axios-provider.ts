@@ -37,7 +37,8 @@ export default class AxiosHttpProvider implements IHTTPProvider {
     path: string,
     config?: IRequestConfig
   ): Promise<T> {
-    return Http.instance.get(path, config);
+    const response = await Http.instance.get(path, config);
+    return response.data;
   }
 
   public async patch<T = unknown>(
@@ -45,7 +46,8 @@ export default class AxiosHttpProvider implements IHTTPProvider {
     body?: unknown,
     config?: IRequestConfig
   ): Promise<T> {
-    return Http.instance.patch(path, body, config);
+    const response = await Http.instance.patch(path, body, config);
+    return response.data;
   }
 
   public async post<T = unknown>(
@@ -53,7 +55,8 @@ export default class AxiosHttpProvider implements IHTTPProvider {
     body?: unknown,
     config?: IRequestConfig
   ): Promise<T> {
-    return Http.instance.post(path, body, config);
+    const response = await Http.instance.post(path, body, config);
+    return response.data;
   }
 
   public async put<T = unknown>(
@@ -61,6 +64,7 @@ export default class AxiosHttpProvider implements IHTTPProvider {
     body?: unknown,
     config?: IRequestConfig
   ): Promise<T> {
-    return Http.instance.put(path, body, config);
+    const response = await Http.instance.put(path, body, config);
+    return response.data;
   }
 }

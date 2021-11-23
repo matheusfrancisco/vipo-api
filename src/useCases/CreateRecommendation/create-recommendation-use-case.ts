@@ -3,12 +3,10 @@ import IRecommendationRequestsRepository from "@domain/recommendation-request/IR
 import RecommendationRequest from "@domain/recommendation-request/recommendation-request";
 import ICreateRecommendationDTO from "@useCases/CreateRecommendation/create-recommendation-dto";
 import IUserRepository from "@domain/user/IUserRepository";
-import { IRecommendationProvider } from "@providers/RecommendationProvider/models/IRecommendationProvider";
-
-interface IRecommendation {
-  name: string;
-  description: string;
-}
+import {
+  IRecommedationData,
+  IRecommendationProvider
+} from "@providers/RecommendationProvider/models/IRecommendationProvider";
 
 export class CreateRecommendationUseCase {
   constructor(
@@ -22,7 +20,7 @@ export class CreateRecommendationUseCase {
     numberOfPeople,
     howMuch,
     like
-  }: ICreateRecommendationDTO): Promise<IRecommendation[]> {
+  }: ICreateRecommendationDTO): Promise<IRecommedationData[]> {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
