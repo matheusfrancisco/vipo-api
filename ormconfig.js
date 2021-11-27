@@ -2,6 +2,7 @@ const base_path =
   process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test"
     ? "./src"
     : "./dist";
+
 const type_file =
   process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test"
     ? "*.ts"
