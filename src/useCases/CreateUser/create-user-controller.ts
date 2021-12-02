@@ -27,9 +27,16 @@ export class CreateUserController {
       throw new ServiceError("short_password");
 
     const birthDate = new Date(request.body.birthDate);
-    const actualYear = new Date();
+    const actualDate = new Date();
 
-    if (actualYear.getFullYear() - birthDate.getFullYear() <= 18)
+    if (
+      actualDate.getFullYear() - birthDate.getFullYear() === 18 &&
+      actualDate.getMonth() - birthDate.getMonth() <= 0 &&
+      actualDate.getDate() - birthDate.getDate() < 0
+    )
+      throw new ServiceError("under_age");
+
+    if (actualDate.getFullYear() - birthDate.getFullYear() < 18)
       throw new ServiceError("under_age");
 
     if (actualYear.getFullYear() - birthDate.getFullYear() >= 100)
