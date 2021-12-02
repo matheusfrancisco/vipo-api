@@ -28,9 +28,6 @@ export class CreateUserController {
 
     const birthDate = new Date(request.body.birthDate);
     const actualDate = new Date();
-    console.log(actualDate.getFullYear() - birthDate.getFullYear());
-    console.log(actualDate.getDate() - birthDate.getDate());
-    console.log(actualDate.getDate() - birthDate.getDate());
 
     if (
       actualDate.getFullYear() - birthDate.getFullYear() === 18 &&
