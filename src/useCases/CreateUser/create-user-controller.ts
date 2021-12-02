@@ -39,7 +39,7 @@ export class CreateUserController {
     if (actualDate.getFullYear() - birthDate.getFullYear() < 18)
       throw new ServiceError("under_age");
 
-    if (actualYear.getFullYear() - birthDate.getFullYear() >= 100)
+    if (actualDate.getFullYear() - birthDate.getFullYear() >= 100)
       throw new ServiceError("over_age");
 
     if (!isGenderValid(request.body.gender))
